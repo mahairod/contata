@@ -22,3 +22,4 @@ if [ -z $RML ]; then
 fi;
 
 echo "RML=$RML"
+export RML

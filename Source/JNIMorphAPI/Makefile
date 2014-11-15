@@ -44,30 +44,12 @@ objects = JNIMorphAPI.o$(ct) ../common/utilit.o$(ct) \
 ../GraphanLib/UnitHolder.o$(ct) \
 ../GraphanLib/GraphanDicts.o$(ct) \
 ../GraphanLib/Sentences.o$(ct) \
-$(PCRE_OBJECTS_LIB)/pcre_chartables.o \
-$(PCRE_OBJECTS_LIB)/pcre_compile.o \
-$(PCRE_OBJECTS_LIB)/pcre_config.o \
-$(PCRE_OBJECTS_LIB)/pcrecpp.o \
-$(PCRE_OBJECTS_LIB)/pcre_dfa_exec.o \
-$(PCRE_OBJECTS_LIB)/pcre_exec.o \
-$(PCRE_OBJECTS_LIB)/pcre_fullinfo.o \
-$(PCRE_OBJECTS_LIB)/pcre_get.o \
-$(PCRE_OBJECTS_LIB)/pcre_globals.o \
-$(PCRE_OBJECTS_LIB)/pcre_info.o \
-$(PCRE_OBJECTS_LIB)/pcre_maketables.o \
-$(PCRE_OBJECTS_LIB)/pcre_newline.o \
-$(PCRE_OBJECTS_LIB)/pcre_ord2utf8.o \
-$(PCRE_OBJECTS_LIB)/pcreposix.o \
-$(PCRE_OBJECTS_LIB)/pcre_refcount.o \
-$(PCRE_OBJECTS_LIB)/pcre_scanner.o \
-$(PCRE_OBJECTS_LIB)/pcre_stringpiece.o \
-$(PCRE_OBJECTS_LIB)/pcre_study.o \
-$(PCRE_OBJECTS_LIB)/pcre_tables.o \
-$(PCRE_OBJECTS_LIB)/pcre_try_flipped.o \
-$(PCRE_OBJECTS_LIB)/pcre_ucd.o \
-$(PCRE_OBJECTS_LIB)/pcre_valid_utf8.o \
-$(PCRE_OBJECTS_LIB)/pcre_version.o \
-$(PCRE_OBJECTS_LIB)/pcre_xclass.o
+$(PCRE_OBJECTS_LIB)/libpcre.a \
+$(PCRE_OBJECTS_LIB)/libpcrecpp.a \
+$(PCRE_OBJECTS_LIB)/libpcre16.a \
+$(PCRE_OBJECTS_LIB)/libpcre32.a \
+$(PCRE_OBJECTS_LIB)/libpcreposix.a
+
 
 libs =  ../PCRE/libPCRE$(ct).$(lib_ext)
 

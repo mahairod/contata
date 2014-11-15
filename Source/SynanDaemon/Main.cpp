@@ -3,6 +3,8 @@
 #include "../common/string_socket.cpp"
 #include <syslog.h>
 #include <sys/wait.h>
+#include <sys/param.h>
+#include <sys/resource.h>
 
 void PrintUsage()
 {

@@ -1,5 +1,6 @@
 #!/bin/sh
-source setrml.sh
+
+source ./setrml.sh
 
 make_tool=make
 echo $* | grep -vq "\-\-VS" || make_tool="echo Skipping: make "

@@ -1,3 +1,4 @@
+#if 0
 #ifndef rename_h_as7d46as4d
 #define rename_h_as7d46as4d
 #define pcre_callout internal_pcre_callout
@@ -29,4 +30,5 @@
 #define regerror internal_regerror
 #define regexec internal_regexec
 #define regfree internal_regfree
+#endif
 #endif

@@ -1,5 +1,6 @@
 #!/bin/sh
-source setrml.sh
+
+source ./setrml.sh
 
 cd $RML
 

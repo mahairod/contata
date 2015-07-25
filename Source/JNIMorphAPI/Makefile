@@ -2,7 +2,7 @@ VPATH = ../
 
 include ../common/common_mak
 
-common_parms := -I. $(JAVA_INCLUDES)
+common_parms := -I. $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers
 
 include ../common/common_mak
 
@@ -46,8 +46,6 @@ objects = JNIMorphAPI.o$(ct) ../common/utilit.o$(ct) \
 ../GraphanLib/Sentences.o$(ct) \
 $(PCRE_OBJECTS_LIB)/libpcre.a \
 $(PCRE_OBJECTS_LIB)/libpcrecpp.a \
-$(PCRE_OBJECTS_LIB)/libpcre16.a \
-$(PCRE_OBJECTS_LIB)/libpcre32.a \
 $(PCRE_OBJECTS_LIB)/libpcreposix.a
 
 

@@ -7,21 +7,20 @@ import ru.aot.morph.JavaMorphAPI.РезультатСлова;
 import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
 
 public class Test {
-	public static void main(String[] args){
+	public static void main(String[] аргументы){
 		try{
-			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Russian));
-			РезультатСлова wr=JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Russian, "свой");
-			for (Парадигма парадигма: wr.дайПарадигмы()){
+			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Русский));
+			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "свой");
+			for (Парадигма парадигма: рс.дайПарадигмы()){
 				System.out.println(парадигма.toString());
-				
 			}
-			String bf=wr.дайПарадигмы().итератор().следующий().дайБазовуюФорму();
-			if (bf.equals("ЗЕЛЕНЫЙ")){
+			String бф = рс.дайПарадигмы().iterator().next().дайБазовуюФорму();
+			if (бф.equals("ЗЕЛЕНЫЙ")){
 				System.err.println("TEST PASSED");
 				return;
 			}
-		}catch(Throwable tr){
-			tr.printStackTrace();
+		}catch(Throwable ош){
+			ош.printStackTrace();
 		}
 		System.err.println("TEST FAILED");
 	}

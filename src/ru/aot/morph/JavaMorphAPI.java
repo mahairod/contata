@@ -2,8 +2,11 @@ package ru.aot.morph;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 import java.util.HashSet;
-import java.util.Множество;
+import java.util.List;
 
 import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
 
@@ -14,9 +17,9 @@ public class JavaMorphAPI{
 	final private static File ТЕКУЩИЙ_КАТАЛОГ;
 	static{
 		{
-			String катал=System.getProperty("JNIMorphAPI-jni-lib-dir");
+			String катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
 			if(катал==null)
-				катал="jni-lib";
+				катал = "jni-lib";
 			ТЕКУЩИЙ_КАТАЛОГ = new File(катал);
 		}
 		
@@ -29,28 +32,28 @@ public class JavaMorphAPI{
 //			loadLibrary("libMorphWizardrsh");
 			загрузиБиблиотеку("JNIMorphAPI");
 		}catch(Throwable tr){
-			System.err.println("Error loading JNIMorphAPI library");
+			System.err.println("Ошибка загрузки библиотеки JNIMorphAPI");
 			throw new ExceptionInInitializerError(tr);
 		}
 	}
-	public static enum Язык{Russian};
+	public static enum Язык{Русский};
 	
 	public static class ИсключениеЯваСопряженияМорфологии extends RuntimeException{
 		private static final long serialVersionUID = 6844719078250020184L;
 		public ИсключениеЯваСопряженияМорфологии() {super();}
-		public ИсключениеЯваСопряженияМорфологии(String message, Throwable cause) {super(message, cause);}
-		public ИсключениеЯваСопряженияМорфологии(String message) {super(message);}
-		public ИсключениеЯваСопряженияМорфологии(Throwable cause) {super(cause);}
+		public ИсключениеЯваСопряженияМорфологии(String сообщение, Throwable причина) {super(сообщение, причина);}
+		public ИсключениеЯваСопряженияМорфологии(String сообщение) {super(сообщение);}
+		public ИсключениеЯваСопряженияМорфологии(Throwable причина) {super(причина);}
 	}
 
-	public static void приготовьСловари(Множество<Язык> языкиДляОзначивания) throws ИсключениеЯваСопряженияМорфологии{
+	public static void приготовьСловари(Set<Язык> языкиДляОзначивания) throws ИсключениеЯваСопряженияМорфологии{
 		int наборБитов = 0;
 		for(Язык яз:языкиДляОзначивания)
 			наборБитов|=(1<<яз.ordinal());
-		реализОбозначив(наборБитов);
+		initImpl(наборБитов);
 	}
 	
-	public static void закройСловари(){реализЗакрой();}
+	public static void закройСловари(){closeImpl();}
 
 	public static enum ЧастьРечи{
 		noun,  // 0
@@ -113,11 +116,20 @@ public class JavaMorphAPI{
 	private static final String[] числа = {
 		"множественное", "единственное", "двойственное", "тройственное", "паукальное"
 	};
+	private static final String[] числа_кратко = {
+		"мн", "ед", "дв", "тр", "паук"
+	};
 	private static final String[] роды = {
 		"мужской", "женский", "средний", "обоюдный", "общий"
 	};
+	private static final String[] роды_кратко = {
+		"муж", "жен", "сред", "обоюд", "общ"
+	};
 	private static final String[] падежи = {
 		"именительный", "родительный", "дательный", "винительный", "творительный", "предложный", "звательный"
+	};
+	private static final String[] падежи_кратко = {
+		"им", "род", "дат", "вин", "тв", "пр", "зв"
 	};
 	private static final String[] наклонения = {
 		"изъявительное", "условное", "повелительное", "желательное",
@@ -125,7 +137,7 @@ public class JavaMorphAPI{
 		"гортатив", //поощрение (давай ...)
 		"инъюктив", //собств.намерение
 		"прохибитив", //отрицательно-повелительное
-		"ирреальное", //ииреалис
+		"ирреальное", //ирреалис
 		"парафразис" //чужая речь
 	};
 	private static final String[] одушевлённости = {
@@ -142,10 +154,10 @@ public class JavaMorphAPI{
 		"средний", "антистрадательный", "эргативный", "совместный", "безличный",
 		"побудительный"/*каузатив*/, "декаузативный", "аппликативный"
 	};
-	private static final String[] переходность = {
+	private static final String[] переходности = {
 		"непереходное", "переходное"
 	};
-	private static final String[] валентность = переходность;
+	private static final String[] валентности = переходности;
 	private static final String[] видыГлагола = {
 		"совершенный", "несовершенный"
 	};
@@ -153,10 +165,20 @@ public class JavaMorphAPI{
 		"положительная", "сравнительная", "превосходная"
 	};
 	private static final String[] разряды = {
-		"качественное", "относительное", "притяжательное", "порядковые"
+		"качественное", "относительное", "притяжательное", "порядковое"
+	};
+	
+	private static final String[][] названия = {
+		{"нет названия"},
+		числа,			падежи,			роды,		времена, лица, одушевлённости, видыГлагола, переходности, залоги, наклонения, степениСравнения, разряды
 	};
 
-	public static enum Граммема{
+	private static final String[][] названия_кратко = {
+		{"нет названия"},
+		числа_кратко,	падежи_кратко,	роды_кратко, времена, лица, одушевлённости, видыГлагола, переходности, залоги, наклонения, степениСравнения, разряды
+	};
+
+	public static enum Граммема {
 		// 0..1
 		plural, singular,
 		// 2..8
@@ -199,34 +221,98 @@ public class JavaMorphAPI{
 		padej2,
 		poet, professionalizm,
 		prev, poloj;
-		
-		@Override
-		public String toString() {
+
+		public String коротко() {
+			int смещение = ordinal()-база().ordinal();
+			switch (this){
+				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
+					return падежи_кратко[смещение];
+				case plural: case singular:
+					return числа_кратко[смещение];
+				case rodMuj: case rodJen: case rodSred: case rodMujJen:
+					return роды_кратко[смещение];
+				default:
+					return toString();
+			}
+		}
+
+		public Граммема база() {
 			switch (this){
 				case plural: case singular:
-					return числа[ordinal()-plural.ordinal()] + _ЧИСЛО;
+					return plural;
 				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
-					return падежи[ordinal()-padejImen.ordinal()] + _ПАДЕЖ;
+					return padejImen;
 				case rodMuj: case rodJen: case rodSred: case rodMujJen:
-					return роды[ordinal()-rodMuj.ordinal()] + _РОД;
+					return rodMuj;
 				case present: case future: case past:
-					return времена[ordinal()-present.ordinal()] + _ВРЕМЯ;
+					return present;
 				case lico1: case lico2: case lico3:
-					return лица[ordinal()-lico1.ordinal()] + _ЛИЦО;
+					return lico1;
+				case odush: case neodush:
+					return odush;
+				case vidSov: case vidNesov:
+					return vidSov;
+				case neperehodnyiGlagol: case perehodnyiGlagol:
+					return neperehodnyiGlagol;
+				case deistvitZalog: case stradatZalog:
+					return deistvitZalog;
+				default:
+					return this;
+			}
+		}
+		public ТипГраммемы тип(){
+			Граммема база = this.база();
+			for (int i=0; i<базы.length; i++){
+				if (база==базы[i]){
+					return ТипГраммемы.values()[i];
+				}
+			}
+			return ТипГраммемы.НетТипа;
+		}
+		
+		public boolean тип(ТипГраммемы проверка){
+			int позицияТипа = проверка.ordinal();
+			return this.база() == базы[позицияТипа];
+		}
+		
+		public static enum ТипГраммемы {
+			НетТипа,		Число,	Падеж,		Род,		Время,	Лицо,	Одушевлённость,	Вид,		Переходность,		Залог,			Наклонение,				Степень_сравнения,		Разряд, 
+		}
+		private static final Граммема[] базы = {
+			null,		plural,	padejImen,	rodMuj,	present,	lico1,	odush,			vidSov,	neperehodnyiGlagol, deistvitZalog,	povelitelnFormaGlagola,	sravnitelnFormaPrilagat,	kachestv
+		};
+
+		private String описание(int смещение, ТипГраммемы типГраммемы){
+			return null;
+		}
+
+		@Override
+		public String toString() {
+			int смещение = ordinal()-база().ordinal();
+			ТипГраммемы типГраммемы = тип();
+			switch (this){
+				case plural: case singular:
+					return числа[смещение] + _ЧИСЛО;
+				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
+					return падежи[смещение] + _ПАДЕЖ;
+				case rodMuj: case rodJen: case rodSred: case rodMujJen:
+					return роды[смещение] + _РОД;
+				case present: case future: case past:
+					return времена[смещение] + _ВРЕМЯ;
+				case lico1: case lico2: case lico3:
+					return лица[смещение] + _ЛИЦО;
+				case odush: case neodush:
+					return одушевлённости[смещение];
+				case vidSov: case vidNesov:
+					return видыГлагола[смещение] + _ВИД;
+				case neperehodnyiGlagol: case perehodnyiGlagol:
+					return переходности[смещение];
+				case deistvitZalog: case stradatZalog:
+					return залоги[смещение] + _ЗАЛОГ;
 				case povelitelnFormaGlagola:
 					return наклонения[2];
-				case odush:
-					return одушевлённости[0];
-				case neodush:
-					return одушевлённости[1];
 				case sravnitelnFormaPrilagat:
 					return степениСравнения[1];
-				case vidSov: case vidNesov:
-					return видыГлагола[ordinal()-vidSov.ordinal()] + _ВИД;
-				case neperehodnyiGlagol: case perehodnyiGlagol:
-					return переходность[ordinal()-neperehodnyiGlagol.ordinal()];
-				case deistvitZalog: case stradatZalog:
-					return залоги[ordinal()-deistvitZalog.ordinal()] + _ЗАЛОГ;
 				case neizmenyaemoe:
 					return "неизменяемое";
 				case abbrev:
@@ -274,31 +360,48 @@ public class JavaMorphAPI{
 			boolean былоНайдено();
 			String дайБазовуюФорму();
 			ЧастьРечи дайЧастьРечи();
-			Множество<Граммема> дайГраммемы();
+			Set<Граммема> дайГраммемы();
+			@Override
 			String toString();
 		}
-		Множество<Парадигма> дайПарадигмы();
+		Set<Парадигма> дайПарадигмы();
 	}
 	
-	public static РезультатСлова найдиСлово(Язык язык, String слово)throws ИсключениеЯваСопряженияМорфологии{
-		final byte[] байты;
+	public static РезультатСлова найдиСлово(Язык язык, String слово) throws ИсключениеЯваСопряженияМорфологии {
+		final byte[] байты = байтыСлова(язык, слово);
+		return lookupWordImpl(язык.ordinal(), байты);
+	}
+
+	public static Парадигма найдиФорму(Язык язык, String слово, Set<Граммема> граммемы) throws ИсключениеЯваСопряженияМорфологии {
+		final byte[] байты = байтыСлова(язык, слово);
+		long маска = маскаГраммем( граммемы );
+		final РезультатСлова рс = lookupWordImpl(язык.ordinal(), байты);
+		for (Парадигма парадигма: рс.дайПарадигмы() ){
+			long образец = маскаГраммем( парадигма.дайГраммемы() );
+			if ( (маска & образец) != 0){
+				return парадигма;
+			}
+		}
+		return null;
+	}
+
+	private static byte[] байтыСлова(Язык язык, String слово) {
 		switch(язык){
-		case Russian:
+		case Русский:
 			try {
-				байты = слово.getBytes("cp1251");
+				return слово.getBytes("cp1251");
 			} catch (UnsupportedEncodingException и) {
 				throw new AssertionError(и);
 			}
-			break;
 		default:
-			throw new AssertionError("unknown language: " + язык);
+			throw new AssertionError("неизвестный язык: " + язык);
 		}
-		return реализНайдиСлово(язык.ordinal(), байты);
 	}
 
-	private static native РезультатСлова реализНайдиСлово(int идЯзыка, byte[] слово);
-	private static native void реализОбозначив(int битовыйНаборЯзыков);
-	private static native void реализЗакрой();
+	private static native РезультатСлова lookupWordImpl(int идЯзыка, byte[] слово);
+	private static native РезультатСлова lookupFormImpl(int идЯзыка, byte[] слово);
+	private static native void initImpl(int битовыйНаборЯзыков);
+	private static native void closeImpl();
 
 	//used in natives
 	private static String convertFromCP1251(byte[] байты_cp1251){
@@ -309,18 +412,26 @@ public class JavaMorphAPI{
 		}
 	}
 	
+	private static long маскаГраммем(Collection<Граммема> граммемы){
+		long result = 0;
+		for (Граммема г: граммемы){
+			result |= (1 << г.ordinal());
+		}
+		return result;
+	}
+	
 	private static final Граммема[] значения_граммем = Граммема.values();
 	private static final ЧастьРечи[] значения_чречи = ЧастьРечи.values();
 
 	//used in natives
 	private static void добавьГраммемуКМножеству(HashSet<Граммема> множествоГраммем, int идГраммемы){
-		множествоГраммем.добавь(значения_граммем[идГраммемы]);
+		множествоГраммем.add(значения_граммем[идГраммемы]);
 	}
 	
 	//used in natives
 	private static void добавьПарадигмуКМножеству(HashSet<Парадигма> множествоПарадигм, final HashSet<Граммема> множествоГраммем, final String базоваяФорма, final boolean найдено, int идЧастиРечи){
 		final ЧастьРечи чречи = значения_чречи[идЧастиРечи];
-		множествоПарадигм.добавь(new Парадигма() {
+		множествоПарадигм.add(new Парадигма() {
 			
 			@Override
 			public boolean былоНайдено() {
@@ -333,7 +444,7 @@ public class JavaMorphAPI{
 			}
 			
 			@Override
-			public Множество<Граммема> дайГраммемы() {
+			public Set<Граммема> дайГраммемы() {
 				return множествоГраммем;
 			}
 			
@@ -359,9 +470,28 @@ public class JavaMorphAPI{
 		return new РезультатСлова() {
 			
 			@Override
-			public Множество<Парадигма> дайПарадигмы() {
+			public Set<Парадигма> дайПарадигмы() {
 				return множествоПарадигм;
 			}
 		};
 	}
+
+	public static void main(String[] аргументы){
+		try{
+			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Русский));
+			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "свой");
+			for (Парадигма парадигма: рс.дайПарадигмы()){
+				System.out.println(парадигма.toString());
+			}
+			String бф = рс.дайПарадигмы().iterator().next().дайБазовуюФорму();
+			if (бф.equals("ЗЕЛЕНЫЙ")){
+				System.err.println("TEST PASSED");
+				return;
+			}
+		}catch(Throwable ош){
+			ош.printStackTrace();
+		}
+		System.err.println("TEST FAILED");
+	}
+
 }

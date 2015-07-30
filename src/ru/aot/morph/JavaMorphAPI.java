@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import static ru.aot.morph.ТипГраммемы.*;
 
 import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
 
@@ -15,21 +16,25 @@ public class JavaMorphAPI{
 		System.load(new File(ТЕКУЩИЙ_КАТАЛОГ, библ + ".so").getAbsolutePath());
 	}
 	final private static File ТЕКУЩИЙ_КАТАЛОГ;
+	final private static File РАБОЧИЙ_КАТАЛОГ;
 	static{
 		{
-			String катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
-			if(катал==null)
-				катал = "jni-lib";
-			ТЕКУЩИЙ_КАТАЛОГ = new File(катал);
+			String раб_катал = System.getProperty("JNIMorphAPI-rml-dir");
+			РАБОЧИЙ_КАТАЛОГ = (раб_катал==null) ? null : new File(раб_катал);
+
+			String бин_катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
+			if(бин_катал!=null){
+				ТЕКУЩИЙ_КАТАЛОГ = new File(бин_катал);
+			} else {
+				if (РАБОЧИЙ_КАТАЛОГ!=null){
+					ТЕКУЩИЙ_КАТАЛОГ = new File(РАБОЧИЙ_КАТАЛОГ, "Bin/");
+				} else {
+					ТЕКУЩИЙ_КАТАЛОГ = new File("jni-lib");
+				}
+			}
 		}
 		
 		try{
-//			loadLibrary("libStructDictrsh");
-//			loadLibrary("libAgramtabrsh");
-//			loadLibrary("libLemmatizerrsh");
-//			loadLibrary("libPCRErsh");
-//			loadLibrary("libGraphanrsh");
-//			loadLibrary("libMorphWizardrsh");
 			загрузиБиблиотеку("JNIMorphAPI");
 		}catch(Throwable tr){
 			System.err.println("Ошибка загрузки библиотеки JNIMorphAPI");
@@ -48,308 +53,166 @@ public class JavaMorphAPI{
 
 	public static void приготовьСловари(Set<Язык> языкиДляОзначивания) throws ИсключениеЯваСопряженияМорфологии{
 		int наборБитов = 0;
-		for(Язык яз:языкиДляОзначивания)
+		for(Язык яз:языкиДляОзначивания){
 			наборБитов|=(1<<яз.ordinal());
-		initImpl(наборБитов);
+		}
+		initImpl(наборБитов, РАБОЧИЙ_КАТАЛОГ==null? null: РАБОЧИЙ_КАТАЛОГ.getAbsolutePath() );
 	}
 	
-	public static void закройСловари(){closeImpl();}
+	public static void закройСловари(){
+		closeImpl();
+	}
 
 	public static enum ЧастьРечи{
-		noun,  // 0
-		adjective, // 1
-		verb, // 2
-		mestoim_noun, // 3
-		mestoim_adjective, // 4
-		mestoim_predikativ, // 5
-		chislitelnoeKolichestv, // 6
-		chislitelnoePoryadkovoe, // 7
-		narechie, // 8
-		predikativ, //9
-		predlog, // 10
-		posl, // 11
-		soyuz, // 12
-		mejdometie, // 13
-		vvodnoe_slovo,// 14
-		fraz, // 15
-		chastica, // 16
-		kratkoePrilagat,  // 17
-		prichastie, //18
-		deeprichastie, //19
-		kratkoePrichastie, // 20
-		verbInfinitive  //21
+		существительное,	// 0
+		прилагательное,		// 1
+		глагол,				// 2
+		местоименное_существительное,	// 3
+		местоименное_прилагательное,	// 4
+		местоименный_предикатив,			// 5
+		числительное_количественное,	// 6
+		числительное_порядковое,		// 7
+		наречие,			// 8
+		предикатив,			// 9
+		предлог,				// 10
+		пословица,			// 11
+		союз,				// 12
+		междометие,			// 13
+		вводное_слово,		// 14
+		фраза,				// 15
+		частица,				// 16
+		краткое_прилагательное,			// 17
+		причастие,			//18
+		деепричастие,		//19
+		краткое_причастие,	//20
+		инфинитив			//21
+		;
+
+		@Override
+		public String toString() {
+			return name().replace('_', ' ');
+		}
+
+		public String кратко(){
+			if (ordinal() <= предлог.ordinal()){
+				return краткие_названия[ordinal()];
+			} else {
+				return name();
+			}
+		}
+		
+		private String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
 	};
 	
-	private static final String ПАДЕЖ = "падеж";
-	private static final String _ПАДЕЖ = " падеж";
+	private static final String[][] названия = Названия.полные_имена;
 
-	private static final String РОД = "род";
-	private static final String _РОД = " род";
-
-	private static final String ВРЕМЯ = "время";
-	private static final String _ВРЕМЯ = " время";
-
-	private static final String ЛИЦО = "лицо";
-	private static final String _ЛИЦО = " лицо";
-
-	private static final String НАКЛОНЕНИЕ = "наклонение";
-	private static final String _НАКЛОНЕНИЕ = " наклонение";
-
-	private static final String ЧИСЛО = "число";
-	private static final String _ЧИСЛО = " число";
-
-	private static final String ЗАЛОГ = "залог";
-	private static final String _ЗАЛОГ = " залог";
-
-	private static final String ВИД = "вид";
-	private static final String _ВИД = " вид";
-
-	private static final String СТЕПЕНЬ_СРАВНЕНИЯ = "степень";
-	private static final String _СТЕПЕНЬ_СРАВНЕНИЯ = " степень";
-
-	private static final String РАЗРЯД = "разряд";
-	private static final String _РАЗРЯД = " разряд";
-
-	private static final String ОДУШЕВЛЁННОСТЬ = "одушевлённость";
-	private static final String ПЕРЕХОДНОСТЬ = "переходность";
-
-	private static final String[] числа = {
-		"множественное", "единственное", "двойственное", "тройственное", "паукальное"
-	};
-	private static final String[] числа_кратко = {
-		"мн", "ед", "дв", "тр", "паук"
-	};
-	private static final String[] роды = {
-		"мужской", "женский", "средний", "обоюдный", "общий"
-	};
-	private static final String[] роды_кратко = {
-		"муж", "жен", "сред", "обоюд", "общ"
-	};
-	private static final String[] падежи = {
-		"именительный", "родительный", "дательный", "винительный", "творительный", "предложный", "звательный"
-	};
-	private static final String[] падежи_кратко = {
-		"им", "род", "дат", "вин", "тв", "пр", "зв"
-	};
-	private static final String[] наклонения = {
-		"изъявительное", "условное", "повелительное", "желательное",
-		"юссив", //косв. повеление 3-му лицу
-		"гортатив", //поощрение (давай ...)
-		"инъюктив", //собств.намерение
-		"прохибитив", //отрицательно-повелительное
-		"ирреальное", //ирреалис
-		"парафразис" //чужая речь
-	};
-	private static final String[] одушевлённости = {
-		"одушевлённое", "неодушевлённое",
-	};
-	private static final String[] лица = {
-		"первое", "второе", "третье", "четвёртое"
-	};
-	private static final String[] времена = {
-		"настоящее", "будущее", "прошлое"
-	};
-	private static final String[] залоги = {
-		"действительный", "страдательный", "возвратный", "взаимный",
-		"средний", "антистрадательный", "эргативный", "совместный", "безличный",
-		"побудительный"/*каузатив*/, "декаузативный", "аппликативный"
-	};
-	private static final String[] переходности = {
-		"непереходное", "переходное"
-	};
-	private static final String[] валентности = переходности;
-	private static final String[] видыГлагола = {
-		"совершенный", "несовершенный"
-	};
-	private static final String[] степениСравнения = {
-		"положительная", "сравнительная", "превосходная"
-	};
-	private static final String[] разряды = {
-		"качественное", "относительное", "притяжательное", "порядковое"
-	};
-	
-	private static final String[][] названия = {
-		{"нет названия"},
-		числа,			падежи,			роды,		времена, лица, одушевлённости, видыГлагола, переходности, залоги, наклонения, степениСравнения, разряды
-	};
-
-	private static final String[][] названия_кратко = {
-		{"нет названия"},
-		числа_кратко,	падежи_кратко,	роды_кратко, времена, лица, одушевлённости, видыГлагола, переходности, залоги, наклонения, степениСравнения, разряды
-	};
+	private static final String[][] названия_кратко = Названия.краткие_имена;
 
 	public static enum Граммема {
 		// 0..1
-		plural, singular,
+		множественное(Число), единственное(Число),
 		// 2..8
-		padejImen, padejRodit, padejDatel, padejVinit, padejTvor, padejPredl, padejZvateln,
+		именительный(Падеж), родительный(Падеж), дательный(Падеж), винительный(Падеж), творительный(Падеж), предложный(Падеж), звательный(Падеж),
 		// род 9-12
-		rodMuj, rodJen, rodSred, rodMujJen,
+		мужской(Род), женский(Род), средний(Род), обоюдный(Род),
 		// 13..15
-		present, future, past,
+		настоящее(Время), будущее(Время), прошлое(Время),
 		// 16..18
-		lico1, lico2, lico3,
+		первое(Лицо), второе(Лицо), третье(Лицо),
 		// 19
-		povelitelnFormaGlagola,
+		повелительное(Наклонение),
 		// 20..21
-		odush, neodush,
+		odush(Одушевлённость), neodush(Одушевлённость),
 		// 22
-		sravnitelnFormaPrilagat,
+		сравнительная(Степень_сравнения),
 		// 23..24
-		vidSov, vidNesov,
+		совершенный(Вид), несовершенный(Вид),
 		// 25..26
-		neperehodnyiGlagol, perehodnyiGlagol,
+		непереходный(Переходность), переходный(Переходность),
 		// 27..28
-		deistvitZalog, stradatZalog,
+		действительный(Залог), страдательный(Залог),
 		// 29-31
-		neizmenyaemoe, abbrev, otchestvo,
+		неизменяемое(НетТипа), аббревиатура(Собственное), отчество(Собственное),
 		// 32-33
-		lokativnost, organizaciya,
+		локативность(Собственное), организация(Собственное),
 		// 34-35
-		kachestv, neImeetMnojestvChisla,
+		качественное(Разряд),
+		neImeetMnojestvChisla(НетТипа),
 		// 36-37 (наречия)
-		voprositNarech, ukazat,
+		voprositNarech(НетТипа), ukazat(НетТипа),
 		// 38..39
-		firstName, lastName,
+		имя(Собственное), фамилия(Собственное),
 		// 40
-		bezlichnGlagol,
+		безличный(НетТипа),
 		// 41,42
-		jargon, opechatka,
+		жаргонизм(Стиль), опечатка(Стиль),
 		// 43,44,45
-		razgovorn, posessive, archaic,
+		разговорное(Стиль), притяжательное(Специальный_падеж), архаизм(Стиль),
 		// для второго родительного и второго предложного
-		padej2,
-		poet, professionalizm,
-		prev, poloj;
+		padej2(Специальный_падеж),
+		поэтизм(Стиль), профессионализм(Стиль),
+		превосходная(Степень_сравнения), poloj(НетТипа)
+		;
+
+		Граммема(ТипГраммемы типГраммемы){
+			this.типГраммемы = типГраммемы;
+			типГраммемы.updateLimits(this);
+		}
+
+		private final ТипГраммемы типГраммемы;
 
 		public String коротко() {
-			int смещение = ordinal()-база().ordinal();
-			switch (this){
-				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
-					return падежи_кратко[смещение];
-				case plural: case singular:
-					return числа_кратко[смещение];
-				case rodMuj: case rodJen: case rodSred: case rodMujJen:
-					return роды_кратко[смещение];
-				default:
-					return toString();
+			if (ordinal() <= третье.ordinal() ){
+				int смещение = ordinal()-база().ordinal();
+				return названия_кратко[типГраммемы.ordinal()][смещение];
+			} else {
+				return toString();
 			}
 		}
 
 		public Граммема база() {
-			switch (this){
-				case plural: case singular:
-					return plural;
-				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
-					return padejImen;
-				case rodMuj: case rodJen: case rodSred: case rodMujJen:
-					return rodMuj;
-				case present: case future: case past:
-					return present;
-				case lico1: case lico2: case lico3:
-					return lico1;
-				case odush: case neodush:
-					return odush;
-				case vidSov: case vidNesov:
-					return vidSov;
-				case neperehodnyiGlagol: case perehodnyiGlagol:
-					return neperehodnyiGlagol;
-				case deistvitZalog: case stradatZalog:
-					return deistvitZalog;
-				default:
-					return this;
-			}
+			return тип().границы()[0];
 		}
 		public ТипГраммемы тип(){
-			Граммема база = this.база();
-			for (int i=0; i<базы.length; i++){
-				if (база==базы[i]){
-					return ТипГраммемы.values()[i];
-				}
-			}
-			return ТипГраммемы.НетТипа;
+			return типГраммемы;
 		}
 		
 		public boolean тип(ТипГраммемы проверка){
-			int позицияТипа = проверка.ordinal();
-			return this.база() == базы[позицияТипа];
+			return this.тип() == проверка;
 		}
 		
-		public static enum ТипГраммемы {
-			НетТипа,		Число,	Падеж,		Род,		Время,	Лицо,	Одушевлённость,	Вид,		Переходность,		Залог,			Наклонение,				Степень_сравнения,		Разряд, 
-		}
-		private static final Граммема[] базы = {
-			null,		plural,	padejImen,	rodMuj,	present,	lico1,	odush,			vidSov,	neperehodnyiGlagol, deistvitZalog,	povelitelnFormaGlagola,	sravnitelnFormaPrilagat,	kachestv
-		};
-
-		private String описание(int смещение, ТипГраммемы типГраммемы){
-			return null;
+		private String описание(int смещение){
+			StringBuilder sb = new StringBuilder(64);
+			String название = названия[тип().ordinal()][смещение];
+			sb.append(название).append(' ').append(типГраммемы.имя());
+			return sb.toString();
 		}
 
 		@Override
 		public String toString() {
-			int смещение = ordinal()-база().ordinal();
-			ТипГраммемы типГраммемы = тип();
 			switch (this){
-				case plural: case singular:
-					return числа[смещение] + _ЧИСЛО;
-				case padejImen: case padejRodit: case padejDatel: case padejVinit: case padejTvor: case padejPredl: case padejZvateln:
-					return падежи[смещение] + _ПАДЕЖ;
-				case rodMuj: case rodJen: case rodSred: case rodMujJen:
-					return роды[смещение] + _РОД;
-				case present: case future: case past:
-					return времена[смещение] + _ВРЕМЯ;
-				case lico1: case lico2: case lico3:
-					return лица[смещение] + _ЛИЦО;
-				case odush: case neodush:
-					return одушевлённости[смещение];
-				case vidSov: case vidNesov:
-					return видыГлагола[смещение] + _ВИД;
-				case neperehodnyiGlagol: case perehodnyiGlagol:
-					return переходности[смещение];
-				case deistvitZalog: case stradatZalog:
-					return залоги[смещение] + _ЗАЛОГ;
-				case povelitelnFormaGlagola:
-					return наклонения[2];
-				case sravnitelnFormaPrilagat:
-					return степениСравнения[1];
-				case neizmenyaemoe:
-					return "неизменяемое";
-				case abbrev:
-					return "аббревиатура";
-				case otchestvo:
-					return "отчество";
-				case lokativnost:
-					return "локативность";
-				case organizaciya:
-					return "организация";
-				case kachestv:
-					return разряды[0];
-					
+				case повелительное:
+					return описание(2);
+				case сравнительная:
+					return описание(1);
+				case превосходная:
+					return описание(2);
 /*
-					neImeetMnojestvChisla,
-					// 36-37 (наречия)
-					voprositNarech, ukazat,
+				neImeetMnojestvChisla,
+				// 36-37 (наречия)
+				voprositNarech, ukazat,
+				bezlichnGlagol,
+				// для второго родительного и второго предложного
+				padej2,
+				poloj;
 */
-				case firstName:
-					return "имя";
-				case lastName:
-					return "фамилия";
-/*					
-					// 40
-					bezlichnGlagol,
-					// 41,42
-					jargon, opechatka,
-					// 43,44,45
-					razgovorn, posessive, archaic,
-					// для второго родительного и второго предложного
-					padej2,
-					poet, professionalizm,
-					prev, poloj;
-*/
-					default:
+				default:
+					if ( ordinal() <= страдательный.ordinal() ){
+						int смещение = ordinal()-база().ordinal();
+						return описание(смещение);
+					} else {
 						return this.name();
-				
+					}
 			}
 		}
 
@@ -361,6 +224,7 @@ public class JavaMorphAPI{
 			String дайБазовуюФорму();
 			ЧастьРечи дайЧастьРечи();
 			Set<Граммема> дайГраммемы();
+			List<ФормаСлова> формы();
 			@Override
 			String toString();
 		}
@@ -372,17 +236,29 @@ public class JavaMorphAPI{
 		return lookupWordImpl(язык.ordinal(), байты);
 	}
 
-	public static Парадигма найдиФорму(Язык язык, String слово, Set<Граммема> граммемы) throws ИсключениеЯваСопряженияМорфологии {
+	public static ФормаСлова найдиФорму(Язык язык, String слово, Set<Граммема> граммемы) throws ИсключениеЯваСопряженияМорфологии {
 		final byte[] байты = байтыСлова(язык, слово);
 		long маска = маскаГраммем( граммемы );
-		final РезультатСлова рс = lookupWordImpl(язык.ordinal(), байты);
+		final РезультатСлова рс = lookupFormImpl(язык.ordinal(), байты);
 		for (Парадигма парадигма: рс.дайПарадигмы() ){
-			long образец = маскаГраммем( парадигма.дайГраммемы() );
-			if ( (маска & образец) != 0){
-				return парадигма;
+			for (ФормаСлова словоформа: парадигма.формы()){
+				long образец = словоформа.дайМаскуГраммем();
+				if ( согласиеФорм(маска, образец) ){
+					return словоформа;
+				}
 			}
 		}
 		return null;
+	}
+	
+	private static boolean согласиеФорм(long ф1, long ф2){
+		long маскаРода =	ТипГраммемы.Род.маска();
+		long маскаЧисла =	ТипГраммемы.Число.маска();
+		long маскаПад =	ТипГраммемы.Падеж.маска();
+		return
+			((маскаПад	& ф1 & ф2) > 0 || 0==(маскаПад	& ф1) || 0==(маскаПад	& ф2)) &&
+			((маскаЧисла& ф1 & ф2) > 0 || 0==(маскаЧисла	& ф1) || 0==(маскаЧисла	& ф2)) &&
+		    ((маскаРода	& ф1 & ф2) > 0 || 0==(маскаРода	& ф1) || 0==(маскаРода	& ф2));
 	}
 
 	private static byte[] байтыСлова(Язык язык, String слово) {
@@ -400,7 +276,7 @@ public class JavaMorphAPI{
 
 	private static native РезультатСлова lookupWordImpl(int идЯзыка, byte[] слово);
 	private static native РезультатСлова lookupFormImpl(int идЯзыка, byte[] слово);
-	private static native void initImpl(int битовыйНаборЯзыков);
+	private static native void initImpl(int битовыйНаборЯзыков, String env_path);
 	private static native void closeImpl();
 
 	//used in natives
@@ -431,55 +307,38 @@ public class JavaMorphAPI{
 	//used in natives
 	private static void добавьПарадигмуКМножеству(HashSet<Парадигма> множествоПарадигм, final HashSet<Граммема> множествоГраммем, final String базоваяФорма, final boolean найдено, int идЧастиРечи){
 		final ЧастьРечи чречи = значения_чречи[идЧастиРечи];
-		множествоПарадигм.add(new Парадигма() {
-			
-			@Override
-			public boolean былоНайдено() {
-				return найдено;
-			}
-			
-			@Override
-			public ЧастьРечи дайЧастьРечи() {
-				return чречи;
-			}
-			
-			@Override
-			public Set<Граммема> дайГраммемы() {
-				return множествоГраммем;
-			}
-			
-			@Override
-			public String дайБазовуюФорму() {
-				return базоваяФорма;
-			}
+		множествоПарадигм.add(new ПарадигмаНормальная(найдено, чречи, множествоГраммем, базоваяФорма));
+	}
 
-			@Override
-			public String toString() {
-				String результат = дайЧастьРечи().toString() + " " + дайБазовуюФорму() + "\n";
-				for (Граммема граммема: дайГраммемы()){
-					результат += "\t" + граммема.toString() + "\n";
-				}
-				return результат;
-			}
-			
-		});
+	//used in natives
+	private static void добавьПарадигму(HashSet<Парадигма> множествоПарадигм, Парадигма парадигма){
+		множествоПарадигм.add(парадигма);
 	}
 
 	//used in natives
 	private static РезультатСлова создайРезультатСлова(final HashSet<Парадигма> множествоПарадигм){
-		return new РезультатСлова() {
-			
-			@Override
-			public Set<Парадигма> дайПарадигмы() {
-				return множествоПарадигм;
-			}
-		};
+		return new РезультатСловаВопл(множествоПарадигм);
+	}
+
+	//used in natives
+	private static Парадигма добавьСловоформуКПарадигме(Парадигма парадигма, String форма, long граммемы, int идЧастиРечи){
+		final ЧастьРечи частьРечи = значения_чречи[идЧастиРечи];
+		if (парадигма == null){
+			парадигма = new ПарадигмаПолная(true, частьРечи);
+		}
+		if (!(парадигма instanceof ПарадигмаПолная)){
+			return null;
+		}
+		ПарадигмаПолная парадигмаПолная = (ПарадигмаПолная) парадигма;
+		ФормаСлова формаСлова = new ФормаСлова(частьРечи, форма, граммемы, парадигма);
+		парадигмаПолная.добавьФорму(формаСлова);
+		return парадигма;
 	}
 
 	public static void main(String[] аргументы){
 		try{
 			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Русский));
-			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "свой");
+			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "любой");
 			for (Парадигма парадигма: рс.дайПарадигмы()){
 				System.out.println(парадигма.toString());
 			}

@@ -14,7 +14,7 @@ endif
 
 $(objects): %.o$(ct) : %.cpp
 	$(mode_error)
-	g++ $(cparams) $< -o $@
+	g++ $(cparams) $< -ftemplate-depth=45 -o $@
 
 
 include $(wildcard *.d)

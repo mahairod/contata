@@ -4,7 +4,9 @@
 *.otst
 *.d
 *.a
+*.so
 *.orsh
+*.odsh
 *.bin
 /Source/StatDatBin/StatDatBin
 /Source/StructDictLoader/StructDictLoader

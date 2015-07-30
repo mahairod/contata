@@ -18,11 +18,19 @@ JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl
 
 /*
  * Class:     ru_aot_morph_JavaMorphAPI
+ * Method:    lookupFormImpl
+ * Signature: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
+ */
+JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupFormImpl
+  (JNIEnv *, jclass, jint, jbyteArray);
+
+/*
+ * Class:     ru_aot_morph_JavaMorphAPI
  * Method:    initImpl
- * Signature: (I)V
+ * Signature: (ILjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl
-  (JNIEnv *, jclass, jint);
+  (JNIEnv *, jclass, jint, jstring work_dir);
 
 /*
  * Class:     ru_aot_morph_JavaMorphAPI

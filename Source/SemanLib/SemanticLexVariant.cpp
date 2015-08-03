@@ -11,7 +11,7 @@ const int PrefixesCount = 2;
 const CProductivePrefix Prefixes[PrefixesCount] = { {"¿¬»¿", "¿¬»¿"},{"¿›–Œ", "¿¬»¿"} };
 
 
-long CSemanticStructure::GetPosesFromRusArticle(CRossHolder& Ross,WORD UnitNo) const
+poses_mask_t CSemanticStructure::GetPosesFromRusArticle(CRossHolder& Ross,WORD UnitNo) const
 {
 	StringVector GramFets;
     Ross.GetSimpleFieldItemsFromArticle (UnitNo, "GF", 0, 0, GramFets);
@@ -486,7 +486,7 @@ CRusSemNode CRusSemStructure::CreatePrimitiveNode(size_t WordNo)
 
 	}
 	SemWord.m_Poses = H.m_iPoses;
-	string GramCodes = H.m_GramCodes;
+	string GramCodes = H.GetGramCodes();
 	SemWord.m_pData =  m_pData;
 	SemWord.m_GramCodes = GramCodes;
 
@@ -655,7 +655,7 @@ CRusSemNode CRusSemStructure::CreatePrimitiveNode(size_t WordNo)
 
 
 	N.SetGrammems(SemWord.GetAllGrammems());
-	N.m_GramCodes = GramCodes;
+	N.m_GramCodes  = GramCodes;
 	N.m_SynGroupTypeStr = "";
 	N.SetMainWordNo(0);
 	N.m_ClauseNo = ClauseNo;
@@ -759,7 +759,7 @@ CRusSemNode CRusSemStructure::CreateNode(const CRelationsIterator* RelIt, long G
 	   SemWord.m_ParadigmId = H.m_lPradigmID; 
 
 	   SemWord.SetFormGrammems (H.m_iGrammems);
-	   SemWord.m_GramCodes = H.m_GramCodes;
+	   SemWord.m_GramCodes = H.GetGramCodes();
 	   SemWord.m_Poses = H.m_iPoses;
 	   SemWord.m_pData =  m_pData;
 	   	{
@@ -799,7 +799,7 @@ CRusSemNode CRusSemStructure::CreateNode(const CRelationsIterator* RelIt, long G
 		if ( j == G.m_MainWordNo )
 		{
 			N.SetMainWordNo(N.m_Words.size()-1);
-			N.m_GramCodes = H.m_GramCodes;
+			N.m_GramCodes = H.GetGramCodes();
 			InitInterps(SemWord, false, ClauseNo, N);
 		};
 

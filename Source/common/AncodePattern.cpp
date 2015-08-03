@@ -14,6 +14,21 @@ const	CAgramtab* CAncodePattern::GetGramTab() const
     return m_pGramTab;
 }
 
+const string& CAncodePattern::GetGramCodes() const {
+    return m_GramCodes;
+}
+
+void  CAncodePattern::SetGramCodes(const string& s) {
+    assert (s.length() % 2 == 0);
+    for (size_t i = 0; i < s.length(); i += 2)
+        assert (m_pGramTab->CheckGramCode (s.c_str() + i) );
+    m_GramCodes = s;
+}
+
+void  CAncodePattern::SetGramCodes(const char* s) {
+    SetGramCodes (string(s));
+}
+
 
 void CAncodePattern::ResetFlags()
 {
@@ -86,11 +101,11 @@ bool CAncodePattern::DeleteAncodesByGrammemIfCan(BYTE Grammem)
     return true;
 }
 
-bool CAncodePattern::ModifyGrammems(QWORD Grammems , size_t Poses)
+bool CAncodePattern::ModifyGrammems(QWORD Grammems, poses_mask_t Poses)
 {
 	string strOldGramcodes = m_GramCodes;	
 	QWORD  savegrammems = m_iGrammems;	
-	size_t saveposes = m_iPoses;
+	poses_mask_t saveposes = m_iPoses;
 	m_iGrammems = 0;
 	m_iPoses = 0;
 	m_GramCodes = "";

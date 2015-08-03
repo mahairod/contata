@@ -313,6 +313,16 @@ bool CAgramtab::GetGramCodeByGrammemsAndPartofSpeechIfCan(BYTE Pos, QWORD gramme
 	return false; 
 };
 
+bool CAgramtab::CheckGramCode(const char* gram_code) const
+{
+    if (gram_code == 0) return true;
+    if (*gram_code == 0) return true;
+    if (*gram_code == '?') return true; 
+    size_t line_no = s2i(gram_code);
+    if (line_no >= GetMaxGrmCount()) return false;
+	return   GetLine(line_no) != NULL;
+}
+
 
 BYTE CAgramtab::GetPartOfSpeech(const char* gram_code) const
 {
@@ -391,7 +401,7 @@ bool CAgramtab::LoadFromRegistryAndCheck ()
 };
 
 
-BYTE CAgramtab::GetFirstPartOfSpeech(const DWORD poses) const
+BYTE CAgramtab::GetFirstPartOfSpeech(const poses_mask_t poses) const
 {
 	BYTE Count = GetPartOfSpeechesCount();
 	for (BYTE i = 0; i < Count; i++)

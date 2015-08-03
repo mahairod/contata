@@ -2,9 +2,12 @@
 
 source ./setrml.sh
 
-make_tool=make
+make_tool="make -j4"
 echo $* | grep -vq "\-\-VS" || make_tool="echo Skipping: make "
 cd $RML
+
+check_executable flex
+check_executable bison
 
 #compile struct dicts
 run $make_tool -C $RML/Source/StructDictLoader mode=release

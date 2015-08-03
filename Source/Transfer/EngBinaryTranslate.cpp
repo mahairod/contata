@@ -5,7 +5,7 @@
 #include "../AprRead/all_labels.h"
 
 
-int find_label(char *label)
+int find_label(const char *label)
 {
 	for(int i = 0;  i < GetTransLabelsCount(); i++){
 		if(!strcmp(label, GetTransLabels()[i].str)) return i;
@@ -426,7 +426,7 @@ const CThesaurus*   translate_helper::GetThes(int ThesId)  const
 }
 
 
-void translate_helper::translate_id(long Id, vector<long> &res, UINT RusPoses) const
+void translate_helper::translate_id(long Id, vector<long> &res, poses_mask_t RusPoses) const
 {
 	
 	// получение всех видовых пар данного слова, если это глагол,

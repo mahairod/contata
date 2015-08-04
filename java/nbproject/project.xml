@@ -6,6 +6,7 @@
             <name>Linguitics</name>
             <source-roots>
                 <root id="src.dir" name="Исходники"/>
+                <root id="src.bin.dir" name="Бинарники"/>
             </source-roots>
             <test-roots>
                 <root id="test.test.dir" name="Тесты"/>

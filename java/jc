@@ -1,0 +1,2 @@
+echo Параметры: « $* »
+/media/home2/mahairod/Develop/eclipse-4.3/wsp/RuOpenJDK-8/jdk/bin/javac -J-Xdebug -J-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -d bin @sources.lst

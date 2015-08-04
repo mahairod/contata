@@ -1,0 +1,1 @@
+/media/home2/mahairod/Develop/eclipse-4.3/wsp/RuOpenJDK-8/jdk/bin/javap -s -c $*

@@ -4,13 +4,13 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.HashSet;
 import java.util.Set;
-import ru.aot.morph.JavaMorphAPI.Граммема;
-import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
-import ru.aot.morph.JavaMorphAPI.ЧастьРечи;
+import org.elliptica.ling.Morph.Граммема;
+import org.elliptica.ling.Morph.РезультатСлова.Парадигма;
+import org.elliptica.ling.Morph.ЧастьРечи;
 
 /**
  *

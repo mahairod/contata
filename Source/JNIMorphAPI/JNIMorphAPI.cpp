@@ -1,4 +1,4 @@
-#include "ru_aot_morph_JavaMorphAPI.h"
+#include "org_elliptica_ling_Morph.h"
 
 #ifndef JNIEXPORT
 #define JNIEXPORT
@@ -57,7 +57,7 @@ void throwEx(JNIEnv* env, char* message){
 //jni infrastructure stuff end
 
 // java class and method names
-#define CLASS_UTIL "org/elliptica/ling/MorphAPI"
+#define CLASS_UTIL "org/elliptica/ling/Morph"
 #define CLASS_WORDRES "РезультатСлова"
 #define CLASS_PARADIGM "Парадигма"
 #define CLASS_EXCP "ИсключениеЯваСопряженияМорфологии"
@@ -74,10 +74,14 @@ void throwEx(JNIEnv* env, char* message){
 
 #define CLASS_EXCP_FULL CLASS_UTIL "$" CLASS_EXCP
 
+#define concat(left, right)
+#define FUN_UTIL_CLASS Java_org_elliptica_ling_Morph_
+
+#define UTIL_CALL(meth) concat(FUN_UTIL_CLASS,meth)
+
 #ifndef UTIL_METHOD
-#define UTIL_METHOD(type, meth) JNIEXPORT type Java_org_elliptica_ling_MorphAPI_ ## meth
+#define UTIL_METHOD(type, meth) JNIEXPORT type concat(FUN_UTIL_CLASS,meth)
 #endif
-#define UTIL_CALL(meth) Java_org_elliptica_ling_MorphAPI_ ## meth
 
 // ----
 

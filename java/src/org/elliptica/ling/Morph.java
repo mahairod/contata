@@ -1,4 +1,4 @@
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -7,13 +7,12 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
-import static ru.aot.morph.ТипГраммемы.*;
+import static org.elliptica.ling.ТипГраммемы.*;
+import org.elliptica.ling.Morph.РезультатСлова.Парадигма;
 
-import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
-
-public class JavaMorphAPI{
+public class Morph{
 	public static enum Язык{Русский};
-	
+
 	public static class ИсключениеЯваСопряженияМорфологии extends RuntimeException{
 		private static final long serialVersionUID = 6844719078250020184L;
 		public ИсключениеЯваСопряженияМорфологии() {super();}
@@ -29,7 +28,7 @@ public class JavaMorphAPI{
 		}
 		initImpl(наборБитов, РАБОЧИЙ_КАТАЛОГ==null? null: РАБОЧИЙ_КАТАЛОГ.getAbsolutePath() );
 	}
-	
+
 	public static void закройСловари(){
 		closeImpl();
 	}
@@ -270,7 +269,7 @@ public class JavaMorphAPI{
 			throw new AssertionError(e);
 		}
 	}
-	
+
 	private static long маскаГраммем(Collection<Граммема> граммемы){
 		long result = 0;
 		for (Граммема г: граммемы){
@@ -320,8 +319,8 @@ public class JavaMorphAPI{
 
 	public static void main(String[] аргументы){
 		try{
-			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Русский));
-			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "любой");
+			Morph.приготовьСловари(Collections.singleton(Morph.Язык.Русский));
+			РезультатСлова рс = Morph.найдиСлово(Morph.Язык.Русский, "любой");
 			for (Парадигма парадигма: рс.дайПарадигмы()){
 				System.out.println(парадигма.toString());
 			}

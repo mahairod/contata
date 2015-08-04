@@ -31,3 +31,5 @@
 /Source/SimpleGrammarLib/unix_chunker_lex.cpp
 /Source/SimpleGrammarLib/unix_chunker_yacc.cpp
 /Source/SimpleGrammarLib/unix_chunker_yacc.h
+/java/dist/
+/java/build/

@@ -4,7 +4,7 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 /**
  *
@@ -14,7 +14,7 @@ abstract class БазаСловоформы implements Словоформа {
 	@Override
 	public String toString() {
 		String результат = дайЧастьРечи().toString() + " " + дайСлово() + "\n";
-		for (JavaMorphAPI.Граммема граммема: дайГраммемы()){
+		for (Morph.Граммема граммема: дайГраммемы()){
 			результат += "\t" + граммема.toString() + "\n";
 		}
 		return результат;

@@ -4,7 +4,7 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class ПарадигмаПолная extends БазаПарадигмы {
 
-	public ПарадигмаПолная(boolean найдено, JavaMorphAPI.ЧастьРечи чречи) {
+	public ПарадигмаПолная(boolean найдено, Morph.ЧастьРечи чречи) {
 		super(найдено, чречи);
 		формыСлова = new ArrayList<>(12);
 	}
@@ -32,7 +32,7 @@ public class ПарадигмаПолная extends БазаПарадигмы {
 	}
 
 	@Override
-	public Set<JavaMorphAPI.Граммема> дайГраммемы() {
+	public Set<Morph.Граммема> дайГраммемы() {
 		return формы().get(0).дайГраммемы();
 	}
 

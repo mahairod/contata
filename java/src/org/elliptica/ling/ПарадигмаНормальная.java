@@ -4,7 +4,7 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,17 +16,17 @@ import java.util.Set;
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 class ПарадигмаНормальная extends БазаПарадигмы {
-	private final HashSet<JavaMorphAPI.Граммема> множествоГраммем;
+	private final HashSet<Morph.Граммема> множествоГраммем;
 	private final String базоваяФорма;
 
-	public ПарадигмаНормальная(boolean найдено, JavaMorphAPI.ЧастьРечи чречи, HashSet<JavaMorphAPI.Граммема> множествоГраммем, String базоваяФорма) {
+	public ПарадигмаНормальная(boolean найдено, Morph.ЧастьРечи чречи, HashSet<Morph.Граммема> множествоГраммем, String базоваяФорма) {
 		super(найдено, чречи);
 		this.множествоГраммем = множествоГраммем;
 		this.базоваяФорма = базоваяФорма;
 	}
 
 	@Override
-	public Set<JavaMorphAPI.Граммема> дайГраммемы() {
+	public Set<Morph.Граммема> дайГраммемы() {
 		return множествоГраммем;
 	}
 

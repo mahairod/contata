@@ -3,16 +3,16 @@
 #include <jni.h>
 /* Заголовок для класса ru_aot_morph_JavaMorphAPI */
 
-#define UTIL_METHOD(type, meth) JNIEXPORT type Java_org_elliptica_ling_MorphAPI_ ## meth
+#define UTIL_METHOD(type, meth) JNIEXPORT type Java_org_elliptica_ling_Morph_ ## meth
 
 
-#ifndef _Included_ru_aot_morph_JavaMorphAPI
-#define _Included_ru_aot_morph_JavaMorphAPI
+#ifndef _Included_org_elliptica_ling_Morph
+#define _Included_org_elliptica_ling_Morph
 #ifdef __cplusplus
 extern "C" {
 #endif
 /*
- * Class:     ru_aot_morph_JavaMorphAPI
+ * Class:     org_elliptica_ling_Morph
  * Method:    lookupWordImpl
  * Signature: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
@@ -20,7 +20,7 @@ UTIL_METHOD(jobject, lookupWordImpl)
   (JNIEnv *, jclass, jint, jbyteArray);
 
 /*
- * Class:     ru_aot_morph_JavaMorphAPI
+ * Class:     org_elliptica_ling_Morph
  * Method:    lookupFormImpl
  * Signature: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
@@ -28,7 +28,7 @@ UTIL_METHOD(jobject, lookupFormImpl)
   (JNIEnv *, jclass, jint, jbyteArray);
 
 /*
- * Class:     ru_aot_morph_JavaMorphAPI
+ * Class:     org_elliptica_ling_Morph
  * Method:    initImpl
  * Signature: (ILjava/lang/String;)V
  */
@@ -36,7 +36,7 @@ UTIL_METHOD(void, initImpl)
   (JNIEnv *, jclass, jint, jstring work_dir);
 
 /*
- * Class:     ru_aot_morph_JavaMorphAPI
+ * Class:     org_elliptica_ling_Morph
  * Method:    closeImpl
  * Signature: ()V
  */

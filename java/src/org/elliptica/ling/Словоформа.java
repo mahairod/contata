@@ -3,10 +3,10 @@
  * Данный программный код является собственностью Астафьева Антона Александровича
  * и может быть использован только с его личного разрешения
  */
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.Set;
-import ru.aot.morph.JavaMorphAPI.Граммема;
+import org.elliptica.ling.Morph.Граммема;
 
 /**
  *
@@ -15,5 +15,5 @@ import ru.aot.morph.JavaMorphAPI.Граммема;
 public interface Словоформа {
 	Set<Граммема> дайГраммемы();
 	String дайСлово();
-	JavaMorphAPI.ЧастьРечи дайЧастьРечи();
+	Morph.ЧастьРечи дайЧастьРечи();
 }

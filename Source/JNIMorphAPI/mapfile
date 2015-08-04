@@ -3,10 +3,10 @@
 
 Elliptica_1.0 {
 global:
-	Java_org_elliptica_ling_MorphAPI_lookupWordImpl;
-	Java_org_elliptica_ling_MorphAPI_lookupFormImpl;
-	Java_org_elliptica_ling_MorphAPI_initImpl;
-	Java_org_elliptica_ling_MorphAPI_closeImpl;
+	Java_org_elliptica_ling_Morph_lookupWordImpl;
+	Java_org_elliptica_ling_Morph_lookupFormImpl;
+	Java_org_elliptica_ling_Morph_initImpl;
+	Java_org_elliptica_ling_Morph_closeImpl;
 local:
     *;
 };

@@ -4,7 +4,7 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-class РезультатСловаВопл implements JavaMorphAPI.РезультатСлова {
+class РезультатСловаВопл implements Morph.РезультатСлова {
 	private final Set<Парадигма> множествоПарадигм;
 
 	public РезультатСловаВопл(Set<Парадигма> множествоПарадигм) {

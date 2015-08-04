@@ -4,10 +4,10 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+package org.elliptica.ling;
 
 import java.util.Arrays;
-import ru.aot.morph.JavaMorphAPI.Граммема;
+import org.elliptica.ling.Morph.Граммема;
 
 /**
  *
@@ -52,7 +52,7 @@ public enum ТипГраммемы {
 		return границы[ordinal()];
 	}
 
-	public JavaMorphAPI.Граммема[] значения() {
+	public Morph.Граммема[] значения() {
 		Граммема[] диапазон = границы();
 		return Arrays.copyOfRange(Граммема.values(), диапазон[0].ordinal(), диапазон[1].ordinal() + 1);
 	}

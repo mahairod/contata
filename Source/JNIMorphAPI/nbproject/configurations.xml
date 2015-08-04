@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <in>JByteArray.cpp</in>
+      <in>JMorph.cpp</in>
+      <in>jcommon.cpp</in>
+    </df>
+    <logicalFolder name="Source" displayName="Source" projectFiles="true" root="..">
+      <logicalFolder name="AgramtabLib" displayName="AgramtabLib" projectFiles="true">
+        <itemPath>../AgramtabLib/EngGramTab.h</itemPath>
+        <itemPath>../AgramtabLib/GerGramTab.h</itemPath>
+        <itemPath>../AgramtabLib/RusGramTab.h</itemPath>
+        <itemPath>../AgramtabLib/agramtab_.h</itemPath>
+        <itemPath>../AgramtabLib/ger_consts.h</itemPath>
+        <itemPath>../AgramtabLib/rus_consts.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common" displayName="common" projectFiles="true">
+        <itemPath>../common/util_classes.h</itemPath>
+        <itemPath>../common/utilit.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="LemmatizerLib"
+                     displayName="LemmatizerLib"
+                     projectFiles="true">
+        <itemPath>../LemmatizerLib/Lemmatizers.h</itemPath>
+        <itemPath>../LemmatizerLib/MorphAutomat.h</itemPath>
+        <itemPath>../LemmatizerLib/MorphDict.h</itemPath>
+        <itemPath>../LemmatizerLib/Paradigm.h</itemPath>
+        <itemPath>../LemmatizerLib/Predict.h</itemPath>
+        <itemPath>../LemmatizerLib/Statistic.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="MorphWizardLib"
+                     displayName="MorphWizardLib"
+                     projectFiles="true">
+        <itemPath>../MorphWizardLib/FormInfo.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>build.sh</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+        <includeAdditional>true</includeAdditional>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>./build.sh</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean mode=release libmode=shared</cleanCommand>
+          <executablePath>JMorph.so</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>/usr/lib/jvm/java-1.8.0-openjdk/include/</pElem>
+              <pElem>/usr/lib/jvm/java-1.8.0-openjdk/include/linux/</pElem>
+            </incDir>
+            <incFile>
+              <pElem>JByteArray.h</pElem>
+              <pElem>jcommon.h</pElem>
+              <pElem>org_elliptica_ling_Morph.h</pElem>
+            </incFile>
+          </ccTool>
+        </makeTool>
+      </makefileType>
+      <item path="JByteArray.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="JMorph.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="jcommon.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -2,7 +2,7 @@ ifeq ($(libmode), shared)
 
 $(LibName).$(lib_ext) : $(objects)
 	$(mode_error)
-	g++ -$(libmode)  -o $@ $^
+	g++ -$(libmode)  -o $@ $^ -Xlinker --version-script=mapfile
 	cp $@ $(RML)/Bin
 
 else
@@ -14,7 +14,7 @@ endif
 
 $(objects): %.o$(ct) : %.cpp
 	$(mode_error)
-	g++ $(cparams) $< -ftemplate-depth=45 -o $@
+	g++ $(cparams) $< -o $@
 
 
 include $(wildcard *.d)

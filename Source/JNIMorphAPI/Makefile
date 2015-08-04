@@ -2,7 +2,7 @@ VPATH = ../
 
 include ../common/common_mak
 
-common_parms := -I. $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers
+common_parms := -I. $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers -fvisibility=hidden
 
 include ../common/common_mak
 

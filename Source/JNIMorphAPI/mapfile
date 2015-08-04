@@ -1,0 +1,13 @@
+# This file contains information about exported functions
+#
+
+Elliptica_1.0 {
+global:
+    Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl;
+    Java_ru_aot_morph_JavaMorphAPI_lookupFormImpl;
+    Java_ru_aot_morph_JavaMorphAPI_initImpl;
+    Java_ru_aot_morph_JavaMorphAPI_closeImpl;
+    testParadigms;
+local:
+    *;
+};

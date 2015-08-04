@@ -1,4 +1,4 @@
-#include "./ru_aot_morph_JavaMorphAPI.h"
+#include "ru_aot_morph_JavaMorphAPI.h"
 
 #ifndef JNIEXPORT
 #define JNIEXPORT
@@ -231,39 +231,39 @@ jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vecto
 			}
 		}
 
-        jobject paradigm = 0;
+		jobject paradigm = 0;
 
 		for (int i=0; i<F.GetCount(); i++){
 			string form = F.GetWordForm(i);
-            {
-                char firstChar = form[0];
-                EngRusMakeLower(form);
-                if (bCapital){
-                    form[0] = firstChar;
-                }
-            }
-            jstring jform = createJStringCp1251(env, clazz, form);
+			{
+				char firstChar = form[0];
+				EngRusMakeLower(form);
+				if (bCapital){
+					form[0] = firstChar;
+				}
+			}
+			jstring jform = createJStringCp1251(env, clazz, form);
 
 			QWORD grammems=0;
 			grammems |= commonGrammems;
 
-            string GramCodes = F.GetAncode(i);
+			string GramCodes = F.GetAncode(i);
 			BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(GramCodes.c_str());
 			//assert(dic.lang==Russian);
 			rus_pos pos = (rus_pos) PartOfSpeech;
 
 			for (long i=0; i < GramCodes.length(); i+=2){
 				QWORD grammems2;
-                bool ok2 = GetGrammems(dic, GramCodes.c_str()+i, grammems2);
+				bool ok2 = GetGrammems(dic, GramCodes.c_str()+i, grammems2);
 				if(ok2){
-                    grammems |= grammems2;
+					grammems |= grammems2;
 				}
 			}
 
-            paradigm = env->CallStaticObjectMethod(clazz, method_paradigmAddWordform, paradigm, jform, grammems, (jint)pos);
+			paradigm = env->CallStaticObjectMethod(clazz, method_paradigmAddWordform, paradigm, jform, grammems, (jint)pos);
 		}
 
-        env->CallStaticVoidMethod(clazz, method_paradigmSetAddParadigm, paradigmset, paradigm);
+		env->CallStaticVoidMethod(clazz, method_paradigmSetAddParadigm, paradigmset, paradigm);
 		SIMPLE_CHECK_RETURN
 
 	}
@@ -275,8 +275,8 @@ jobject GenerateMorphInfoIntern(JNIEnv *env, jclass clazz, jni_dictionary& dic, 
 		const CFormInfo& F = Paradigms[i];
 		bool found = F.m_bFound;
 
-        string baseForm = F.GetWordForm(0);
-        jstring jbaseForm = createJStringCp1251(env, clazz, baseForm);
+		string baseForm = F.GetWordForm(0);
+		jstring jbaseForm = createJStringCp1251(env, clazz, baseForm);
 
 		//baseFormBytes is a local ref, no need to release.
 		string GramCodes = F.GetSrcAncode();
@@ -323,23 +323,23 @@ jobject GenerateMorphInfoIntern(JNIEnv *env, jclass clazz, jni_dictionary& dic, 
 jobject GenerateMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& Form, bool norm){
 //	try{
 
-    jobject paradigmset = env->NewObject(setClazz, setConstructor);
-    NULL_CHECK_RETURN(paradigmset)
+	jobject paradigmset = env->NewObject(setClazz, setConstructor);
+	NULL_CHECK_RETURN(paradigmset)
 
-    bool bCapital = is_upper_alpha((BYTE)Form[0], dic.Language);
-    vector<CFormInfo> Paradigms;
-    dic.pLemmatizer->CreateParadigmCollection(norm, Form, bCapital, true, Paradigms);
+	bool bCapital = is_upper_alpha((BYTE)Form[0], dic.Language);
+	vector<CFormInfo> Paradigms;
+	dic.pLemmatizer->CreateParadigmCollection(norm, Form, bCapital, true, Paradigms);
 
-    if (norm){
-        GenerateMorphForms(env, clazz, dic, Paradigms, paradigmset, bCapital);
-    } else {
-        GenerateMorphInfoIntern(env, clazz, dic, Paradigms, paradigmset);
-    }
+	if (norm){
+		GenerateMorphForms(env, clazz, dic, Paradigms, paradigmset, bCapital);
+	} else {
+		GenerateMorphInfoIntern(env, clazz, dic, Paradigms, paradigmset);
+	}
 
-    jobject wordresult = env->CallStaticObjectMethod(clazz, method_wordresult_new, paradigmset);
-    //paradigmset is a local ref, no need to release.
-    NULL_CHECK_RETURN(wordresult)
-    return wordresult;
+	jobject wordresult = env->CallStaticObjectMethod(clazz, method_wordresult_new, paradigmset);
+	//paradigmset is a local ref, no need to release.
+	NULL_CHECK_RETURN(wordresult)
+	return wordresult;
 
 //	}catch(CExpc e){
 //		char* err=str_compose("C++ exception: CExpc: %s",e.m_strCause.c_str());
@@ -493,77 +493,77 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
  * Метод:	initImpl
  * Сигнатура: (I)V
  */
-JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl
-  (JNIEnv *env, jclass clazz, jint languagesBitSet, jstring work_dir){
+JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jclass clazz, jint languagesBitSet, jstring work_dir){
 	dic.pAgramtab=0;
 	dic.pLemmatizer=0;
 	setClazz=NULL;
 	setConstructor=NULL;
 	JNIAPIExceptionClass=NULL;
 	method_convertFromCharsetCp1251ToJavaString=NULL;
-    method_grammemSetAddGrammem=NULL;
-    method_paradigmsetAddNewParadigm=NULL;
-    method_paradigmAddWordform = NULL;
-    method_wordresult_new=NULL;
+	method_grammemSetAddGrammem=NULL;
+	method_paradigmsetAddNewParadigm=NULL;
+	method_paradigmAddWordform = NULL;
+	method_wordresult_new=NULL;
 
-    if (0!=work_dir){
-        const char* wdirPar = env->GetStringUTFChars(work_dir, JNI_FALSE);
-        int res = setenv("RML", wdirPar, 0);
-        env->ReleaseStringUTFChars(work_dir, wdirPar);
-        CHECKJAVAERROR(res!=0, "RML not set")
-    }
+	if (0!=work_dir){
+		const char* wdirPar = env->GetStringUTFChars(work_dir, JNI_FALSE);
+		int res = setenv("RML", wdirPar, 0);
+		env->ReleaseStringUTFChars(work_dir, wdirPar);
+		CHECKJAVAERROR(res!=0, "RML not set")
+	}
 
-		JNIAPIExceptionClass = env->FindClass("ru/aot/morph/JavaMorphAPI$ИсключениеЯваСопряженияМорфологии");
-		if (JNIAPIExceptionClass==NULL || env->ExceptionOccurred()){
-		  if(!env->ExceptionOccurred())
-			env->FatalError("JNIMorphAPI JNI: Cannot resolve exception class");
-		  return;
-		}
-		JNIAPIExceptionClass = (jclass)env->NewGlobalRef(JNIAPIExceptionClass);
-		CHECKJAVAERROR(JNIAPIExceptionClass==NULL || env->ExceptionOccurred(), "global ref error")
-
-		setClazz = env->FindClass("java/util/HashSet");
-		CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "Out of memory")
-
-		setClazz = (jclass)env->NewGlobalRef(setClazz);
-		CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "global ref error")
-		
-		setConstructor = env->GetMethodID(setClazz, "<init>", "()V");
-        CHECKJAVAERROR( setConstructor==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
-		
-		method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "convertFromCP1251", "([B)Ljava/lang/String;");
-        CHECKJAVAERROR( method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
-
-		method_grammemSetAddGrammem = env->GetStaticMethodID(clazz, "добавьГраммемуКМножеству", "(Ljava/util/HashSet;I)V");
-        CHECKJAVAERROR( method_grammemSetAddGrammem==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
-
-        method_paradigmsetAddNewParadigm = env->GetStaticMethodID(clazz, "добавьПарадигмуКМножеству", "(Ljava/util/HashSet;Ljava/util/HashSet;Ljava/lang/String;ZI)V");
-        CHECKJAVAERROR( method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
-
-        method_paradigmSetAddParadigm = env->GetStaticMethodID(clazz, "добавьПарадигму", "(Ljava/util/HashSet;Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;)V");
-        CHECKJAVAERROR( method_paradigmSetAddParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
-
-        method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "(Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;Ljava/lang/String;JI)Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;");
-        CHECKJAVAERROR( method_paradigmAddWordform==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR);
-
-		method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(Ljava/util/HashSet;)Lru/aot/morph/JavaMorphAPI$РезультатСлова;");
-		CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "method_wordresult_new is null")
-
-
-		//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-		//method_convertFromCharsetCp1251ToJavaString=(jmethodID)env->NewGlobalRef(method_convertFromCharsetCp1251ToJavaString);if(method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-		//method_grammemSetAddGrammem=(jmethodID)env->NewGlobalRef(method_grammemSetAddGrammem);if(method_grammemSetAddGrammem==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-		//method_paradigmsetAddNewParadigm=(jmethodID)env->NewGlobalRef(method_paradigmsetAddNewParadigm);if(method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-		//method_wordresult_new=(jmethodID)env->NewGlobalRef(method_wordresult_new);if(method_wordresult_new==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-
-		inited=false;
-		if(languagesBitSet==0){
-            throwEx(env, strdup("The set of languages is empty."));
-            return;
-        }
-	if(languagesBitSet!=1){
-		throwEx(env, strdup("Russian is the only language supported by JavaMorphAPI."));
+	JNIAPIExceptionClass = env->FindClass("ru/aot/morph/JavaMorphAPI$ИсключениеЯваСопряженияМорфологии");
+	if (JNIAPIExceptionClass==NULL || env->ExceptionOccurred()){
+	if(!env->ExceptionOccurred()){
+		env->FatalError("JNIMorphAPI JNI: Cannot resolve exception class");
 		return;
+	}
+	}
+	JNIAPIExceptionClass = (jclass)env->NewGlobalRef(JNIAPIExceptionClass);
+	CHECKJAVAERROR(JNIAPIExceptionClass==NULL || env->ExceptionOccurred(), "global ref error")
+
+	setClazz = env->FindClass("java/util/HashSet");
+	CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "Out of memory")
+
+	setClazz = (jclass)env->NewGlobalRef(setClazz);
+	CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "global ref error")
+
+	setConstructor = env->GetMethodID(setClazz, "<init>", "()V");
+	CHECKJAVAERROR( setConstructor==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
+
+	method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "convertFromCP1251", "([B)Ljava/lang/String;");
+	CHECKJAVAERROR( method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
+
+	method_grammemSetAddGrammem = env->GetStaticMethodID(clazz, "добавьГраммемуКМножеству", "(Ljava/util/HashSet;I)V");
+	CHECKJAVAERROR( method_grammemSetAddGrammem==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
+
+	method_paradigmsetAddNewParadigm = env->GetStaticMethodID(clazz, "добавьПарадигмуКМножеству", "(Ljava/util/HashSet;Ljava/util/HashSet;Ljava/lang/String;ZI)V");
+	CHECKJAVAERROR( method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
+
+	method_paradigmSetAddParadigm = env->GetStaticMethodID(clazz, "добавьПарадигму", "(Ljava/util/HashSet;Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;)V");
+	CHECKJAVAERROR( method_paradigmSetAddParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
+
+	method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "(Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;Ljava/lang/String;JI)Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;");
+	CHECKJAVAERROR( method_paradigmAddWordform==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR);
+
+	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(Ljava/util/HashSet;)Lru/aot/morph/JavaMorphAPI$РезультатСлова;");
+	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "method_wordresult_new is null")
+
+
+	//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+	//method_convertFromCharsetCp1251ToJavaString=(jmethodID)env->NewGlobalRef(method_convertFromCharsetCp1251ToJavaString);if(method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+	//method_grammemSetAddGrammem=(jmethodID)env->NewGlobalRef(method_grammemSetAddGrammem);if(method_grammemSetAddGrammem==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+	//method_paradigmsetAddNewParadigm=(jmethodID)env->NewGlobalRef(method_paradigmsetAddNewParadigm);if(method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+	//method_wordresult_new=(jmethodID)env->NewGlobalRef(method_wordresult_new);if(method_wordresult_new==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+
+	inited=false;
+	if(languagesBitSet==0){
+		throwEx(env, strdup("The set of languages is empty."));
+		return;
+	}
+	if(languagesBitSet!=1){
+	throwEx(env, strdup("Russian is the only language supported by JavaMorphAPI."));
+	return;
 	}
 	dic.Language=morphRussian;
 	try{
@@ -658,6 +658,7 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_closeImpl
 	}
 }
 
+/*
 #include <iostream>
 using namespace std;
 
@@ -665,11 +666,11 @@ JNIEXPORT void JNICALL testParadigms(char* word){
 try{
 	//initialization
 
-    if (true){
-        const char* wdirPar = "/mnt/f16/mahairod/Develop/eclipse-4.3/wsp/dialing/svn-native/sf";
-        int res = setenv("RML", wdirPar, 0);
-        cerr << "Error " << res << ", code: " << errno << endl;
-    }
+	if (true){
+		const char* wdirPar = "/mnt/f16/mahairod/Develop/eclipse-4.3/wsp/dialing/svn-native/sf";
+		int res = setenv("RML", wdirPar, 0);
+		cerr << "Error " << res << ", code: " << errno << endl;
+	}
 
 	dic.Language=morphRussian;
 	dic.lang=Russian;
@@ -744,3 +745,4 @@ try{
 }
 
 }
+*/

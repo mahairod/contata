@@ -8,9 +8,6 @@ package org.elliptica.ling;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.elliptica.ling.Morph.Граммема;
-import org.elliptica.ling.Morph.РезультатСлова.Парадигма;
-import org.elliptica.ling.Morph.ЧастьРечи;
 
 /**
  *

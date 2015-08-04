@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class ПарадигмаПолная extends БазаПарадигмы {
 
-	public ПарадигмаПолная(boolean найдено, Morph.ЧастьРечи чречи) {
+	public ПарадигмаПолная(boolean найдено, ЧастьРечи чречи) {
 		super(найдено, чречи);
 		формыСлова = new ArrayList<>(12);
 	}
@@ -32,7 +32,7 @@ public class ПарадигмаПолная extends БазаПарадигмы {
 	}
 
 	@Override
-	public Set<Morph.Граммема> дайГраммемы() {
+	public Set<Граммема> дайГраммемы() {
 		return формы().get(0).дайГраммемы();
 	}
 

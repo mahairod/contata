@@ -7,7 +7,6 @@
 package org.elliptica.ling;
 
 import java.util.Arrays;
-import org.elliptica.ling.Morph.Граммема;
 
 /**
  *
@@ -52,7 +51,7 @@ public enum ТипГраммемы {
 		return границы[ordinal()];
 	}
 
-	public Morph.Граммема[] значения() {
+	public Граммема[] значения() {
 		Граммема[] диапазон = границы();
 		return Arrays.copyOfRange(Граммема.values(), диапазон[0].ordinal(), диапазон[1].ordinal() + 1);
 	}

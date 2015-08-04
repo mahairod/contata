@@ -16,17 +16,17 @@ import java.util.Set;
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 class ПарадигмаНормальная extends БазаПарадигмы {
-	private final HashSet<Morph.Граммема> множествоГраммем;
+	private final HashSet<Граммема> множествоГраммем;
 	private final String базоваяФорма;
 
-	public ПарадигмаНормальная(boolean найдено, Morph.ЧастьРечи чречи, HashSet<Morph.Граммема> множествоГраммем, String базоваяФорма) {
+	public ПарадигмаНормальная(boolean найдено, ЧастьРечи чречи, HashSet<Граммема> множествоГраммем, String базоваяФорма) {
 		super(найдено, чречи);
 		this.множествоГраммем = множествоГраммем;
 		this.базоваяФорма = базоваяФорма;
 	}
 
 	@Override
-	public Set<Morph.Граммема> дайГраммемы() {
+	public Set<Граммема> дайГраммемы() {
 		return множествоГраммем;
 	}
 

@@ -14,7 +14,7 @@ abstract class БазаСловоформы implements Словоформа {
 	@Override
 	public String toString() {
 		String результат = дайЧастьРечи().toString() + " " + дайСлово() + "\n";
-		for (Morph.Граммема граммема: дайГраммемы()){
+		for (Граммема граммема: дайГраммемы()){
 			результат += "\t" + граммема.toString() + "\n";
 		}
 		return результат;

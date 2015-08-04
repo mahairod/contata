@@ -11,8 +11,8 @@ import java.util.Set;
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public interface Словоформа {
-	Set<Граммема> дайГраммемы();
-	String дайСлово();
-	ЧастьРечи дайЧастьРечи();
+public interface РезультатСлова {
+
+	Set<Парадигма> дайПарадигмы();
+	
 }

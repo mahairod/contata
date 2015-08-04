@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-class РезультатСловаВопл implements Morph.РезультатСлова {
+class РезультатСловаВопл implements РезультатСлова {
 	private final Set<Парадигма> множествоПарадигм;
 
 	public РезультатСловаВопл(Set<Парадигма> множествоПарадигм) {

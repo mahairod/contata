@@ -57,22 +57,23 @@ void throwEx(JNIEnv* env, char* message){
 //jni infrastructure stuff end
 
 // java class and method names
-#define CLASS_UTIL "org/elliptica/ling/Morph"
-#define CLASS_WORDRES "РезультатСлова"
-#define CLASS_PARADIGM "Парадигма"
-#define CLASS_EXCP "ИсключениеЯваСопряженияМорфологии"
-#define CLASS_HSET "java/util/HashSet"
-#define CLASS_STRG "java/lang/String"
+#define PCKG_UTIL "org/elliptica/ling/"
 
+#define CLASS_UTIL		PCKG_UTIL "Morph"
+#define CLASS_WORDRES	PCKG_UTIL "РезультатСлова"
+#define CLASS_PARADIGM	PCKG_UTIL "Парадигма"
+#define CLASS_EXCP		PCKG_UTIL "ИсключениеМорфологии"
 
-#define SIG_UTIL "L" CLASS_UTIL ";"
-#define SIG_WORDRES "L" CLASS_UTIL "$" CLASS_WORDRES ";"
-#define SIG_PARADIGM "L" CLASS_UTIL "$" CLASS_WORDRES "$" CLASS_PARADIGM ";"
+#define CLASS_HSET		"java/util/HashSet"
+#define CLASS_STRG		"java/lang/String"
 
-#define SIG_STRG "L" CLASS_STRG ";"
-#define SIG_HSET "L" CLASS_HSET ";"
+#define SIG(clss) "L" clss ";"
 
-#define CLASS_EXCP_FULL CLASS_UTIL "$" CLASS_EXCP
+#define SIG_UTIL		SIG( CLASS_UTIL )
+#define SIG_WORDRES		SIG( CLASS_WORDRES )
+#define SIG_PARADIGM	SIG( CLASS_PARADIGM )
+#define SIG_STRG		SIG( CLASS_STRG )
+#define SIG_HSET		SIG( CLASS_HSET )
 
 #define concat(left, right)
 #define FUN_UTIL_CLASS Java_org_elliptica_ling_Morph_
@@ -452,11 +453,11 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
 	char* chars=NULL;
 	try{
 		if(!inited||dic.pAgramtab==0||dic.pLemmatizer==0){
-			throwEx(env, strdup("Dictionaries are not loaded. Call JavaMorphAPI.initDictionaries() first!"));
+			throwEx(env, strdup("Словари не загружены. Сначала вызови Morph.приготовьСловари()!"));
 			return NULL;
 		}
 		if(languageId!=0){
-			throwEx(env, strdup("The only language implemented is Russian."));
+			throwEx(env, strdup("Поддерживается только русский язык."));
 			return NULL;
 		}
 		NULL_CHECK_ONLY(word, "word is null")
@@ -541,14 +542,14 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	JNIAPIExceptionClass = env->FindClass(CLASS_EXCP);
 	if (JNIAPIExceptionClass==NULL || env->ExceptionOccurred()){
 	if(!env->ExceptionOccurred()){
-		env->FatalError("JNIMorphAPI JNI: Cannot resolve exception class");
+		env->FatalError("JMorph JNI: Cannot resolve exception class");
 		return;
 	}
 	}
 	JNIAPIExceptionClass = (jclass)env->NewGlobalRef(JNIAPIExceptionClass);
 	CHECKJAVAERROR(JNIAPIExceptionClass==NULL || env->ExceptionOccurred(), "global ref error")
 
-	setClazz = env->FindClass("java/util/HashSet");
+	setClazz = env->FindClass(CLASS_HSET);
 	CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "Out of memory")
 
 	setClazz = (jclass)env->NewGlobalRef(setClazz);
@@ -557,7 +558,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	setConstructor = env->GetMethodID(setClazz, "<init>", "()V");
 	CHECKJAVAERROR( setConstructor==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "convertFromCP1251", "([B)" SIG_STRG );
+	method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "преобразованиеРегионКодировки", "([B)" SIG_STRG );
 	CHECKJAVAERROR( method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
 	method_grammemSetAddGrammem = env->GetStaticMethodID(clazz, "добавьГраммемуКМножеству", "(" SIG_HSET "I)V");
@@ -573,7 +574,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	CHECKJAVAERROR( method_paradigmAddWordform==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR);
 
 	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(" SIG_HSET ")" SIG_WORDRES);
-	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "method_wordresult_new is null")
+	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "метод создайРезультатСлова не получен")
 
 
 	//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
@@ -584,11 +585,11 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 
 	inited=false;
 	if(languagesBitSet==0){
-		throwEx(env, strdup("The set of languages is empty."));
+		throwEx(env, strdup("Набор языков пуст."));
 		return;
 	}
 	if(languagesBitSet!=1){
-	throwEx(env, strdup("Russian is the only language supported by JavaMorphAPI."));
+		throwEx(env, strdup("JMorph поддерживает только русский язык."));
 	return;
 	}
 	dic.Language=morphRussian;

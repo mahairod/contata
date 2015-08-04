@@ -12,35 +12,6 @@ import static ru.aot.morph.ТипГраммемы.*;
 import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
 
 public class JavaMorphAPI{
-	private static void загрузиБиблиотеку(String библ){
-		System.load(new File(ТЕКУЩИЙ_КАТАЛОГ, библ + ".so").getAbsolutePath());
-	}
-	final private static File ТЕКУЩИЙ_КАТАЛОГ;
-	final private static File РАБОЧИЙ_КАТАЛОГ;
-	static{
-		{
-			String раб_катал = System.getProperty("JNIMorphAPI-rml-dir");
-			РАБОЧИЙ_КАТАЛОГ = (раб_катал==null) ? null : new File(раб_катал);
-
-			String бин_катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
-			if(бин_катал!=null){
-				ТЕКУЩИЙ_КАТАЛОГ = new File(бин_катал);
-			} else {
-				if (РАБОЧИЙ_КАТАЛОГ!=null){
-					ТЕКУЩИЙ_КАТАЛОГ = new File(РАБОЧИЙ_КАТАЛОГ, "Bin/");
-				} else {
-					ТЕКУЩИЙ_КАТАЛОГ = new File("jni-lib");
-				}
-			}
-		}
-		
-		try{
-			загрузиБиблиотеку("JNIMorphAPI");
-		}catch(Throwable tr){
-			System.err.println("Ошибка загрузки библиотеки JNIMorphAPI");
-			throw new ExceptionInInitializerError(tr);
-		}
-	}
 	public static enum Язык{Русский};
 	
 	public static class ИсключениеЯваСопряженияМорфологии extends RuntimeException{
@@ -100,10 +71,10 @@ public class JavaMorphAPI{
 				return name();
 			}
 		}
-		
+
 		private String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
 	};
-	
+
 	private static final String[][] названия = Названия.полные_имена;
 
 	private static final String[][] названия_кратко = Названия.краткие_имена;
@@ -122,7 +93,7 @@ public class JavaMorphAPI{
 		// 19
 		повелительное(Наклонение),
 		// 20..21
-		odush(Одушевлённость), neodush(Одушевлённость),
+		одушевлённое(Одушевлённость), неодушевлённое(Одушевлённость),
 		// 22
 		сравнительная(Степень_сравнения),
 		// 23..24
@@ -176,11 +147,11 @@ public class JavaMorphAPI{
 		public ТипГраммемы тип(){
 			return типГраммемы;
 		}
-		
+
 		public boolean тип(ТипГраммемы проверка){
 			return this.тип() == проверка;
 		}
-		
+
 		private String описание(int смещение){
 			StringBuilder sb = new StringBuilder(64);
 			String название = названия[тип().ordinal()][смещение];
@@ -217,7 +188,7 @@ public class JavaMorphAPI{
 		}
 
 	};
-	
+
 	public static interface РезультатСлова{
 		public static interface Парадигма{
 			boolean былоНайдено();
@@ -230,7 +201,7 @@ public class JavaMorphAPI{
 		}
 		Set<Парадигма> дайПарадигмы();
 	}
-	
+
 	public static РезультатСлова найдиСлово(Язык язык, String слово) throws ИсключениеЯваСопряженияМорфологии {
 		final byte[] байты = байтыСлова(язык, слово);
 		return lookupWordImpl(язык.ordinal(), байты);
@@ -250,7 +221,19 @@ public class JavaMorphAPI{
 		}
 		return null;
 	}
-	
+
+	public static РезультатСлова формыСлова(Язык язык, String слово) throws ИсключениеЯваСопряженияМорфологии {
+		final byte[] байты = байтыСлова(язык, слово);
+		final РезультатСлова рс = lookupWordImpl(язык.ordinal(), байты);
+		Set<Парадигма> парадигмы = new HashSet();
+		for (Парадигма парадигма: рс.дайПарадигмы() ){
+			final byte[] байты_парадигмы = байтыСлова(язык, парадигма.дайБазовуюФорму());
+			final РезультатСлова рс_формы = lookupFormImpl(язык.ordinal(), байты_парадигмы);
+			парадигмы.addAll( рс_формы.дайПарадигмы() );
+		}
+		return new РезультатСловаВопл(парадигмы);
+	}
+
 	private static boolean согласиеФорм(long ф1, long ф2){
 		long маскаРода =	ТипГраммемы.Род.маска();
 		long маскаЧисла =	ТипГраммемы.Число.маска();
@@ -295,7 +278,7 @@ public class JavaMorphAPI{
 		}
 		return result;
 	}
-	
+
 	private static final Граммема[] значения_граммем = Граммема.values();
 	private static final ЧастьРечи[] значения_чречи = ЧастьРечи.values();
 
@@ -303,7 +286,7 @@ public class JavaMorphAPI{
 	private static void добавьГраммемуКМножеству(HashSet<Граммема> множествоГраммем, int идГраммемы){
 		множествоГраммем.add(значения_граммем[идГраммемы]);
 	}
-	
+
 	//used in natives
 	private static void добавьПарадигмуКМножеству(HashSet<Парадигма> множествоПарадигм, final HashSet<Граммема> множествоГраммем, final String базоваяФорма, final boolean найдено, int идЧастиРечи){
 		final ЧастьРечи чречи = значения_чречи[идЧастиРечи];
@@ -351,6 +334,36 @@ public class JavaMorphAPI{
 			ош.printStackTrace();
 		}
 		System.err.println("TEST FAILED");
+	}
+
+	private static void загрузиБиблиотеку(String библ){
+		System.load(new File(ТЕКУЩИЙ_КАТАЛОГ, библ + ".so").getAbsolutePath());
+	}
+	final private static File ТЕКУЩИЙ_КАТАЛОГ;
+	final private static File РАБОЧИЙ_КАТАЛОГ;
+	static{
+		{
+			String раб_катал = System.getProperty("JNIMorphAPI-rml-dir");
+			РАБОЧИЙ_КАТАЛОГ = (раб_катал==null) ? null : new File(раб_катал);
+
+			String бин_катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
+			if(бин_катал!=null){
+				ТЕКУЩИЙ_КАТАЛОГ = new File(бин_катал);
+			} else {
+				if (РАБОЧИЙ_КАТАЛОГ!=null){
+					ТЕКУЩИЙ_КАТАЛОГ = new File(РАБОЧИЙ_КАТАЛОГ, "Bin/");
+				} else {
+					ТЕКУЩИЙ_КАТАЛОГ = new File("jni-lib");
+				}
+			}
+		}
+
+		try{
+			загрузиБиблиотеку("JNIMorphAPI");
+		}catch(Throwable tr){
+			System.err.println("Ошибка загрузки библиотеки JNIMorphAPI");
+			throw new ExceptionInInitializerError(tr);
+		}
 	}
 
 }

@@ -56,6 +56,28 @@ void throwEx(JNIEnv* env, char* message){
 }
 //jni infrastructure stuff end
 
+// java class and method names
+#define CLASS_UTIL "ru/aot/morph/JavaMorphAPI"
+#define CLASS_WORDRES "РезультатСлова"
+#define CLASS_PARADIGM "Парадигма"
+#define CLASS_EXCP "ИсключениеЯваСопряженияМорфологии"
+#define CLASS_HSET "java/util/HashSet"
+#define CLASS_STRG "java/lang/String"
+
+
+#define SIG_UTIL "L" CLASS_UTIL ";"
+#define SIG_WORDRES "L" CLASS_UTIL "$" CLASS_WORDRES ";"
+#define SIG_PARADIGM "L" CLASS_UTIL "$" CLASS_WORDRES "$" CLASS_PARADIGM ";"
+
+#define SIG_STRG "L" CLASS_STRG ";"
+#define SIG_HSET "L" CLASS_HSET ";"
+
+#define CLASS_EXCP_FULL CLASS_UTIL "$" CLASS_EXCP
+
+#define UTIL_METHOD(type, meth) JNIEXPORT type JNICALL Java_ru_aot_morph_JavaMorphAPI_ ## meth
+#define UTIL_CALL(meth) Java_ru_aot_morph_JavaMorphAPI_ ## meth
+
+// ----
 
 enum jni_language {Russian,English,German};
 
@@ -405,8 +427,7 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
  * Метод:	lookupWordImpl
  * Сигнатура: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
-JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl
-  (JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
+UTIL_METHOD(jobject, lookupWordImpl) (JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
 	  return lookupWordIternal(false, env, clazz, languageId, word);
 }
 
@@ -416,8 +437,7 @@ JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl
  * Метод:	lookupFormImpl
  * Сигнатура: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
-JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupFormImpl
-  (JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
+UTIL_METHOD(jobject, lookupFormImpl) (JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
 	  return lookupWordIternal(true, env, clazz, languageId, word);
 }
 
@@ -483,7 +503,7 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
 #define CHECKJAVAERROR(test, message ) \
 		if (test){ \
 		  throwEx(env,strdup(message)); \
-		  Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz); \
+		  UTIL_CALL(closeImpl)(env,clazz); \
 		  return; \
 		}
 
@@ -493,7 +513,7 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
  * Метод:	initImpl
  * Сигнатура: (I)V
  */
-JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jclass clazz, jint languagesBitSet, jstring work_dir){
+UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jstring work_dir){
 	dic.pAgramtab=0;
 	dic.pLemmatizer=0;
 	setClazz=NULL;
@@ -512,7 +532,7 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jcla
 		CHECKJAVAERROR(res!=0, "RML not set")
 	}
 
-	JNIAPIExceptionClass = env->FindClass("ru/aot/morph/JavaMorphAPI$ИсключениеЯваСопряженияМорфологии");
+	JNIAPIExceptionClass = env->FindClass(CLASS_EXCP);
 	if (JNIAPIExceptionClass==NULL || env->ExceptionOccurred()){
 	if(!env->ExceptionOccurred()){
 		env->FatalError("JNIMorphAPI JNI: Cannot resolve exception class");
@@ -531,30 +551,30 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jcla
 	setConstructor = env->GetMethodID(setClazz, "<init>", "()V");
 	CHECKJAVAERROR( setConstructor==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "convertFromCP1251", "([B)Ljava/lang/String;");
+	method_convertFromCharsetCp1251ToJavaString = env->GetStaticMethodID(clazz, "convertFromCP1251", "([B)" SIG_STRG );
 	CHECKJAVAERROR( method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_grammemSetAddGrammem = env->GetStaticMethodID(clazz, "добавьГраммемуКМножеству", "(Ljava/util/HashSet;I)V");
+	method_grammemSetAddGrammem = env->GetStaticMethodID(clazz, "добавьГраммемуКМножеству", "(" SIG_HSET "I)V");
 	CHECKJAVAERROR( method_grammemSetAddGrammem==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_paradigmsetAddNewParadigm = env->GetStaticMethodID(clazz, "добавьПарадигмуКМножеству", "(Ljava/util/HashSet;Ljava/util/HashSet;Ljava/lang/String;ZI)V");
+	method_paradigmsetAddNewParadigm = env->GetStaticMethodID(clazz, "добавьПарадигмуКМножеству", "(" SIG_HSET SIG_HSET SIG_STRG "ZI)V");
 	CHECKJAVAERROR( method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_paradigmSetAddParadigm = env->GetStaticMethodID(clazz, "добавьПарадигму", "(Ljava/util/HashSet;Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;)V");
+	method_paradigmSetAddParadigm = env->GetStaticMethodID(clazz, "добавьПарадигму", "(" SIG_HSET SIG_PARADIGM ")V");
 	CHECKJAVAERROR( method_paradigmSetAddParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "(Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;Ljava/lang/String;JI)Lru/aot/morph/JavaMorphAPI$РезультатСлова$Парадигма;");
+	method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "("SIG_PARADIGM SIG_STRG "JI)" SIG_PARADIGM);
 	CHECKJAVAERROR( method_paradigmAddWordform==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR);
 
-	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(Ljava/util/HashSet;)Lru/aot/morph/JavaMorphAPI$РезультатСлова;");
+	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(" SIG_HSET ")" SIG_WORDRES);
 	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "method_wordresult_new is null")
 
 
-	//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-	//method_convertFromCharsetCp1251ToJavaString=(jmethodID)env->NewGlobalRef(method_convertFromCharsetCp1251ToJavaString);if(method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-	//method_grammemSetAddGrammem=(jmethodID)env->NewGlobalRef(method_grammemSetAddGrammem);if(method_grammemSetAddGrammem==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-	//method_paradigmsetAddNewParadigm=(jmethodID)env->NewGlobalRef(method_paradigmsetAddNewParadigm);if(method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
-	//method_wordresult_new=(jmethodID)env->NewGlobalRef(method_wordresult_new);if(method_wordresult_new==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);return;}
+	//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
+	//method_convertFromCharsetCp1251ToJavaString=(jmethodID)env->NewGlobalRef(method_convertFromCharsetCp1251ToJavaString);if(method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
+	//method_grammemSetAddGrammem=(jmethodID)env->NewGlobalRef(method_grammemSetAddGrammem);if(method_grammemSetAddGrammem==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
+	//method_paradigmsetAddNewParadigm=(jmethodID)env->NewGlobalRef(method_paradigmsetAddNewParadigm);if(method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
+	//method_wordresult_new=(jmethodID)env->NewGlobalRef(method_wordresult_new);if(method_wordresult_new==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
 
 	inited=false;
 	if(languagesBitSet==0){
@@ -587,7 +607,7 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jcla
 								return;
 				};
 				if (!bResult){
-						Java_ru_aot_morph_JavaMorphAPI_closeImpl(env,clazz);
+						UTIL_CALL(closeImpl)(env,clazz);
 						return;//exception was thrown by InitMorphologySystem
 				}
 
@@ -612,8 +632,7 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl(JNIEnv *env, jcla
  * Метод:	closeImpl
  * Сигнатура: ()V
  */
-JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_closeImpl
-  (JNIEnv *env, jclass clazz){
+UTIL_METHOD(void, closeImpl) (JNIEnv *env, jclass clazz){
 	try{
 		//dispose of dics
 		if(dic.pLemmatizer!=0){

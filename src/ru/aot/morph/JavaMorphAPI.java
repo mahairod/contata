@@ -72,7 +72,7 @@ public class JavaMorphAPI{
 			}
 		}
 
-		private String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
+		private final String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
 	};
 
 	private static final String[][] названия = Названия.полные_имена;
@@ -316,24 +316,6 @@ public class JavaMorphAPI{
 		ФормаСлова формаСлова = new ФормаСлова(частьРечи, форма, граммемы, парадигма);
 		парадигмаПолная.добавьФорму(формаСлова);
 		return парадигма;
-	}
-
-	public static void main(String[] аргументы){
-		try{
-			JavaMorphAPI.приготовьСловари(Collections.singleton(JavaMorphAPI.Язык.Русский));
-			РезультатСлова рс = JavaMorphAPI.найдиСлово(JavaMorphAPI.Язык.Русский, "любой");
-			for (Парадигма парадигма: рс.дайПарадигмы()){
-				System.out.println(парадигма.toString());
-			}
-			String бф = рс.дайПарадигмы().iterator().next().дайБазовуюФорму();
-			if (бф.equals("ЗЕЛЕНЫЙ")){
-				System.err.println("TEST PASSED");
-				return;
-			}
-		}catch(Throwable ош){
-			ош.printStackTrace();
-		}
-		System.err.println("TEST FAILED");
 	}
 
 	private static void загрузиБиблиотеку(String библ){

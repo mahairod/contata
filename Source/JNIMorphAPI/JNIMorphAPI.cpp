@@ -57,7 +57,7 @@ void throwEx(JNIEnv* env, char* message){
 //jni infrastructure stuff end
 
 // java class and method names
-#define CLASS_UTIL "ru/aot/morph/JavaMorphAPI"
+#define CLASS_UTIL "org/elliptica/ling/MorphAPI"
 #define CLASS_WORDRES "РезультатСлова"
 #define CLASS_PARADIGM "Парадигма"
 #define CLASS_EXCP "ИсключениеЯваСопряженияМорфологии"
@@ -74,8 +74,10 @@ void throwEx(JNIEnv* env, char* message){
 
 #define CLASS_EXCP_FULL CLASS_UTIL "$" CLASS_EXCP
 
-#define UTIL_METHOD(type, meth) JNIEXPORT type JNICALL Java_ru_aot_morph_JavaMorphAPI_ ## meth
-#define UTIL_CALL(meth) Java_ru_aot_morph_JavaMorphAPI_ ## meth
+#ifndef UTIL_METHOD
+#define UTIL_METHOD(type, meth) JNIEXPORT type Java_org_elliptica_ling_MorphAPI_ ## meth
+#endif
+#define UTIL_CALL(meth) Java_org_elliptica_ling_MorphAPI_ ## meth
 
 // ----
 
@@ -165,8 +167,8 @@ char* str_compose(const char *fmt, ...){
    va_list ap;
 
   if ((p = (char*)malloc (size)) == NULL){
-	  //out_of_memory();
-	  return 0;
+		//out_of_memory();
+		return 0;
   }
 
   while (1) {
@@ -563,7 +565,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	method_paradigmSetAddParadigm = env->GetStaticMethodID(clazz, "добавьПарадигму", "(" SIG_HSET SIG_PARADIGM ")V");
 	CHECKJAVAERROR( method_paradigmSetAddParadigm==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR)
 
-	method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "("SIG_PARADIGM SIG_STRG "JI)" SIG_PARADIGM);
+    method_paradigmAddWordform = env->GetStaticMethodID(clazz, "добавьСловоформуКПарадигме", "(" SIG_PARADIGM SIG_STRG "JI)" SIG_PARADIGM);
 	CHECKJAVAERROR( method_paradigmAddWordform==NULL || env->ExceptionOccurred(), NO_OBJ_MEM_ERROR);
 
 	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(" SIG_HSET ")" SIG_WORDRES);

@@ -3,6 +3,9 @@
 #include <jni.h>
 /* Заголовок для класса ru_aot_morph_JavaMorphAPI */
 
+#define UTIL_METHOD(type, meth) JNIEXPORT type Java_org_elliptica_ling_MorphAPI_ ## meth
+
+
 #ifndef _Included_ru_aot_morph_JavaMorphAPI
 #define _Included_ru_aot_morph_JavaMorphAPI
 #ifdef __cplusplus
@@ -13,7 +16,7 @@ extern "C" {
  * Method:    lookupWordImpl
  * Signature: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
-JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl
+UTIL_METHOD(jobject, lookupWordImpl)
   (JNIEnv *, jclass, jint, jbyteArray);
 
 /*
@@ -21,7 +24,7 @@ JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupWordImpl
  * Method:    lookupFormImpl
  * Signature: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
-JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupFormImpl
+UTIL_METHOD(jobject, lookupFormImpl)
   (JNIEnv *, jclass, jint, jbyteArray);
 
 /*
@@ -29,7 +32,7 @@ JNIEXPORT jobject JNICALL Java_ru_aot_morph_JavaMorphAPI_lookupFormImpl
  * Method:    initImpl
  * Signature: (ILjava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl
+UTIL_METHOD(void, initImpl)
   (JNIEnv *, jclass, jint, jstring work_dir);
 
 /*
@@ -37,7 +40,7 @@ JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_initImpl
  * Method:    closeImpl
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_ru_aot_morph_JavaMorphAPI_closeImpl
+UTIL_METHOD(void, closeImpl)
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

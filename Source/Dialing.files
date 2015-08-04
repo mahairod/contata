@@ -833,3 +833,4 @@ VisualSynan/WaitDlg.h
 VisualSynan/WaitThread.cpp
 VisualSynan/WaitThread.h
 WordDatBin/WordDatBin.cpp
+JNIMorphAPI/mapfile

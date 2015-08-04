@@ -6,10 +6,10 @@ common_parms := -I. $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers -fvisibil
 
 include ../common/common_mak
 
-LibName = JNIMorphAPI
+LibName = JMorph
 
 
-objects = JNIMorphAPI.o$(ct) ../common/utilit.o$(ct) \
+objects = JMorph.o$(ct) ../common/utilit.o$(ct) \
 ../LemmatizerLib/Lemmatizers.o$(ct) \
 ../LemmatizerLib/Paradigm.o$(ct) \
 ../LemmatizerLib/CreatePredictionBase.o$(ct) \

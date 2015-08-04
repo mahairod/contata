@@ -27,3 +27,7 @@
 /Source/GraphmatThick/GraphmatThick
 /Source/MorphGen/MorphGen
 /Source/Dialing.creator.user
+/java/nbproject/private/
+/Source/SimpleGrammarLib/unix_chunker_lex.cpp
+/Source/SimpleGrammarLib/unix_chunker_yacc.cpp
+/Source/SimpleGrammarLib/unix_chunker_yacc.h

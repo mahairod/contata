@@ -1,10 +1,7 @@
 package org.elliptica.ling;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class Morph{
 	public static enum Язык{Русский};
@@ -68,25 +65,25 @@ public class Morph{
 		case Русский:
 			try {
 				return слово.getBytes(кодировка);
-			} catch (UnsupportedEncodingException и) {
-				throw new IllegalStateException(и);
+			} catch (Exception откл) {
+				throw new IllegalStateException(откл);
 			}
 		default:
 			throw new IllegalArgumentException("неизвестный язык: " + язык);
 		}
 	}
 
-	private static native РезультатСлова lookupWordImpl(int идЯзыка, byte[] слово);
-	private static native РезультатСлова lookupFormImpl(int идЯзыка, byte[] слово);
 	private static native void initImpl(int битовыйНаборЯзыков, String env_path);
 	private static native void closeImpl();
+	private static native РезультатСлова lookupWordImpl(int идЯзыка, byte[] слово);
+	private static native РезультатСлова lookupFormImpl(int идЯзыка, byte[] слово);
 
 	// вызывается из низкоуровнего кода
 	private static String преобразованиеРегионКодировки(byte[] байты){
 		try {
 			return new String(байты, кодировка);
-		} catch (UnsupportedEncodingException e) {
-			throw new AssertionError(e);
+		} catch (Exception откл) {
+			throw new IllegalArgumentException(откл);
 		}
 	}
 
@@ -97,10 +94,6 @@ public class Morph{
 		}
 		return result;
 	}
-
-	private static final Граммема[] значения_граммем = Граммема.values();
-	private static final ЧастьРечи[] значения_чречи = ЧастьРечи.values();
-	private static final String кодировка = "cp1251";
 
 	// вызывается из низкоуровнего кода
 	private static void добавьГраммемуКМножеству(HashSet<Граммема> множествоГраммем, int идГраммемы){
@@ -147,10 +140,10 @@ public class Morph{
 
 	static{
 		{
-			String раб_катал = System.getProperty("JNIMorphAPI-rml-dir");
+			String раб_катал = System.getProperty("JMorph-rml-dir");
 			РАБОЧИЙ_КАТАЛОГ = (раб_катал==null) ? null : new File(раб_катал);
 
-			String бин_катал = System.getProperty("JNIMorphAPI-jni-lib-dir");
+			String бин_катал = System.getProperty("JMorph-jni-lib-dir");
 			if(бин_катал!=null){
 				ТЕКУЩИЙ_КАТАЛОГ = new File(бин_катал);
 			} else {
@@ -169,4 +162,7 @@ public class Morph{
 			throw new ExceptionInInitializerError(tr);
 		}
 	}
+	private static final Граммема[] значения_граммем = Граммема.values();
+	private static final ЧастьРечи[] значения_чречи = ЧастьРечи.values();
+	private static final String кодировка = "cp1251";
 }

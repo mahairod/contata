@@ -19,12 +19,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <locale.h>
-#include <malloc.h>
 
 #include "../common/utilit.h"
 #include "../AgramtabLib/RusGramTab.h"
@@ -33,28 +30,18 @@
 #include "../LemmatizerLib/Lemmatizers.h"
 #include "../LemmatizerLib/Paradigm.h"
 
-//jni infrastructure stuff
+#include "JByteArray.h"
+#include "jcommon.h"
+
+//jni
 static jclass setClazz=0;
 static jmethodID setConstructor=0;
-static jclass JNIAPIExceptionClass=0;
 static jmethodID method_convertFromCharsetCp1251ToJavaString=0;
 static jmethodID method_grammemSetAddGrammem=0;
 static jmethodID method_paradigmSetAddParadigm = 0;
 static jmethodID method_paradigmsetAddNewParadigm=0;
 static jmethodID method_paradigmAddWordform=0;
 static jmethodID method_wordresult_new=0;
-
-void throwEx(JNIEnv* env, char* message){
-	if(env->ExceptionOccurred())return;
-	jint retcode;//Returns 0 on success; a negative value on failure.
-	if(message == 0){
-		retcode = env->ThrowNew(JNIAPIExceptionClass,"null message");
-	} else {
-		retcode = env->ThrowNew(JNIAPIExceptionClass,message);
-		free(message);
-	}
-}
-//jni infrastructure stuff end
 
 // java class and method names
 #define PCKG_UTIL "org/elliptica/ling/"
@@ -165,65 +152,6 @@ struct jni_dictionary{
 	CLemmatizer*		pLemmatizer;
 };
 
-char* str_compose(const char *fmt, ...){
-   /* Guess we need no more than 100 bytes. */
-   int n, size = 100;
-   char *p, *np;
-   va_list ap;
-
-  if ((p = (char*)malloc (size)) == NULL){
-		//out_of_memory();
-		return 0;
-  }
-
-  while (1) {
-	  /* Try to print in the allocated space. */
-	  va_start(ap, fmt);
-	  n = vsnprintf (p, size, fmt, ap);
-	  va_end(ap);
-	  /* If that worked, return the string. */
-	  if (n > -1 && n < size){
-		 //return p;
-		  break;
-	  }
-	  /* Else try again with more space. */
-	  if (n > -1)	/* glibc 2.1 */
-		 size = n+1; /* precisely what is needed */
-	  else		   /* glibc 2.0 */
-		 size *= 2;  /* twice the old size */
-	  if ((np = (char*)realloc (p, size)) == NULL) {
-		 //out_of_memory();
-		 //free(p);
-		 return p;//partial string
-	  } else {
-		 p = np;
-	  }
-   }
-
-   return p;
-}
-
-const static char NO_OBJ_MEM_ERROR[] = "Object was not allocated";
-const static char NO_MEM_ERROR[] = "Not enough memory";
-
-#define SIMPLE_CHECK_RETURN \
-if(env->ExceptionOccurred()){\
-	return NULL;\
-};
-
-
-#define NULL_CHECK_ONLY(var, msg) \
-if(0 == var){\
-	throwEx(env, strdup(msg));\
-	return NULL;\
-};
-
-
-#define NULL_CHECK_RETURN(var) \
-SIMPLE_CHECK_RETURN \
-NULL_CHECK_ONLY(var, NO_OBJ_MEM_ERROR)
-
-
 /* returns true if ok */
 bool GetGrammems (jni_dictionary& dic, const char* tab_str, QWORD& grammems){
 	return dic.pAgramtab->GetGrammems(tab_str, grammems);
@@ -246,14 +174,14 @@ jstring createJStringCp1251(JNIEnv *env, jclass clazz, string& baseForm){
 	return jbaseForm;
 }
 
-jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vector<CFormInfo>& Paradigms, jobject paradigmset, bool bCapital){
-	for(int i=0; i < Paradigms.size(); i++){
-		const CFormInfo& F = Paradigms[i];
-		bool found = F.m_bFound;
+jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vector<CFormInfo>& paradigms, jobject paradigmset, bool bCapital){
+	for(int i=0; i < paradigms.size(); i++){
+		const CFormInfo& formInfo = paradigms[i];
+		bool found = formInfo.m_bFound;
 
 		QWORD commonGrammems;
 		{
-			string CommonAncode = F.GetCommonAncode();
+			string CommonAncode = formInfo.GetCommonAncode();
 			bool ok = GetGrammems(dic, CommonAncode.c_str(), commonGrammems);
 			if(!ok){
 				commonGrammems = 0;
@@ -262,8 +190,8 @@ jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vecto
 
 		jobject paradigm = 0;
 
-		for (int i=0; i<F.GetCount(); i++){
-			string form = F.GetWordForm(i);
+		for (int i=0; i<formInfo.GetCount(); i++){
+			string form = formInfo.GetWordForm(i);
 			{
 				char firstChar = form[0];
 				EngRusMakeLower(form);
@@ -276,14 +204,14 @@ jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vecto
 			QWORD grammems=0;
 			grammems |= commonGrammems;
 
-			string GramCodes = F.GetAncode(i);
-			BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(GramCodes.c_str());
+			string grammemCodes = formInfo.GetAncode(i);
+			BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(grammemCodes.c_str());
 			//assert(dic.lang==Russian);
 			rus_pos pos = (rus_pos) PartOfSpeech;
 
-			for (long i=0; i < GramCodes.length(); i+=2){
+			for (long i=0; i < grammemCodes.length(); i+=2){
 				QWORD grammems2;
-				bool ok2 = GetGrammems(dic, GramCodes.c_str()+i, grammems2);
+				bool ok2 = GetGrammems(dic, grammemCodes.c_str()+i, grammems2);
 				if(ok2){
 					grammems |= grammems2;
 				}
@@ -299,30 +227,30 @@ jobject GenerateMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, vecto
 	return paradigmset;
 }
 
-jobject GenerateMorphInfoIntern(JNIEnv *env, jclass clazz, jni_dictionary& dic, vector<CFormInfo>& Paradigms, jobject paradigmset){
-	for(int i=0; i < Paradigms.size(); i++){
-		const CFormInfo& F = Paradigms[i];
-		bool found = F.m_bFound;
+jobject GenerateMorphInfoIntern(JNIEnv *env, jclass clazz, jni_dictionary& dic, vector<CFormInfo>& paradigms, jobject paradigmset){
+	for(int i=0; i < paradigms.size(); i++){
+		const CFormInfo& formInfo = paradigms[i];
+		bool found = formInfo.m_bFound;
 
-		string baseForm = F.GetWordForm(0);
+		string baseForm = formInfo.GetWordForm(0);
 		jstring jbaseForm = createJStringCp1251(env, clazz, baseForm);
 
 		//baseFormBytes is a local ref, no need to release.
-		string GramCodes = F.GetSrcAncode();
-		BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(GramCodes.c_str());
+		string grammemCodes = formInfo.GetSrcAncode();
+		BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(grammemCodes.c_str());
 		//assert(dic.lang==Russian);
 		rus_pos pos = (rus_pos) PartOfSpeech;
 
-		string CommonAncode = F.GetCommonAncode();
+		string CommonAncode = formInfo.GetCommonAncode();
 		QWORD grammems=0;
 		QWORD grammems1;
 		bool ok = GetGrammems(dic, CommonAncode.c_str(), grammems1);
 		if(ok){
 			grammems=grammems1;
 		}
-		for (long i=0; i < GramCodes.length(); i+=2){
+		for (long i=0; i < grammemCodes.length(); i+=2){
 			QWORD grammems2;
-			bool ok2=GetGrammems(dic, GramCodes.c_str()+i, grammems2);
+			bool ok2=GetGrammems(dic, grammemCodes.c_str()+i, grammems2);
 			if(ok2){
 				grammems|=grammems2;
 			}
@@ -349,44 +277,42 @@ jobject GenerateMorphInfoIntern(JNIEnv *env, jclass clazz, jni_dictionary& dic, 
 }
 
 /* cp1251 charset on input string - for Russian */
-jobject GenerateMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& Form, bool norm){
+jobject GenerateMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& form, bool norm){
 //	try{
 
 	jobject paradigmset = env->NewObject(setClazz, setConstructor);
 	NULL_CHECK_RETURN(paradigmset)
 
-	bool bCapital = is_upper_alpha((BYTE)Form[0], dic.Language);
-	vector<CFormInfo> Paradigms;
-	dic.pLemmatizer->CreateParadigmCollection(norm, Form, bCapital, true, Paradigms);
+	bool bCapital = is_upper_alpha((BYTE)form[0], dic.Language);
+	vector<CFormInfo> paradigms;
+	dic.pLemmatizer->CreateParadigmCollection(norm, form, bCapital, true, paradigms);
 
 	if (norm){
-		GenerateMorphForms(env, clazz, dic, Paradigms, paradigmset, bCapital);
+		GenerateMorphForms(env, clazz, dic, paradigms, paradigmset, bCapital);
 	} else {
-		GenerateMorphInfoIntern(env, clazz, dic, Paradigms, paradigmset);
+		GenerateMorphInfoIntern(env, clazz, dic, paradigms, paradigmset);
 	}
 
 	jobject wordresult = env->CallStaticObjectMethod(clazz, method_wordresult_new, paradigmset);
-	//paradigmset is a local ref, no need to release.
 	NULL_CHECK_RETURN(wordresult)
 	return wordresult;
 
 //	}catch(CExpc e){
-//		char* err=str_compose("C++ exception: CExpc: %s",e.m_strCause.c_str());
-//		throwEx(env, err);
+//		throwException(env, "C++ exception: CExpc: " + e.m_strCause);
 //	}catch(int e){
 //		string errstr("C++ exception: int: ");
-//		errstr+=e;
-//		errstr+=".";
-//		throwEx(env, strdup(errstr.c_str()));
+//		errstr += e;
+//		errstr += ".";
+//		throwException(env, errstr);
 //	}catch(...){
-//		throwEx(env, strdup("Unknown C++ exception."));
+//		throwException(env, "Unknown C++ exception.");
 //	}
 //	return NULL;
 
 }
 
-jobject GetMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& Form){
-	return GenerateMorphInfo(env, clazz, dic, Form, false);
+jobject GetMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& form){
+	return GenerateMorphInfo(env, clazz, dic, form, false);
 }
 
 jobject GetMorphForms(JNIEnv *env, jclass clazz, jni_dictionary& dic, string& norm){
@@ -402,7 +328,7 @@ bool InitMorphologySystem(JNIEnv *env, jni_dictionary &dic){
 		case morphEnglish :
 		case morphGerman:
 		default:
-			throwEx(env, strdup("assertion error: A1"));
+			throwException(env, "assertion error: A1");
 			return false;
 	}
 
@@ -410,14 +336,14 @@ bool InitMorphologySystem(JNIEnv *env, jni_dictionary &dic){
 	dic.pLemmatizer = new T;
 	string strError;
 	if (!dic.pLemmatizer->LoadDictionariesRegistry(strError)){
-   		char* err=str_compose("Cannot load %s morphological dictionary. Error details: %s", langua_str.c_str(), strError.c_str());
-		throwEx(env, err);
+		string err = "Cannot load " + langua_str + " morphological dictionary. Error details: " + strError;
+		throwException(env, err);
 		return false;
 	}
 	dic.pAgramtab = new Y;
 	if (!dic.pAgramtab->LoadFromRegistry()){
-   		char* err=str_compose("Cannot load %s gramtab.", langua_str.c_str());
-		throwEx(env, err);
+		string err = "Cannot load " + langua_str + " gramtab.";
+		throwException(env, err);
 		return false;
 	}
 	return true;
@@ -440,7 +366,7 @@ UTIL_METHOD(jobject, lookupWordImpl) (JNIEnv *env, jclass clazz, jint languageId
 
 //cp1251 charset for <code>word</code> - for Russian.
 /*
- * Класс:	 ru_aot_morph_JavaMorphAPI
+ * Класс:	ru_aot_morph_JavaMorphAPI
  * Метод:	lookupFormImpl
  * Сигнатура: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
@@ -449,71 +375,53 @@ UTIL_METHOD(jobject, lookupFormImpl) (JNIEnv *env, jclass clazz, jint languageId
 }
 
 static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
-	jbyte* bytes=NULL;
-	char* chars=NULL;
 	try{
 		if(!inited||dic.pAgramtab==0||dic.pLemmatizer==0){
-			throwEx(env, strdup("Словари не загружены. Сначала вызови Morph.приготовьСловари()!"));
+			throwException(env, "Словари не загружены. Сначала вызови Morph.приготовьСловари()!");
 			return NULL;
 		}
 		if(languageId!=0){
-			throwEx(env, strdup("Поддерживается только русский язык."));
+			throwException(env, "Поддерживается только русский язык.");
 			return NULL;
 		}
 		NULL_CHECK_ONLY(word, "word is null")
 
-		jsize len = env->GetArrayLength(word);
-		bytes = env->GetByteArrayElements(word, NULL);
-		NULL_CHECK_RETURN(bytes)
-
-		chars=(char*)malloc(len+1);
-		NULL_CHECK_ONLY(chars, NO_MEM_ERROR)
-
-		for(jsize i=0;i<len;i++){
-			chars[i] = (char)bytes[i];
-		}
-		chars[len]=(char)0;
-		string s = chars;
-		free(chars);chars=0;
-		env->ReleaseByteArrayElements(word,bytes,JNI_ABORT);
-		bytes=NULL;
-		Trim(s);
-		if (s.empty()){
-			throwEx(env, strdup("Empty or whitespace-only string instead of a word."));
+		try {
+			ByteArray bArray(env, word);
+			string s( (char*) bArray.b(), bArray.len() );
+			Trim(s);
+			if (s.empty()){
+				throwException(env, "Empty or whitespace-only string instead of a word.");
+				return NULL;
+			}
+			if (normal){
+				return GetMorphForms(env, clazz, dic, s);
+			} else {
+				return GetMorphInfo(env, clazz, dic, s);
+			}
+		} catch(JNIException& ex){
 			return NULL;
 		}
-		if (normal){
-			return GetMorphForms(env, clazz, dic, s);
-		} else {
-			return GetMorphInfo(env, clazz, dic, s);
-		}
 	}catch(CExpc& e){
-		char* err=str_compose("C++ exception: CExpc: %s",e.m_strCause.c_str());
-		throwEx(env, err);
-		if(chars!=0){free(chars);chars=0;}
-		if(bytes!=NULL){env->ReleaseByteArrayElements(word,bytes,JNI_ABORT);bytes=NULL;}
+		string err = "C++ exception: CExpc: " + e.m_strCause;
+		throwException(env, err);
 	}catch(int e){
 		string errstr("C++ exception: int: ");
-		errstr+=e;
-		errstr+=".";
-		throwEx(env, strdup(errstr.c_str()));
-		if(chars!=0){free(chars);chars=0;}
-		if(bytes!=NULL){env->ReleaseByteArrayElements(word,bytes,JNI_ABORT);bytes=NULL;}
+		errstr += e;
+		errstr += ".";
+		throwException(env, errstr);
 	}catch(...){
-		throwEx(env, strdup("Unknown C++ exception."));
-		if(chars!=0){free(chars);chars=0;}
-		if(bytes!=NULL){env->ReleaseByteArrayElements(word,bytes,JNI_ABORT);bytes=NULL;}
+		throwException(env, "Unknown C++ exception.");
 	}
 	return NULL;
 }
 
 #define CHECKJAVAERROR(test, message ) \
 		if (test){ \
-		  throwEx(env,strdup(message)); \
+		  throwException(env,message); \
 		  UTIL_CALL(closeImpl)(env,clazz); \
 		  return; \
 		}
-
 
 /*
  * Класс:	ru_aot_morph_JavaMorphAPI
@@ -576,27 +484,17 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	method_wordresult_new = env->GetStaticMethodID(clazz, "создайРезультатСлова", "(" SIG_HSET ")" SIG_WORDRES);
 	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "метод создайРезультатСлова не получен")
 
-
-	//setConstructor=(jmethodID)env->NewGlobalRef(setConstructor);if(setConstructor==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
-	//method_convertFromCharsetCp1251ToJavaString=(jmethodID)env->NewGlobalRef(method_convertFromCharsetCp1251ToJavaString);if(method_convertFromCharsetCp1251ToJavaString==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
-	//method_grammemSetAddGrammem=(jmethodID)env->NewGlobalRef(method_grammemSetAddGrammem);if(method_grammemSetAddGrammem==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
-	//method_paradigmsetAddNewParadigm=(jmethodID)env->NewGlobalRef(method_paradigmsetAddNewParadigm);if(method_paradigmsetAddNewParadigm==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
-	//method_wordresult_new=(jmethodID)env->NewGlobalRef(method_wordresult_new);if(method_wordresult_new==NULL || env->ExceptionOccurred()){throwEx(env,strdup("global ref error"));UTIL_METHOD(closeImpl)(env,clazz);return;}
-
 	inited=false;
 	if(languagesBitSet==0){
-		throwEx(env, strdup("Набор языков пуст."));
+		throwException(env, "Набор языков пуст.");
 		return;
 	}
 	if(languagesBitSet!=1){
-		throwEx(env, strdup("JMorph поддерживает только русский язык."));
+		throwException(env, "JMorph поддерживает только русский язык.");
 	return;
 	}
 	dic.Language=morphRussian;
 	try{
-		//dic.Language=morphEnglish;
-		//dic.Language=morphGerman;
-
 		//LOADING DICTS
 		bool bResult = false;
 		switch (dic.Language){
@@ -610,28 +508,26 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 				bResult = InitMorphologySystem<CLemmatizerGerman, CGerGramTab>(env,dic);
 				break; */
 			default:
-				throwEx(env,strdup("assertion error: A2."));
-								return;
-				};
-				if (!bResult){
-						UTIL_CALL(closeImpl)(env,clazz);
-						return;//exception was thrown by InitMorphologySystem
-				}
+				throwException(env,"assertion error: A2.");
+				return;
+		};
+		if (!bResult){
+			UTIL_CALL(closeImpl)(env,clazz);
+			return;//exception was thrown by InitMorphologySystem
+		}
 
 		inited=true;
 		return;//ok
-		}catch(CExpc& e){
-				const char* ca=e.m_strCause.c_str();
-				char* err=str_compose("C++ exception: CExpc: %s",ca);
-				CHECKJAVAERROR(true, err)
-		}catch(int e){
-				string errstr("C++ exception: int: ");
-				errstr+=e;
-				errstr+=".";
-				CHECKJAVAERROR(true, errstr.c_str())
-		}catch(...){
-				CHECKJAVAERROR(true, "Unknown C++ exception.")
-		}
+	}catch(CExpc& e){
+			CHECKJAVAERROR(true, "C++ exception: CExpc: " + e.m_strCause)
+	}catch(int e){
+			string errstr("C++ exception: int: ");
+			errstr += e;
+			errstr += ".";
+			CHECKJAVAERROR(true, errstr)
+	}catch(...){
+			CHECKJAVAERROR(true, "Unknown C++ exception.")
+	}
 }
 
 /*
@@ -661,25 +557,20 @@ UTIL_METHOD(void, closeImpl) (JNIEnv *env, jclass clazz){
 			env->DeleteGlobalRef(JNIAPIExceptionClass);
 			JNIAPIExceptionClass=NULL;
 		}
-		//if(method_convertFromCharsetCp1251ToJavaString!=NULL){env->DeleteGlobalRef(method_convertFromCharsetCp1251ToJavaString);method_convertFromCharsetCp1251ToJavaString=NULL;}
-		//if(method_grammemSetAddGrammem!=NULL){env->DeleteGlobalRef(method_grammemSetAddGrammem);method_grammemSetAddGrammem=NULL;}
-		//if(method_paradigmsetAddNewParadigm!=NULL){env->DeleteGlobalRef(method_paradigmsetAddNewParadigm);method_paradigmsetAddNewParadigm=NULL;}
-		//if(method_wordresult_new!=NULL){env->DeleteGlobalRef(method_wordresult_new);method_wordresult_new=NULL;}
-
 		inited=false;
 		return;//ok
 	}catch(CExpc& e){
-		char* err=str_compose("C++ exception: CExpc: %s",e.m_strCause.c_str());
-		throwEx(env, err);
+		string err = string ("C++ exception: CExpc: ") + e.m_strCause;
+		throwException(env, err);
 		return;
 	}catch(int e){
 		string errstr("C++ exception: int: ");
-		errstr+=e;
-		errstr+=".";
-		throwEx(env, strdup(errstr.c_str()));
+		errstr += e;
+		errstr += ".";
+		throwException(env, errstr);
 		return;
 	}catch(...){
-		throwEx(env, strdup("Unknown C++ exception."));
+		throwException(env, "Unknown C++ exception.");
 		return;
 	}
 }
@@ -719,41 +610,41 @@ try{
 	// processing
 	vector<CFormInfo> Paradigms;
 	bool norm = false;
-	string Form = word;
-	dic.pLemmatizer->CreateParadigmCollection(norm, Form, false, true, Paradigms);
+	string form = word;
+	dic.pLemmatizer->CreateParadigmCollection(norm, form, false, true, Paradigms);
 	
 	for(int i=0; i < Paradigms.size(); i++){
-		const CFormInfo& F = Paradigms[i];
-		bool found = F.m_bFound;
+		const CFormInfo& formInfo = Paradigms[i];
+		bool found = formInfo.m_bFound;
 		cout << "Forms:=========\n";
-		int cnt = F.GetCount();
+		int cnt = formInfo.GetCount();
 		for (int i=0; i<cnt; i++){
-			string form = F.GetWordForm(i);
+			string form = formInfo.GetWordForm(i);
 			cout << form << "\n";
 		}
 		cout << "+++++++=========\n";
 
-		string baseForm = F.GetWordForm(0);
+		string baseForm = formInfo.GetWordForm(0);
 		const char* chars = baseForm.c_str();
 		jsize length = (jsize) strlen(chars);
 
 
-		string GramCodes = F.GetSrcAncode();
-		cout << "GramCodes:\t" << GramCodes << "\n";
-		BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(GramCodes.c_str());
+		string grammemCodes = formInfo.GetSrcAncode();
+		cout << "grammemCodes:\t" << grammemCodes << "\n";
+		BYTE  PartOfSpeech = dic.pAgramtab->GetPartOfSpeech(grammemCodes.c_str());
 		//assert(dic.lang==Russian);
 		rus_pos pos = (rus_pos) PartOfSpeech;
 
-		string CommonAncode = F.GetCommonAncode();
+		string CommonAncode = formInfo.GetCommonAncode();
 		QWORD grammems=0;
 		QWORD grammems1;
 		bool ok = GetGrammems(dic, CommonAncode.c_str(), grammems1);
 		if(ok){
 			grammems=grammems1;
 		}
-		for (long i=0; i < GramCodes.length(); i+=2){
+		for (long i=0; i < grammemCodes.length(); i+=2){
 			QWORD grammems2;
-			bool ok2=GetGrammems(dic, GramCodes.c_str()+i, grammems2);
+			bool ok2=GetGrammems(dic, grammemCodes.c_str()+i, grammems2);
 			if(ok2){
 				grammems|=grammems2;
 			}

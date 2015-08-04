@@ -3,7 +3,6 @@ package org.elliptica.ling;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
@@ -71,7 +70,7 @@ public class Morph{
 			}
 		}
 
-		private String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
+		private final String[] краткие_названия = new String[] {"сущ", "прил", "гл", "мест", "нар", "пред"};
 	};
 
 	private static final String[][] названия = Названия.полные_имена;
@@ -249,10 +248,10 @@ public class Morph{
 			try {
 				return слово.getBytes("cp1251");
 			} catch (UnsupportedEncodingException и) {
-				throw new AssertionError(и);
+				throw new IllegalStateException(и);
 			}
 		default:
-			throw new AssertionError("неизвестный язык: " + язык);
+			throw new IllegalArgumentException("неизвестный язык: " + язык);
 		}
 	}
 
@@ -281,28 +280,28 @@ public class Morph{
 	private static final Граммема[] значения_граммем = Граммема.values();
 	private static final ЧастьРечи[] значения_чречи = ЧастьРечи.values();
 
-	//used in natives
+	// вызывается из низкоуровнего кода
 	private static void добавьГраммемуКМножеству(HashSet<Граммема> множествоГраммем, int идГраммемы){
 		множествоГраммем.add(значения_граммем[идГраммемы]);
 	}
 
-	//used in natives
+	// вызывается из низкоуровнего кода
 	private static void добавьПарадигмуКМножеству(HashSet<Парадигма> множествоПарадигм, final HashSet<Граммема> множествоГраммем, final String базоваяФорма, final boolean найдено, int идЧастиРечи){
 		final ЧастьРечи чречи = значения_чречи[идЧастиРечи];
 		множествоПарадигм.add(new ПарадигмаНормальная(найдено, чречи, множествоГраммем, базоваяФорма));
 	}
 
-	//used in natives
+	// вызывается из низкоуровнего кода
 	private static void добавьПарадигму(HashSet<Парадигма> множествоПарадигм, Парадигма парадигма){
 		множествоПарадигм.add(парадигма);
 	}
 
-	//used in natives
+	// вызывается из низкоуровнего кода
 	private static РезультатСлова создайРезультатСлова(final HashSet<Парадигма> множествоПарадигм){
 		return new РезультатСловаВопл(множествоПарадигм);
 	}
 
-	//used in natives
+	// вызывается из низкоуровнего кода
 	private static Парадигма добавьСловоформуКПарадигме(Парадигма парадигма, String форма, long граммемы, int идЧастиРечи){
 		final ЧастьРечи частьРечи = значения_чречи[идЧастиРечи];
 		if (парадигма == null){
@@ -317,29 +316,13 @@ public class Morph{
 		return парадигма;
 	}
 
-	public static void main(String[] аргументы){
-		try{
-			Morph.приготовьСловари(Collections.singleton(Morph.Язык.Русский));
-			РезультатСлова рс = Morph.найдиСлово(Morph.Язык.Русский, "любой");
-			for (Парадигма парадигма: рс.дайПарадигмы()){
-				System.out.println(парадигма.toString());
-			}
-			String бф = рс.дайПарадигмы().iterator().next().дайБазовуюФорму();
-			if (бф.equals("ЗЕЛЕНЫЙ")){
-				System.err.println("TEST PASSED");
-				return;
-			}
-		}catch(Throwable ош){
-			ош.printStackTrace();
-		}
-		System.err.println("TEST FAILED");
-	}
-
 	private static void загрузиБиблиотеку(String библ){
 		System.load(new File(ТЕКУЩИЙ_КАТАЛОГ, библ + ".so").getAbsolutePath());
 	}
+
 	final private static File ТЕКУЩИЙ_КАТАЛОГ;
 	final private static File РАБОЧИЙ_КАТАЛОГ;
+
 	static{
 		{
 			String раб_катал = System.getProperty("JNIMorphAPI-rml-dir");

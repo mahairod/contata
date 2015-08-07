@@ -10,21 +10,21 @@ package org.elliptica.ling;
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class ИсключениеМорфологии extends RuntimeException {
+public class ОтклонениеМорфологии extends RuntimeException {
 
-	ИсключениеМорфологии() {
+	ОтклонениеМорфологии() {
 		super();
 	}
 
-	ИсключениеМорфологии(String сообщение, Throwable причина) {
+	ОтклонениеМорфологии(String сообщение, Throwable причина) {
 		super(сообщение, причина);
 	}
 
-	ИсключениеМорфологии(String сообщение) {
+	ОтклонениеМорфологии(String сообщение) {
 		super(сообщение);
 	}
 
-	ИсключениеМорфологии(Throwable причина) {
+	ОтклонениеМорфологии(Throwable причина) {
 		super(причина);
 	}
 

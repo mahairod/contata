@@ -1,12 +1,18 @@
 package org.elliptica.ling;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Morph{
 	public static enum Язык{Русский};
 
-	public static void приготовьСловари(Set<Язык> языкиДляОзначивания) throws ИсключениеМорфологии{
+	public static void приготовьСловари(Set<Язык> языкиДляОзначивания) throws ОтклонениеМорфологии{
 		int наборБитов = 0;
 		for(Язык яз:языкиДляОзначивания){
 			наборБитов|=(1<<яз.ordinal());
@@ -18,12 +24,12 @@ public class Morph{
 		closeImpl();
 	}
 
-	public static РезультатСлова найдиСлово(Язык язык, String слово) throws ИсключениеМорфологии {
+	public static РезультатСлова найдиСлово(Язык язык, String слово) throws ОтклонениеМорфологии {
 		final byte[] байты = байтыСлова(язык, слово);
 		return lookupWordImpl(язык.ordinal(), байты);
 	}
 
-	public static ФормаСлова найдиФорму(Язык язык, String слово, Set<Граммема> граммемы) throws ИсключениеМорфологии {
+	public static ФормаСлова найдиФорму(Язык язык, String слово, Set<Граммема> граммемы) throws ОтклонениеМорфологии {
 		final byte[] байты = байтыСлова(язык, слово);
 		long маска = маскаГраммем( граммемы );
 		final РезультатСлова рс = lookupFormImpl(язык.ordinal(), байты);
@@ -38,7 +44,7 @@ public class Morph{
 		return null;
 	}
 
-	public static РезультатСлова формыСлова(Язык язык, String слово) throws ИсключениеМорфологии {
+	public static РезультатСлова формыСлова(Язык язык, String слово) throws ОтклонениеМорфологии {
 		final byte[] байты = байтыСлова(язык, слово);
 		final РезультатСлова рс = lookupWordImpl(язык.ordinal(), байты);
 		Set<Парадигма> парадигмы = new HashSet();
@@ -137,28 +143,53 @@ public class Morph{
 
 	final private static File ТЕКУЩИЙ_КАТАЛОГ;
 	final private static File РАБОЧИЙ_КАТАЛОГ;
+	private static final String имяМодуля = "JMorph";
 
 	static{
 		{
-			String раб_катал = System.getProperty("JMorph-rml-dir");
+			String раб_катал = System.getProperty("jmorph.rml.dir");
 			РАБОЧИЙ_КАТАЛОГ = (раб_катал==null) ? null : new File(раб_катал);
 
-			String бин_катал = System.getProperty("JMorph-jni-lib-dir");
+			String бин_катал = System.getProperty("jmorph.jni.dir");
 			if(бин_катал!=null){
 				ТЕКУЩИЙ_КАТАЛОГ = new File(бин_катал);
 			} else {
 				if (РАБОЧИЙ_КАТАЛОГ!=null){
 					ТЕКУЩИЙ_КАТАЛОГ = new File(РАБОЧИЙ_КАТАЛОГ, "Bin/");
 				} else {
-					ТЕКУЩИЙ_КАТАЛОГ = new File("jni-lib");
+					ТЕКУЩИЙ_КАТАЛОГ = new File(".");
+					byte[] buf = new byte[1024];
+					File libFile = new File(ТЕКУЩИЙ_КАТАЛОГ, имяМодуля + ".so");
+					if (libFile.exists()){
+						libFile.delete();
+					}
+					try{
+						libFile.createNewFile();
+					} catch (IOException ex) {
+						Logger.getLogger(Morph.class.getName()).log(Level.SEVERE, null, ex);
+					}
+					try (
+						InputStream is = Morph.class.getResourceAsStream("/" + имяМодуля + ".so");
+						OutputStream os = new FileOutputStream( new File(ТЕКУЩИЙ_КАТАЛОГ, имяМодуля + ".so") );
+						){
+						int ready = 0;
+						do {
+							ready = is.read(buf);
+							if (ready>0){
+								os.write(buf, 0, ready);
+							}
+						} while (ready>=0);
+					} catch (IOException ex) {
+						Logger.getLogger(Morph.class.getName()).log(Level.SEVERE, null, ex);
+					}
 				}
 			}
 		}
 
 		try{
-			загрузиБиблиотеку("JNIMorphAPI");
+			загрузиБиблиотеку(имяМодуля);
 		}catch(Throwable tr){
-			System.err.println("Ошибка загрузки библиотеки JNIMorphAPI");
+			System.err.println("Ошибка загрузки библиотеки JMorph");
 			throw new ExceptionInInitializerError(tr);
 		}
 	}

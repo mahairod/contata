@@ -49,7 +49,7 @@ static jmethodID method_wordresult_new=0;
 #define CLASS_UTIL		PCKG_UTIL "Morph"
 #define CLASS_WORDRES	PCKG_UTIL "РезультатСлова"
 #define CLASS_PARADIGM	PCKG_UTIL "Парадигма"
-#define CLASS_EXCP		PCKG_UTIL "ИсключениеМорфологии"
+#define CLASS_EXCP		PCKG_UTIL "ОтклонениеМорфологии"
 
 #define CLASS_HSET		"java/util/HashSet"
 #define CLASS_STRG		"java/lang/String"
@@ -159,8 +159,8 @@ bool GetGrammems (jni_dictionary& dic, const char* tab_str, QWORD& grammems){
 
 jstring createJStringCp1251(JNIEnv *env, jclass clazz, string& baseForm){
 	const char* chars = baseForm.c_str();
-	jsize length = (jsize) strlen(chars);
-	//baseFormBytes is a local ref, no need to release.
+	jsize length = (jsize) baseForm.size();
+
 	jbyteArray baseFormBytes = env->NewByteArray(length);
 	NULL_CHECK_RETURN(baseFormBytes)
 

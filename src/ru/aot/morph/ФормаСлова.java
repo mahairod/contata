@@ -4,60 +4,60 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+пакет ru.aot.morph;
 
-import java.util.HashSet;
-import java.util.Set;
-import ru.aot.morph.JavaMorphAPI.Граммема;
-import ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
-import ru.aot.morph.JavaMorphAPI.ЧастьРечи;
+внеси java.util.HashSet;
+внеси java.util.Множество;
+внеси ru.aot.morph.JavaMorphAPI.Граммема;
+внеси ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
+внеси ru.aot.morph.JavaMorphAPI.ЧастьРечи;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class ФормаСлова extends БазаСловоформы implements Словоформа {
+доступный класс ФормаСлова расширяет БазаСловоформы воплощает Словоформа {
 
-	public ФормаСлова(ЧастьРечи частьРечи, String слово, long граммемы, Парадигма парадигма){
+	доступный ФормаСлова(ЧастьРечи частьРечи, Строка слово, ширцел граммемы, Парадигма парадигма){
 		this.частьРечи = частьРечи;
 		this.слово = слово;
 		маскаГраммем = граммемы;
 		this.парадигма = парадигма;
 	}
 	
-	@Override
-	public String дайСлово() {
-		return слово;
+	@Подмени
+	доступный Строка дайСлово() {
+		верни слово;
 	}
-	@Override
-	public ЧастьРечи дайЧастьРечи() {
-		return частьРечи;
+	@Подмени
+	доступный ЧастьРечи дайЧастьРечи() {
+		верни частьРечи;
 	}
-	@Override
-	public Set<Граммема> дайГраммемы(){
-		Set<Граммема> result = new HashSet<>(Long.bitCount(маскаГраммем));
+	@Подмени
+	доступный Множество<Граммема> дайГраммемы(){
+		Множество<Граммема> result = новый HashSet<>(Long.bitCount(маскаГраммем));
 		Граммема[] граммемы = Граммема.values();
-		long workCopy = маскаГраммем;
-		while (workCopy!=0){
-			long bit = Long.lowestOneBit(workCopy);
+		ширцел workCopy = маскаГраммем;
+		пока (workCopy!=0){
+			ширцел bit = Long.lowestOneBit(workCopy);
 			workCopy ^= bit;
-			int pos = Long.numberOfTrailingZeros(bit);
+			цел pos = Long.numberOfTrailingZeros(bit);
 			Граммема граммема = граммемы[pos];
 			result.add(граммема);
 		}
-		return result;
+		верни result;
 	}
 
-	public long дайМаскуГраммем() {
-		return маскаГраммем;
+	доступный ширцел дайМаскуГраммем() {
+		верни маскаГраммем;
 	}
 
-	public Парадигма дайПарадигму() {
-		return парадигма;
+	доступный Парадигма дайПарадигму() {
+		верни парадигма;
 	}
 
-	private final ЧастьРечи частьРечи;
-	private final String слово;
-	private final long маскаГраммем;
-	private final Парадигма парадигма;
+	личный итоговый ЧастьРечи частьРечи;
+	личный итоговый Строка слово;
+	личный итоговый ширцел маскаГраммем;
+	личный итоговый Парадигма парадигма;
 }

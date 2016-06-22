@@ -4,40 +4,39 @@
  * и может быть использован только с его личного разрешения
  */
 
-package ru.aot.morph;
+пакет ru.aot.morph;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+внеси java.util.Коллекции;
+внеси java.util.Список;
+внеси java.util.Множество;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-class ПарадигмаНормальная extends БазаПарадигмы {
-	private final HashSet<JavaMorphAPI.Граммема> множествоГраммем;
-	private final String базоваяФорма;
+класс ПарадигмаНормальная расширяет БазаПарадигмы {
+	личный итоговый Множество<JavaMorphAPI.Граммема> множествоГраммем;
+	личный итоговый Строка базоваяФорма;
 
-	public ПарадигмаНормальная(boolean найдено, JavaMorphAPI.ЧастьРечи чречи, HashSet<JavaMorphAPI.Граммема> множествоГраммем, String базоваяФорма) {
-		super(найдено, чречи);
+	доступный ПарадигмаНормальная(логическое найдено, JavaMorphAPI.ЧастьРечи чречи, Множество<JavaMorphAPI.Граммема> множествоГраммем, Строка базоваяФорма) {
+		поверх(найдено, чречи);
 		this.множествоГраммем = множествоГраммем;
 		this.базоваяФорма = базоваяФорма;
 	}
 
-	@Override
-	public Set<JavaMorphAPI.Граммема> дайГраммемы() {
-		return множествоГраммем;
+	@Подмени
+	доступный Множество<JavaMorphAPI.Граммема> дайГраммемы() {
+		верни множествоГраммем;
 	}
 
-	@Override
-	public String дайБазовуюФорму() {
-		return базоваяФорма;
+	@Подмени
+	доступный Строка дайБазовуюФорму() {
+		верни базоваяФорма;
 	}
 
-	@Override
-	public List<ФормаСлова> формы() {
-		return Collections.EMPTY_LIST;
+	@Подмени
+	доступный Список<ФормаСлова> формы() {
+		верни Коллекции.ПУСТОЙ_СПИСОК;
 	}
 
 }

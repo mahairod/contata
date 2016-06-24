@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="SourceFiles"
+                   displayName="Исходные файлы"
+                   projectFiles="true">
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.cpp</itemPath>
+      <itemPath>JConjunction.cpp</itemPath>
+      <itemPath>JFragment.cpp</itemPath>
+      <itemPath>JFragmentCollection.cpp</itemPath>
+      <itemPath>JFragmentRelation.cpp</itemPath>
+      <itemPath>JFragmentType.cpp</itemPath>
+      <itemPath>JGroup.cpp</itemPath>
+      <itemPath>JHomonym.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.cpp</itemPath>
+      <itemPath>JObjectSynt.cpp</itemPath>
+      <itemPath>JPeriod.cpp</itemPath>
+      <itemPath>JSentence.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/JSyntaxAn.cpp</itemPath>
+      <itemPath>JSyntaxTree.cpp</itemPath>
+      <itemPath>JUnit.cpp</itemPath>
+      <itemPath>JVariant.cpp</itemPath>
+      <itemPath>JWord.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/TrigramLib/NGramFile.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.cpp</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.cpp</itemPath>
+      <itemPath>newfile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Файлы заголовков"
+                   projectFiles="true">
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.h</itemPath>
+      <itemPath>JConjunction.h</itemPath>
+      <itemPath>JFragment.h</itemPath>
+      <itemPath>JFragmentCollection.h</itemPath>
+      <itemPath>JFragmentRelation.h</itemPath>
+      <itemPath>JFragmentType.h</itemPath>
+      <itemPath>JGroup.h</itemPath>
+      <itemPath>JHomonym.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.h</itemPath>
+      <itemPath>JObjectSynt.h</itemPath>
+      <itemPath>JPeriod.h</itemPath>
+      <itemPath>JSentence.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.h</itemPath>
+      <itemPath>JSyntaxAn.h</itemPath>
+      <itemPath>JSyntaxTree.h</itemPath>
+      <itemPath>JUnit.h</itemPath>
+      <itemPath>JVariant.h</itemPath>
+      <itemPath>JWord.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/StringCommon.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.h</itemPath>
+      <itemPath>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/org_elliptica_ling_Syntax.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Файлы ресурсов"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>/usr/java/jdk1.8.0_45/include</pElem>
+            <pElem>/usr/java/jdk1.8.0_45/include/linux</pElem>
+            <pElem>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/common/</pElem>
+            <pElem>/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/</pElem>
+          </incDir>
+          <commandLine>mode=debug</commandLine>
+        </ccTool>
+        <linkerTool>
+          <commandLine>-ggdb</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/JSyntaxAn.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/org_elliptica_ling_Syntax.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/StringCommon.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/TrigramLib/NGramFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="JConjunction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JConjunction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentCollection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentCollection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentRelation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentRelation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JHomonym.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JHomonym.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JObjectSynt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JObjectSynt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JPeriod.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JPeriod.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSentence.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JSentence.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSyntaxAn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSyntaxTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JSyntaxTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JUnit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JUnit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JVariant.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JVariant.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JWord.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JWord.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="newfile" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>/usr/java/jdk1.8.0_45/include</pElem>
+            <pElem>/usr/java/jdk1.8.0_45/include/linux</pElem>
+          </incDir>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/JSyntaxAn.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/JSyntaxAn/org_elliptica_ling_Syntax.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JByteArray.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JObject.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/JString.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/NString.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/StringCommon.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/Jcommon/jcommon.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/mnt/f16/mahairod/Develop/cpp/linguistan/Source/TrigramLib/NGramFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="JConjunction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JConjunction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentCollection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentCollection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentRelation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentRelation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JFragmentType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JFragmentType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JHomonym.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JHomonym.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JObjectSynt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JObjectSynt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JPeriod.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JPeriod.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSentence.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JSentence.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSyntaxAn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JSyntaxTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JSyntaxTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JUnit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JUnit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JVariant.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JVariant.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="JWord.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="JWord.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="newfile" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

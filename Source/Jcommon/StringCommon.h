@@ -24,5 +24,6 @@ enum encoding_id {
 
 std::u16string convert_to_ucs(std::string str, const encoding_id enc_id);
 std::string convert_to_chars(std::u16string str, const encoding_id enc_id);
+std::string convert_to_utf8(std::string str, const encoding_id enc_id);
 
 #endif // _STRING_COMMON_H_

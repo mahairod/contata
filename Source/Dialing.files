@@ -856,3 +856,5 @@ Jcommon/JString.h
 Jcommon/JString.cpp
 Jcommon/JObject.cpp
 Jcommon/JObject.h
+JSyntaxAn/JFragment.h
+JSyntaxAn/JFragment.cpp

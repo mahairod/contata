@@ -1,0 +1,7 @@
+# This file contains information about exported functions
+#
+
+Elliptica_1.0 {
+global:
+	*;
+};

@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_org_elliptica_ling_Syntax_finalize0
  * Method:    parseRawText
  * Signature: (Ljava/util/List;Ljava/lang/String;)V
  */
-JNIEXPORT jboolean JNICALL Java_org_elliptica_ling_Syntax_parseRawText
+JNIEXPORT jstring JNICALL Java_org_elliptica_ling_Syntax_parseRawText
   (JNIEnv *, jobject, jobject, jstring);
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved);

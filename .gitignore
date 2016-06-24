@@ -39,3 +39,5 @@
 /Source/JSyntaxAn/build/
 /Source/JSyntaxAn/dist/
 /Source/SynanDaemon/SynanDaemon
+/Source/JSyntaxAn/nbproject/private/*
+/Source/SynanDaemon/SynanDaemondst

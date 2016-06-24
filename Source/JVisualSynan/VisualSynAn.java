@@ -10,12 +10,15 @@ import java.lang.Float;
 import java.io.*;
 //import org.w3c.dom;
 import java.awt.TextComponent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.elliptica.ling.Коннектор;
 //import javax.xml.parsers.*;
 
 /*
  * VisualSynAn.java
  *
- * Created on 20 ������ 2001 �., 21:42
+ * Created on 20 Ноябрь 2001 г., 21:42
  */
 
 //package VisualSynAn;
@@ -24,16 +27,23 @@ import java.awt.TextComponent;
  *
  * @author  pankrat
  */
-public class VisualSynAn extends java.applet.Applet
-{
+public class VisualSynAn extends java.applet.Applet {
 
+	private final static String inputStr = "_Russian#Одновременно с этим на донецком направлении двумя группировками Украина намерена начать наступление севернее и южнее Донецка в направлении Иловайска, чтобы замкнуть кольцо вокруг столицы республики.";
+	
     private VisualSynAnPanel m_VisualSynanPanel;    
     public Scrollbar ranger;
     /** Initializes the applet JVisualSynAn */
     public void init() 
     {
-            //String struct = "#words$���@homonyms@���^���$�����@homonyms@������^��@������^��$��@homonyms@��^�������$��������@homonyms@��������^���#groups$0,0,0,0 @ 0,1^����^gr$0,0,0,0 @ 0,3^��_����^cl @ 0,1^����^gr ";//getParameter("struct");
-            String struct = getParameter("struct");
+            String struct = "#words$дом@homonyms@дом^сущ$стоял@homonyms@стоить^гл@стоять^гл$на@homonyms@на^предлог$пригорке@homonyms@пригорок^сущ#groups$0,0,0,0 @ 0,1^подл^gr$0,0,0,0 @ 0,3^гл_личн^cl @ 0,1^подл^gr ";//getParameter("struct");
+			struct = "#words$Одновременно@homonyms@ОДНОВРЕМЕННО$с@homonyms@С$этим@homonyms@ЭТО$на@homonyms@НА$донецком@homonyms@ДОНЕЦКИЙ$направлении@homonyms@НАПРАВЛЕНИЕ$двумя@homonyms@ДВУМЯЯ$группировками@homonyms@ГРУППИРОВКА$Украина@homonyms@УКРАИНА$намерена@homonyms@НАМЕРЕН$начать@homonyms@НАЧАТЬ$наступление@homonyms@НАСТУПЛЕНИЕ$севернее@homonyms@СЕВЕРНЫЙ$и@homonyms@И$южнее@homonyms@ЮЖНЫЙ$Донецка@homonyms@ДОНЕЦК$в@homonyms@В@В$направлении@homonyms@НАПРАВЛЕНИЕ@НАПРАВЛЕНИЕ$Иловайска@homonyms@ИЛОВАЙСК$,@homonyms@,$чтобы@homonyms@ЧТОБЫ$замкнуть@homonyms@ЗАМКНУТЬ$кольцо@homonyms@КОЛЬЦО$вокруг@homonyms@ВОКРУГ$столицы@homonyms@СТОЛИЦА$республики@homonyms@РЕСПУБЛИКА#groups$0= ; ^0= ; ^0= ср,тв,ед,; ^0=ПРЕДЛ ; ^0=П но,од,мр,пр,ед,; но,од,ср,пр,ед,; ^0=С ср,пр,ед,; ^0=С ср,жр,мр,пр,тв,вн,дт,рд,им,ед,мн,; ^0=С жр,тв,мн,; ^0=С жр,им,ед,; ^0=КР_ПРИЛ но,од,жр,ед,; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=П сравн,но,од,; ^0=СОЮЗ ; ^0=П сравн,но,од,; ^0=С мр,рд,ед,; ^0= ; ^0= ср,пр,ед,; ^0=С мр,рд,ед,; ^0= ^0=СОЮЗ ; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=ПРЕДЛ ; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; @0^25^кр_прил^cl@0^2^оборот^gr@3^6^пг^gr@4^6^генит_иг^gr@4^5^прил_сущ^gr@8^9^sp^sp@10^11^пр_доп^gr@12^15^отсравн^gr@12^14^однор_прил^gr@16^18^пг^gr@16^17^оборот^gr@19^25^инф^cl@21^22^пр_доп^gr@23^25^пг^gr@24^25^генит_иг^gr$0= ; ^0= ; ^0= ср,тв,ед,; ^0=ПРЕДЛ ; ^0=П но,од,мр,пр,ед,; но,од,ср,пр,ед,; ^0=С ср,пр,ед,; ^0=С ср,жр,мр,пр,тв,вн,дт,рд,им,ед,мн,; ^0=С жр,тв,мн,; ^0=С жр,им,ед,; ^0=КР_ПРИЛ но,од,жр,ед,; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=П сравн,но,од,; ^0=СОЮЗ ; ^0=П сравн,но,од,; ^0=С мр,рд,ед,; ^0= ; ^0= ср,пр,ед,; ^0=С мр,рд,ед,; ^0= ^0=СОЮЗ ; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=ПРЕДЛ ; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; @0^25^кр_прил^cl@0^2^оборот^gr@3^6^пг^gr@4^6^генит_иг^gr@4^5^прил_сущ^gr@8^9^sp^sp@10^11^пр_доп^gr@12^15^отсравн^gr@12^14^однор_прил^gr@16^18^пг^gr@16^17^оборот^gr@19^25^инф^cl@21^22^пр_доп^gr@23^25^пг^gr@24^25^генит_иг^gr$0= ; ^0= ; ^0= ср,тв,ед,; ^0=ПРЕДЛ ; ^0=П но,од,мр,пр,ед,; но,од,ср,пр,ед,; ^0=С ср,пр,ед,; ^0=С ср,жр,мр,пр,тв,вн,дт,рд,им,ед,мн,; ^0=С жр,тв,мн,; ^0=С жр,им,ед,; ^0=КР_ПРИЛ но,од,жр,ед,; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=П сравн,но,од,; ^0=СОЮЗ ; ^0=П сравн,но,од,; ^0=С мр,рд,ед,; ^1=ПРЕДЛ ; ^1=С ср,пр,ед,; ^0=С мр,рд,ед,; ^0= ^0=СОЮЗ ; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=ПРЕДЛ ; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; @0^25^кр_прил^cl@0^2^оборот^gr@3^6^пг^gr@4^6^генит_иг^gr@4^5^прил_сущ^gr@8^9^sp^sp@10^11^пр_доп^gr@12^15^отсравн^gr@12^14^однор_прил^gr@16^18^пг^gr@17^18^генит_иг^gr@19^25^инф^cl@21^22^пр_доп^gr@23^25^пг^gr@24^25^генит_иг^gr$0= ; ^0= ; ^0= ср,тв,ед,; ^0=ПРЕДЛ ; ^0=П но,од,мр,пр,ед,; но,од,ср,пр,ед,; ^0=С ср,пр,ед,; ^0=С ср,жр,мр,пр,тв,вн,дт,рд,им,ед,мн,; ^0=С жр,тв,мн,; ^0=С жр,им,ед,; ^0=КР_ПРИЛ но,од,жр,ед,; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=П сравн,но,од,; ^0=СОЮЗ ; ^0=П сравн,но,од,; ^0=С мр,рд,ед,; ^1=ПРЕДЛ ; ^1=С ср,пр,ед,; ^0=С мр,рд,ед,; ^0= ^0=СОЮЗ ; ^0=ИНФИНИТИВ дст,; ^0=С ср,им,ед,; ср,вн,ед,; ^0=ПРЕДЛ ; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; ^0=С жр,рд,ед,; жр,им,мн,; жр,вн,мн,; @0^25^кр_прил^cl@0^2^оборот^gr@3^6^пг^gr@4^6^генит_иг^gr@4^5^прил_сущ^gr@8^9^sp^sp@10^11^пр_доп^gr@12^15^отсравн^gr@12^14^однор_прил^gr@16^18^пг^gr@17^18^генит_иг^gr@19^25^инф^cl@21^22^пр_доп^gr@23^25^пг^gr@24^25^генит_иг^gr#topclause";
+			try {
+				struct = new Коннектор().запрос(inputStr);
+			} catch (IOException ex) {
+				Logger.getLogger(VisualSynAn.class.getName()).log(Level.SEVERE, null, ex);
+			}
+//            String struct = getParameter("struct");
             m_VisualSynanPanel = new VisualSynAnPanel(this, struct);
             m_VisualSynanPanel.setBackground(Color.lightGray);
             initComponents();        
@@ -339,13 +349,18 @@ class WordArc
         String ss;
         ss = strTok.nextToken();
         ss = ss.trim();
-        //StringBuffer ssBuf = new StringBuffer(ss);        
-        m_FirstWord = Integer.parseInt(ss);//.intValue();
-        if( !strTok.hasMoreTokens() )
-            return;
-        ss = strTok.nextToken();
-        ss = ss.trim();
-        m_LastWord = Integer.decode(ss).intValue();
+        //StringBuffer ssBuf = new StringBuffer(ss);
+		{
+			String[] nums = ss.split(",");
+			if( nums.length<2 ){
+				m_FirstWord = Integer.parseInt(ss);
+				ss = strTok.nextToken().trim();
+				m_LastWord = Integer.parseInt(ss);
+			} else {
+				m_FirstWord = Integer.parseInt(nums[0]);
+				m_LastWord = Integer.parseInt(nums[1]);
+			}
+		}
         if( !strTok.hasMoreTokens() )
             return;
         m_strName = strTok.nextToken();
@@ -704,15 +719,16 @@ class VisualSynAnPanel  extends Panel
             parseOneWord(strTok.nextToken());
     }
     
-    protected void fillHomonymNumbers(HomonymNumbers homs, String str, int wordsCount)
-    {
-        StringTokenizer strTok = new StringTokenizer(str,", ");
+    protected void fillHomonymNumbers(HomonymNumbers homs, String str, int wordsCount) {
+		String[] homonimStrings = str.split(" \\^");
+        StringTokenizer strTok = new StringTokenizer(str,"; ");
         int ii = 0;
         int[] arr = new int[wordsCount];
-        while( strTok.hasMoreTokens() && (ii < wordsCount))
-        {
-            String strItem = strTok.nextToken();
-            int homNum = Integer.decode(strItem).intValue();            
+        while( ii < homonimStrings.length && (ii < wordsCount)) {
+            String strItem = homonimStrings[ii];
+			strItem = strItem.substring(0, strItem.indexOf('='));
+			int homNum = Integer.parseInt(strItem);
+//            int homNum = Integer.decode(strItem).intValue();
             arr[ii] = homNum;
             ii++;
         }
@@ -804,7 +820,7 @@ class VisualSynAnPanel  extends Panel
         parseWords(strTok.nextToken());
         if( !strTok.hasMoreTokens() )
             return;
-        parseVariants(strTok.nextToken());        
+        parseVariants(strTok.nextToken());
     }
     
     public VisualSynAnPanel(VisualSynAn VisualSynAnApplet, String strArg)

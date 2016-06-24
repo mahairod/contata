@@ -5,7 +5,7 @@ VPATH = ../
 include ../common/common_mak
 
 
-common_parms := -I.
+common_parms := -I. -fPIC
 include ../common/common_mak
 LibName = libLemmatizer$(ct)
 
@@ -21,6 +21,6 @@ MorphDict.o$(ct) \
 MorphDictBuilder.o$(ct) \
 ../common/PlmLine.o$(ct) \
 Predict.o$(ct) \
-../common/MorhologyHolder.o$(ct)
+../common/MorphologyHolder.o$(ct)
 
 include ../common/common_lib_mak

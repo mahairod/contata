@@ -9,6 +9,8 @@
 #include <iconv.h>
 #include <string.h>
 #include <iostream>
+#include <codecvt>
+#include <locale>
 
 using std::string;
 using std::u16string;
@@ -73,17 +75,19 @@ u16string convert_to_ucs(string str, const encoding_id enc_id) {
 	
 	char* inp = (char*) str.c_str();
 	size_t sym_num = str.size();
-	char16_t* out_buf = new char16_t[sym_num];
+    char16_t* out_buf = new char16_t[sym_num+1];
 
 	size_t in_sz_b = sizeof(char) * sym_num;
-	size_t out_sz_b = sizeof(char16_t) * sym_num;
+    size_t out_sz_b = sizeof(char16_t) * (sym_num+1);
 	char* outp = (char*) out_buf;
 	size_t res = iconv(cd_sb_ucs, &inp, &in_sz_b, &outp, &out_sz_b);
 	if (res<0){
 		reportError();
 	}
 
-	u16string ustr(out_buf, sym_num - out_sz_b/sizeof(char16_t));
+	int offset = (outp > (char*) out_buf && out_buf[0]==0xfeff) ? 1 : 0;
+
+	u16string ustr(out_buf + offset, sym_num + (1-offset) - out_sz_b/sizeof(char16_t));
 
 	delete out_buf;
 	iconv_close(cd_sb_ucs);
@@ -119,6 +123,17 @@ string convert_to_chars(u16string str, const encoding_id enc_id) {
 	iconv_close(cd_ucs_sb);
 
 	return bstr;
+}
+
+std::string convert_to_utf8(std::string str, const encoding_id enc_id){
+	if (str.empty()){
+		return "";
+	}
+	u16string ucs_str = convert_to_ucs(str, enc_id);
+	std::wstring wstr(ucs_str.begin(), ucs_str.end());
+	std::wstring_convert<std::codecvt_utf8<wchar_t> > converter;
+	std::string result = converter.to_bytes(wstr);
+	return result;
 }
 
 static void reportError(){

@@ -10,9 +10,8 @@ SynanDmn.o$(ct) \
 ../common/string_socket.o$(ct) \
 ../common/SyntaxHolder.o$(ct) \
 ../common/BigramsReader.o$(ct) \
-../common/MorhologyHolder.o$(ct)
+../common/MorphologyHolder.o$(ct)
 
+cparams += -fPIC
 
 include ../common/common_lib_mak
-
-    

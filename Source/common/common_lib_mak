@@ -2,7 +2,8 @@ ifeq ($(libmode), shared)
 
 $(LibName).$(lib_ext) : $(objects) $(deps) mapfile
 	$(mode_error)
-	g++ -$(libmode)  -o $@ $(objects) -Xlinker --version-script=mapfile
+	g++ -$(libmode)  -o $@ $(objects) 
+#-Xlinker --version-script=mapfile
 	cp $@ $(RML)/Bin/
 
 else
@@ -10,11 +11,12 @@ else
 $(LibName).$(lib_ext) : $(objects)
 	$(mode_error)
 	ar rcs  $@  $^
+
 endif
 
 $(objects): %.o$(ct) : %.cpp
 	$(mode_error)
-	g++ $(cparams) $< -o $@
+	g++ $(cparams) $< -o $@ -fPIC
 
 
 include $(wildcard *.d)
@@ -25,7 +27,7 @@ clean : ;
 	-rm *.d
 
 $(deps) :
-	$(error Переменная среды RML должна установлена!)
+	$(error Переменная среды RML должна быть установлена!)
 
 mapfile:
 	$(warning Копирование сведений об экспорте в локальную директорию)

@@ -33,7 +33,7 @@ public:
 };
 
 
-bool IstZahlWort(CSynPlmLine& l){
+inline bool IstZahlWort(CSynPlmLine& l){
     return l.HasFlag(fl_digit);
 }
 

@@ -70,7 +70,6 @@ template <typename JType>
 JType* getObjectById(jobject obj){
     jlong longPtr = env_ptr->GetLongField(obj, fldObjectRef);
 	JObject* medPtr = reinterpret_cast<JObject*>( longPtr );
-    std::cerr << "Access address:" << medPtr << ", refVal = " << longPtr << "\n";
     return dynamic_cast<JType*>(medPtr);
 }
 

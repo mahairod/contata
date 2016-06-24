@@ -161,7 +161,7 @@ string    CSynHost::ProcessSocketString(const string& S, SOCKET rConnectedSocket
 
 
 const char* RegHosts =  "Software\\Dialing\\Synan\\Daemon";
-extern void(*GlobalErrorMessage)(const string&);
+//extern void(*GlobalErrorMessage)(const string&);
 bool LoadSynan()
 {
     if (!CanGetRegistryString(RegHosts)) 
@@ -183,7 +183,7 @@ bool LoadSynan()
     pGlobalSynHost = new  CSynHost(false,pdMediumDensity);
     pGlobalSynHost->CopyAddressParametersFrom(Hosts[0]);
     pGlobalSynHost->m_LogFunction = synan_daemon_log;
-    GlobalErrorMessage = synan_daemon_log;
+//    GlobalErrorMessage = synan_daemon_log;
     
     
 
@@ -195,7 +195,7 @@ bool LoadSynan()
     };
 
     //sleep(30000);
-
+/*
     try {
         synan_daemon_log ( "Loading German Syntax\n");
         if (!GermanSyntaxHolder.LoadSyntax(morphGerman))
@@ -209,7 +209,7 @@ bool LoadSynan()
         synan_daemon_log ( "  an exception occurred!\n");
         return false;
     };
-
+*/
     try {
         synan_daemon_log ( "Loading English Morphology\n");
         if (!EnglishMorphHolder.LoadGraphanAndLemmatizer(morphEnglish))

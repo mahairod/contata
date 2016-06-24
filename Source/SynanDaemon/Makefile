@@ -22,5 +22,7 @@ libs = \
 
 lparams += -pthread
 
+cparams += -std=c++11
+
 include ../common/common_exe_mak
 

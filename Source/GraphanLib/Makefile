@@ -18,4 +18,6 @@ UnitHolder.o$(ct) \
 GraphanDicts.o$(ct) \
 Sentences.o$(ct)
 
+cparams += -fPIC
+
 include ../common/common_lib_mak

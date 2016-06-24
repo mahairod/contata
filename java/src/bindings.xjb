@@ -1,0 +1,11 @@
+<jaxb:bindings jaxb:version="2.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+	>
+	<jaxb:bindings schemaLocation="elliptica-ling.xsd" node="/xs:schema">
+		<jaxb:globalBindings collectionType="&#1103;&#1074;&#1072;.&#1080;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;.&#1055;&#1086;&#1088;&#1103;&#1076;&#1082;&#1086;&#1074;&#1099;&#1081;&#1057;&#1087;&#1080;&#1089;&#1086;&#1082;"/>
+	</jaxb:bindings>
+</jaxb:bindings>

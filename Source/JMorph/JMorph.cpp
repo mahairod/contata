@@ -44,23 +44,14 @@ static jmethodID method_paradigmAddWordform=0;
 static jmethodID method_wordresult_new=0;
 
 // java class and method names
-#define PCKG_UTIL "org/elliptica/ling/"
 
 #define CLASS_UTIL		PCKG_UTIL "Morph"
 #define CLASS_WORDRES	PCKG_UTIL "РезультатСлова"
 #define CLASS_PARADIGM	PCKG_UTIL "Парадигма"
-#define CLASS_EXCP		PCKG_UTIL "ОтклонениеМорфологии"
-
-#define CLASS_HSET		"java/util/HashSet"
-#define CLASS_STRG		"java/lang/String"
-
-#define SIG(clss) "L" clss ";"
 
 #define SIG_UTIL		SIG( CLASS_UTIL )
 #define SIG_WORDRES		SIG( CLASS_WORDRES )
 #define SIG_PARADIGM	SIG( CLASS_PARADIGM )
-#define SIG_STRG		SIG( CLASS_STRG )
-#define SIG_HSET		SIG( CLASS_HSET )
 
 #define concat(left, right)
 #define FUN_UTIL_CLASS Java_org_elliptica_ling_Morph_
@@ -377,7 +368,7 @@ UTIL_METHOD(jobject, lookupFormImpl) (JNIEnv *env, jclass clazz, jint languageId
 static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
 	try{
 		if(!inited||dic.pAgramtab==0||dic.pLemmatizer==0){
-			throwException(env, "Словари не загружены. Сначала вызови Morph.приготовьСловари()!");
+			throwException(env, "Словари не загружены. Сначала вызови Morph.приготовьСловари!");
 			return NULL;
 		}
 		if(languageId!=0){
@@ -416,13 +407,6 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
 	return NULL;
 }
 
-#define CHECKJAVAERROR(test, message ) \
-		if (test){ \
-		  throwException(env,message); \
-		  UTIL_CALL(closeImpl)(env,clazz); \
-		  return; \
-		}
-
 /*
  * Класс:	ru_aot_morph_JavaMorphAPI
  * Метод:	initImpl
@@ -440,22 +424,11 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	method_paradigmAddWordform = NULL;
 	method_wordresult_new=NULL;
 
-	if (0!=work_dir){
-		const char* wdirPar = env->GetStringUTFChars(work_dir, JNI_FALSE);
-		int res = setenv("RML", wdirPar, 0);
-		env->ReleaseStringUTFChars(work_dir, wdirPar);
-		CHECKJAVAERROR(res!=0, "RML not set")
-	}
-
-	JNIAPIExceptionClass = env->FindClass(CLASS_EXCP);
-	if (JNIAPIExceptionClass==NULL || env->ExceptionOccurred()){
-	if(!env->ExceptionOccurred()){
-		env->FatalError("JMorph JNI: Cannot resolve exception class");
+	try{
+		setEnvPath(work_dir);
+	} catch (JNIException& ex){
 		return;
 	}
-	}
-	JNIAPIExceptionClass = (jclass)env->NewGlobalRef(JNIAPIExceptionClass);
-	CHECKJAVAERROR(JNIAPIExceptionClass==NULL || env->ExceptionOccurred(), "global ref error")
 
 	setClazz = env->FindClass(CLASS_HSET);
 	CHECKJAVAERROR( setClazz==NULL || env->ExceptionOccurred(), "Out of memory")

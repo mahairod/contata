@@ -1,7 +1,7 @@
 
 #include "TrigramModel.h"
 #include "math.h"
-
+#include "TrigramException.h"
 
 
 // ------------------------------------------------------------ 
@@ -258,7 +258,9 @@ void CTrigramModel::ViterbiBackward(const vector<string>& words, const vector<CV
 
 bool CTrigramModel::viterbi(const vector<string>& words, vector<CWordIntepretation>& tags) const 
 {
-    assert (m_TagsCount != UnknownTag );
+    if ( UnknownTag == m_TagsCount ){
+        throw TrigramException("CTrigramModel: Unknown tag");
+    }
     if (m_bReverseModel)
     {
         

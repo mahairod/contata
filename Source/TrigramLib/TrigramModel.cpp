@@ -459,8 +459,8 @@ const CTrigramWord* CTrigramModel::lookup_word(const string& s) const
     if (it == m_Dictionary.end()) return 0;
     return &it->second;*/
     vector<CTrigramWord>::const_iterator it = lower_bound(m_Dictionary.begin(), m_Dictionary.end(), s, LessByWordStr());
-    if (it == m_Dictionary.end()) return false;
-    if (it->m_WordStr != s) return false;
+    if (it == m_Dictionary.end()) return 0;
+    if (it->m_WordStr != s) return 0;
     return &(*it);
 }
 

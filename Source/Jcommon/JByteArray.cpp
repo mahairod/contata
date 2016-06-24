@@ -1,10 +1,10 @@
 #include "JByteArray.h"
 #include "jcommon.h"
 
-ByteArray::ByteArray(JNIEnv* _env, jbyteArray _array):env(_env),array(_array){
-	length = env->GetArrayLength(array);
+ByteArray::ByteArray(jbyteArray _array):array(_array){
+	length = env_ptr->GetArrayLength(array);
 	SIMPLE_CHECK_EXC
-	bytes = env->GetByteArrayElements(array, NULL);
+	bytes = env_ptr->GetByteArrayElements(array, NULL);
 	NULL_CHECK_EXC(bytes)
 }
 
@@ -18,7 +18,7 @@ jbyte* ByteArray::b(){
 
 ByteArray::~ByteArray(){
 	if(bytes!=NULL){
-		env->ReleaseByteArrayElements(array,bytes,JNI_ABORT);
+		env_ptr->ReleaseByteArrayElements(array,bytes,JNI_ABORT);
 	}
 }
 

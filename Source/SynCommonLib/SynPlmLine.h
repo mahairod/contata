@@ -37,7 +37,8 @@ enum  PlmLineFlagEnum {
 	fl_is_russian = 1<<19,
 	fl_can_subdue_infinitive = 1<<20,
 	fl_can_subdue_instr = 1<<21,
-	fl_noun_has_adj_declination = 1<<22
+	fl_noun_has_adj_declination = 1<<22,
+	fl_adjective_as_noun = 1<<23
 
 };
 

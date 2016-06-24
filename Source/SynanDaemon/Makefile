@@ -20,6 +20,7 @@ libs = \
 ../SynanLib/libSynan$(ct).$(lib_ext) \
 ../SimpleGrammarLib/libSimpleGrammar$(ct).$(lib_ext)
 
+lparams += -pthread
 
 include ../common/common_exe_mak
 

@@ -31,7 +31,6 @@ else
 			else
 				ifeq ($(mode), release)
 					cparams := $(cparams) -MD -c -O3 -funroll-loops -fomit-frame-pointer  $(common_parms) -ftemplate-depth-45
-					lparams := --version-script=mapfile
 				else
 					mode_error =  $(error unknown mode. It can be debug, release, profile, debug_thread, release_thread)	
 				endif	
@@ -40,7 +39,7 @@ else
 	endif
 endif
 
-lparams := $(lparams) --version-script=mapfile
+lparams := $(lparams) -Xlinker --version-script=mapfile
 
 ifneq ($(ct), r)
 	ifneq ($(ct), rs)
@@ -61,6 +60,6 @@ else
 	cparams := $(cparams) -fPIC
 endif
 
-
+deps := $(RML)/Source/rml_env_dependency
 
 

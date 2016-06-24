@@ -8,6 +8,7 @@ objects =  TrigramModel.o$(ct) \
 TagSet.o$(ct) \
 NGramFile.o$(ct) \
 ReadLexFile.o$(ct) \
+TrigramException.o$(ct) \
 TrigramSerialize.o$(ct) \
 TrigramLemmatizer.o$(ct) \
 ViterbiInfo.o$(ct) \

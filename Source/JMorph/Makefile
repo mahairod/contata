@@ -9,7 +9,7 @@ include ../common/common_mak
 LibName = JMorph
 
 
-objects = JMorph.o$(ct) JByteArray.o$(ct) jcommon.o$(ct) \
+objects = JMorph.o$(ct) ../Jcommon/JByteArray.o$(ct) ../Jcommon/jcommon.o$(ct) \
 ../common/utilit.o$(ct) \
 ../LemmatizerLib/Lemmatizers.o$(ct) \
 ../LemmatizerLib/Paradigm.o$(ct) \

@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "SemanticMarkup.h"
 #include "string_tokenizer.h"
+#include <iostream>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

@@ -1,9 +1,9 @@
 ifeq ($(libmode), shared)
 
-$(LibName).$(lib_ext) : $(objects)
+$(LibName).$(lib_ext) : $(objects) $(deps) mapfile
 	$(mode_error)
-	g++ -$(libmode)  -o $@ $^ -Xlinker --version-script=mapfile
-	cp $@ $(RML)/Bin
+	g++ -$(libmode)  -o $@ $(objects) -Xlinker --version-script=mapfile
+	cp $@ $(RML)/Bin/
 
 else
 
@@ -23,6 +23,10 @@ clean : ;
 	-rm $(objects)
 	-rm $(LibName).$(lib_ext)
 	-rm *.d
-	
 
+$(deps) :
+	$(error Переменная среды RML должна установлена!)
 
+mapfile:
+	$(warning Копирование сведений об экспорте в локальную директорию)
+	cp $(RML)/Source/common/mapfile mapfile

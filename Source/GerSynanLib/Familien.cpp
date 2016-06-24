@@ -8,7 +8,7 @@
 bool CGerFormatCaller :: format_for_rank_fam (CGroup& G)
 {
 	int i =  get_main_word(G.m_iFirstWord);
-	if (!Wi.m_lemma) return false;
+	if (!Wi.has_lemma()) return false;
 	if ( !Wi.HasFlag(fl_ranknoun) ) return false;
 	
 	size_t j = 0;

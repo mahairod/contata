@@ -7,6 +7,8 @@
 *.so
 *.orsh
 *.odsh
+*.odsh
+*.odst
 *.bin
 /Source/StatDatBin/StatDatBin
 /Source/StructDictLoader/StructDictLoader
@@ -34,3 +36,6 @@
 /java/dist/
 /java/build/
 /Source/JMorph/nbproject/private
+/Source/JSyntaxAn/build/
+/Source/JSyntaxAn/dist/
+/Source/SynanDaemon/SynanDaemon

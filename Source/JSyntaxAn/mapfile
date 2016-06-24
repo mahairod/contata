@@ -1,0 +1,12 @@
+# This file contains information about exported functions
+#
+
+Elliptica_1.0 {
+global:
+	Java_org_elliptica_ling_Syntax_init;
+	Java_org_elliptica_ling_Syntax_parseRawText;
+	Java_org_elliptica_ling_Syntax_finalize0;
+	JNI_OnLoad;
+local:
+    *;
+};

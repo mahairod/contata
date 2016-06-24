@@ -5,14 +5,13 @@
 
 class ByteArray {
 public:
-	ByteArray(JNIEnv* _env, jbyteArray _array);
+	ByteArray(jbyteArray _array);
 	jsize len();
 	jbyte* b();
 	~ByteArray();
 private:
 	jbyte* bytes;
 	jsize length;
-	JNIEnv* env;
 	const jbyteArray array;
 };
 

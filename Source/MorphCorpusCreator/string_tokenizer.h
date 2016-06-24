@@ -1,0 +1,5 @@
+#ifndef STRING_TOKENIZER_H
+#define STRING_TOKENIZER_H
+
+#endif // STRING_TOKENIZER_H
+

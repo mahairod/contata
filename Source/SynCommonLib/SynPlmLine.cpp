@@ -214,4 +214,3 @@ bool CSynPlmLine :: has_des(Descriptors g) const
 }
 
 
-

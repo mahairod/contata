@@ -45,7 +45,7 @@ void string_to_id(const char *str, DwordVector &ids, const CMorphologyHolder& Ho
 	}
 	vector<CFormInfo> ParadigmCollection;
 	string input = str;
-	if (!Holder.m_pLemmatizer->CreateParadigmCollection(false, input, is_capital, ParadigmCollection))
+    if (!Holder.m_pLemmatizer->CreateParadigmCollection(false, input, is_capital, false, ParadigmCollection))
 	{
 		std::cerr << "Catch " << str<< std::endl;
 		return;

@@ -8,26 +8,26 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlElementWrapper;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси ява.инструм.ПорядковыйСписок;
+внеси ява.инструм.Список;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Предложение extends КоллекцияФрагментов {
+доступный класс Предложение расширяет КоллекцияФрагментов {
 
 	@XmlElementWrapper
 	@XmlElement(name = "слово")
-	public Список<Слово> getСписокСлов() {
-		return списокСлов;
+	доступный Список<Слово> getСписокСлов() {
+		верни списокСлов;
 	}
 
-	Список<Слово> списокСлов = new ПорядковыйСписок<>();
+	Список<Слово> списокСлов = новый ПорядковыйСписок<>();
 }

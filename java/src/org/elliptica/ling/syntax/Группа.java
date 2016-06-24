@@ -8,37 +8,37 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Группа extends Диапазон {
+доступный класс Группа расширяет Диапазон {
 
-	private String описание;
-	private String тип;
-
-	@XmlElement
-	public String getОписание() {
-		return описание;
-	}
-
-	public void setОписание(String описание) {
-		this.описание = описание;
-	}
+	личный Строка описание;
+	личный Строка тип;
 
 	@XmlElement
-	public String getТип() {
-		return тип;
+	доступный Строка getОписание() {
+		верни описание;
 	}
 
-	public void setТип(String тип) {
-		this.тип = тип;
+	доступный тщетный setОписание(Строка описание) {
+		это.описание = описание;
+	}
+
+	@XmlElement
+	доступный Строка getТип() {
+		верни тип;
+	}
+
+	доступный тщетный setТип(Строка тип) {
+		это.тип = тип;
 	}
 
 }

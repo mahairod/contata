@@ -8,40 +8,40 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.elliptica.ling.Лемма;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlElementWrapper;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси org.elliptica.ling.Лемма;
+внеси ява.инструм.ПорядковыйСписок;
+внеси ява.инструм.Список;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Слово extends Лемма {
-	public Слово(){
+доступный класс Слово расширяет Лемма {
+	доступный Слово(){
 		
 	}
 	@XmlElement
-	public String getЗначение() {
-		return значение;
+	доступный Строка getЗначение() {
+		верни значение;
 	}
 
-	public void setЗначение(String значение) {
-		this.значение = значение;
+	доступный тщетный setЗначение(Строка значение) {
+		это.значение = значение;
 	}
 	
-	private String значение;
+	личный Строка значение;
 
 	@XmlElement(name = "омоним")
 	@XmlElementWrapper
-	public Список<Омоним> getОмонимы() {
-		return омонимы;
+	доступный Список<Омоним> getОмонимы() {
+		верни омонимы;
 	}
 
-	Список<Омоним> омонимы = new ПорядковыйСписок<>();
+	Список<Омоним> омонимы = новый ПорядковыйСписок<>();
 }

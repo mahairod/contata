@@ -8,25 +8,25 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlElementWrapper;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси ява.инструм.ПорядковыйСписок;
+внеси ява.инструм.Список;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement(name = "текст")
-public class СинтаксическоеДерево extends ОбъектСинт {
+доступный класс СинтаксическоеДерево расширяет ОбъектСинт {
 	@XmlElementWrapper
 	@XmlElement(name = "предложение")
-	public Список<Предложение> getПредложения() {
-		return предложения;
+	доступный Список<Предложение> getПредложения() {
+		верни предложения;
 	}
-	private final Список<Предложение> предложения = new ПорядковыйСписок<>();
+	личный итоговый Список<Предложение> предложения = новый ПорядковыйСписок<>();
 
 }

@@ -8,34 +8,34 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Диапазон extends ОбъектСинт {
+доступный класс Диапазон расширяет ОбъектСинт {
 
 	@XmlElement
-	public int getНачало(){
-		return начало;
+	доступный цел getНачало(){
+		верни начало;
 	}
 	
 	@XmlElement
-	public int getКонец(){
-		return конец;
+	доступный цел getКонец(){
+		верни конец;
 	}
 	
 	@XmlElement
-	public int getДлина(){
-		return конец - начало;
+	доступный цел getДлина(){
+		верни конец - начало;
 	}
 
-	int начало;
-	int конец;
+	цел начало;
+	цел конец;
 	
 }

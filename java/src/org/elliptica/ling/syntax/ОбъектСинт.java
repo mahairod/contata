@@ -8,15 +8,15 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlRootElement;
+внеси javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class ОбъектСинт {
+доступный класс ОбъектСинт {
 
 }

@@ -8,15 +8,15 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling;
+пакет org.elliptica.ling;
 
-import javax.xml.bind.annotation.XmlType;
+внеси javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlType(name = "омон")
-public class Омоним {
+доступный класс Омоним {
 
 }

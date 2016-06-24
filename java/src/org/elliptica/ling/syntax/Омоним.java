@@ -8,11 +8,11 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -20,16 +20,16 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType
-public class Омоним extends org.elliptica.ling.Омоним {
+доступный класс Омоним расширяет org.elliptica.ling.Омоним {
 
 	@XmlElement
-	public String getЗначение() {
-		return значение;
+	доступный Строка getЗначение() {
+		верни значение;
 	}
 
-	public void setЗначение(String значение) {
-		this.значение = значение;
+	доступный тщетный setЗначение(Строка значение) {
+		это.значение = значение;
 	}
 	
-	private String значение;
+	личный Строка значение;
 }

@@ -8,33 +8,33 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlElementWrapper;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси ява.инструм.ПорядковыйСписок;
+внеси ява.инструм.Список;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Вариант extends ОбъектСинт {
+доступный класс Вариант расширяет ОбъектСинт {
 
 	@XmlElementWrapper
 	@XmlElement(name = "юнит")
-	public Список<Юнит> getЮниты() {
-		return юниты;
+	доступный Список<Юнит> getЮниты() {
+		верни юниты;
 	}
 
 	@XmlElementWrapper
 	@XmlElement(name = "группа")
-	public Список<Группа> getГруппы() {
-		return группы;
+	доступный Список<Группа> getГруппы() {
+		верни группы;
 	}
 
-	Список<Юнит> юниты = new ПорядковыйСписок<>();
-	Список<Группа> группы = new ПорядковыйСписок<>();
+	Список<Юнит> юниты = новый ПорядковыйСписок<>();
+	Список<Группа> группы = новый ПорядковыйСписок<>();
 }

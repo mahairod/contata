@@ -4,12 +4,12 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling;
+пакет org.elliptica.ling;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class ОбъектЯва {
-	private long указатель;
+доступный класс ОбъектЯва {
+	личный ширцел указатель;
 }

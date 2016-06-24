@@ -8,33 +8,33 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlElementWrapper;
+внеси javax.xml.bind.annotation.XmlRootElement;
+внеси ява.инструм.ПорядковыйСписок;
+внеси ява.инструм.Список;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class КоллекцияФрагментов extends ОбъектСинт {
+доступный класс КоллекцияФрагментов расширяет ОбъектСинт {
 
 	@XmlElementWrapper
 	@XmlElement(name = "фрагмент")
-	public Список<Фрагмент> getСписокФрагментов() {
-		return списокФрагментов;
+	доступный Список<Фрагмент> getСписокФрагментов() {
+		верни списокФрагментов;
 	}
 
 	@XmlElementWrapper
-	@XmlElement(name = "связьФрагментов", type = ПорядковыйСписок.class)
-	public Список<СвязьФрагментов> getСписокСвязейФрагментов() {
-		return списокСвязейФрагментов;
+	@XmlElement(name = "связьФрагментов", type = ПорядковыйСписок.класс)
+	доступный Список<СвязьФрагментов> getСписокСвязейФрагментов() {
+		верни списокСвязейФрагментов;
 	}
 
-	Список<Фрагмент> списокФрагментов = new ПорядковыйСписок<>();
-	Список<СвязьФрагментов> списокСвязейФрагментов = new ПорядковыйСписок<>();
+	Список<Фрагмент> списокФрагментов = новый ПорядковыйСписок<>();
+	Список<СвязьФрагментов> списокСвязейФрагментов = новый ПорядковыйСписок<>();
 }

@@ -8,26 +8,26 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling;
+пакет org.elliptica.ling;
 
-import java.io.File;
-import java.io.IOException;
-import javax.xml.bind.SchemaOutputResolver;
-import javax.xml.transform.Result;
-import javax.xml.transform.stream.StreamResult;
+внеси java.io.File;
+внеси java.io.IOException;
+внеси javax.xml.bind.SchemaOutputResolver;
+внеси javax.xml.transform.Result;
+внеси javax.xml.transform.stream.StreamResult;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class MySchemaOutputResolver extends SchemaOutputResolver {
+доступный класс MySchemaOutputResolver расширяет SchemaOutputResolver {
 
-	@Override
-	public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException {
-		File file = new File(suggestedFileName);
-		StreamResult result = new StreamResult(file);
+	@Подмени
+	доступный Result createOutput(Строка namespaceUri, Строка suggestedFileName) кидает IOException {
+		File file = новый File(suggestedFileName);
+		StreamResult result = новый StreamResult(file);
 		result.setSystemId(file.toURI().toURL().toString());
-		return result;
+		верни result;
 	}
 
 }

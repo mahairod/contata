@@ -4,108 +4,108 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling;
+пакет org.elliptica.ling;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.SchemaOutputResolver;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import org.elliptica.ling.syntax.*;
-import org.xml.sax.SAXException;
+внеси java.io.File;
+внеси java.io.IOException;
+внеси java.io.StringReader;
+внеси java.util.ArrayList;
+внеси java.util.Список;
+внеси java.util.logging.Level;
+внеси java.util.logging.Logger;
+внеси javax.xml.XMLConstants;
+внеси javax.xml.bind.JAXBContext;
+внеси javax.xml.bind.JAXBException;
+внеси javax.xml.bind.Marshaller;
+внеси javax.xml.bind.SchemaOutputResolver;
+внеси javax.xml.bind.Unmarshaller;
+внеси javax.xml.validation.Schema;
+внеси javax.xml.validation.SchemaFactory;
+внеси org.elliptica.ling.syntax.*;
+внеси org.xml.sax.SAXException;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class Syntax extends ОбъектЯва {
-	public Syntax(String rootPath, String libPath){
-		this.rmlPath = rootPath;
+доступный класс Syntax расширяет ОбъектЯва {
+	доступный Syntax(Строка rootPath, Строка libPath){
+		это.rmlPath = rootPath;
 //		загрузиБиблиотеку("/mnt/f16/mahairod/Develop/cpp/linguistan/Source/LemmatizerLib/libLemmatizerrsh.so");
 //		загрузиБиблиотеку("/mnt/f16/mahairod/Develop/cpp/linguistan/Bin/libAgramtabdsh.so");
 //		загрузиБиблиотеку("/mnt/f16/mahairod/Develop/cpp/linguistan/Source/SynanDmnLib/libSynanDmn.so");
 		загрузиБиблиотеку(rootPath + "/Source/JSyntaxAn/libJSynAndsh.so");
 		init(rmlPath);
 
-		Unmarshaller unmrsh = null;
-		try {
+		Unmarshaller unmrsh = ничто;
+		попробуй {
 			JAXBContext jaxbc = JAXBContext.newInstance("org.elliptica.ling.syntax:ява.инструм");
-//			Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema( new File("src/elliptica-ling.xsd") );
-//			SchemaOutputResolver sor = new MySchemaOutputResolver();
+//			Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema( новый File("src/elliptica-ling.xsd") );
+//			SchemaOutputResolver sor = новый MySchemaOutputResolver();
 //			jaxbc.generateSchema(sor);
 			unmrsh = jaxbc.createUnmarshaller();
 //			unmrsh.setSchema(schema);
-		} catch (JAXBException ex) {
-			Logger.getLogger(Syntax.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (IOException ex) {
-//			Logger.getLogger(Syntax.class.getName()).log(Level.SEVERE, null, ex);
-//		} catch (SAXException ex) {
-//			Logger.getLogger(Syntax.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
+		} ловя (JAXBException ex) {
+			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+//		} ловя (IOException ex) {
+//			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+//		} ловя (SAXException ex) {
+//			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+		} напоследок {
 			unmarshaller = unmrsh;
 		}
 	}
-	public Syntax(String rootPath){
-		this(rootPath, null);
+	доступный Syntax(Строка rootPath){
+		это(rootPath, ничто);
 	}
 	
-	public List<String> разборТекста(String текст){
-		List<String> список = new ArrayList<>();
-		String xmlTree = parseRawText(список, текст);
-//		String xmlTree = "<текст><предложения><предложение><списокСвязейФрагментов></списокСвязейФрагментов><списокФрагментов>"
+	доступный Список<Строка> разборТекста(Строка текст){
+		Список<Строка> список = новый ArrayList<>();
+		Строка xmlTree = parseRawText(список, текст);
+//		Строка xmlTree = "<текст><предложения><предложение><списокСвязейФрагментов></списокСвязейФрагментов><списокФрагментов>"
 //				+ "</списокФрагментов></предложение></предложения></текст>";
-		СинтаксическоеДерево дерево = null;
-		if ( xmlTree != null ){
-			try {
-				дерево = (СинтаксическоеДерево) unmarshaller.unmarshal( new StringReader(xmlTree) );
-			} catch (JAXBException ex) {
-				Logger.getLogger(Syntax.class.getName()).log(Level.SEVERE, null, ex);
+		СинтаксическоеДерево дерево = ничто;
+		если ( xmlTree != ничто ){
+			попробуй {
+				дерево = (СинтаксическоеДерево) unmarshaller.unmarshal( новый StringReader(xmlTree) );
+			} ловя (JAXBException ex) {
+				Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
 			}
 			System.out.println(дерево.getПредложения().рамер());
-			return список;
-		} else {
-			return null;
+			верни список;
+		} иначе {
+			верни ничто;
 		}
 	}
 	
-	private final Unmarshaller unmarshaller;
+	личный итоговый Unmarshaller unmarshaller;
 	
-	private native void init(String rmlPath) throws ОтклонениеМорфологии;
-	private native void finalize0() throws Throwable;
-	private native String parseRawText(List<String> list, String text);
+	личный туземный тщетный init(Строка rmlPath) кидает ОтклонениеМорфологии;
+	личный туземный тщетный finalize0() кидает Throwable;
+	личный туземный Строка parseRawText(Список<Строка> list, Строка text);
 
-	private void fillList(List list, String line){
+	личный тщетный fillList(Список list, Строка line){
 		list.add(line);
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
+	@Подмени
+	защищённый тщетный finalize() кидает Throwable {
 		finalize0();
-		super.finalize();
+		поверх.finalize();
 	}
 
-	private final String rmlPath;
+	личный итоговый Строка rmlPath;
 
-	private static synchronized void загрузиБиблиотеку(String libPath){
-		if (false && библЗагружена) return;
-		if (libPath!=null){
+	личный статичный синхронизированный тщетный загрузиБиблиотеку(Строка libPath){
+		если (ложь && библЗагружена) верни;
+		если (libPath!=ничто){
 			System.load(libPath);
-		} else {
+		} иначе {
 			System.loadLibrary("JSyntaxAn");
 		}
-		библЗагружена = true;
+		библЗагружена = истина;
 	}
-	private static boolean библЗагружена;
+	личный статичный логическое библЗагружена;
 
 }
 

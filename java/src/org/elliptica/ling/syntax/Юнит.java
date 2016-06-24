@@ -8,49 +8,49 @@
  * и может быть использован только с его личного разрешения
  */
 
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+внеси javax.xml.bind.annotation.XmlElement;
+внеси javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 @XmlRootElement
-public class Юнит {
+доступный класс Юнит {
 
-	private int номер;
+	личный цел номер;
 
-	private String частьРечи;
-
-	@XmlElement
-	public String getЧастьРечи() {
-		return частьРечи;
-	}
-
-	public void setЧастьРечи(String частьРечи) {
-		this.частьРечи = частьРечи;
-	}
+	личный Строка частьРечи;
 
 	@XmlElement
-	public int getНомер() {
-		return номер;
+	доступный Строка getЧастьРечи() {
+		верни частьРечи;
 	}
 
-	public void setНомер(int номер) {
-		this.номер = номер;
+	доступный тщетный setЧастьРечи(Строка частьРечи) {
+		это.частьРечи = частьРечи;
 	}
-
-	private long граммемы;
 
 	@XmlElement
-	public long getГраммемы() {
-		return граммемы;
+	доступный цел getНомер() {
+		верни номер;
 	}
 
-	public void setГраммемы(long граммемы) {
-		this.граммемы = граммемы;
+	доступный тщетный setНомер(цел номер) {
+		это.номер = номер;
+	}
+
+	личный ширцел граммемы;
+
+	@XmlElement
+	доступный ширцел getГраммемы() {
+		верни граммемы;
+	}
+
+	доступный тщетный setГраммемы(ширцел граммемы) {
+		это.граммемы = граммемы;
 	}
 
 }

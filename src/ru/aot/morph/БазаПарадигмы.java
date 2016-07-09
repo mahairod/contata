@@ -6,7 +6,7 @@
 
 пакет ru.aot.morph;
 
-внеси ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
+внеся ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
 
 /**
  *

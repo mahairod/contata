@@ -5,8 +5,8 @@
  */
 пакет ru.aot.morph;
 
-внеси java.util.Множество;
-внеси ru.aot.morph.JavaMorphAPI.Граммема;
+внеся java.util.Множество;
+внеся ru.aot.morph.JavaMorphAPI.Граммема;
 
 /**
  *

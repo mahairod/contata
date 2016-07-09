@@ -6,9 +6,9 @@
 
 пакет ru.aot.morph;
 
-внеси java.util.Коллекции;
-внеси java.util.Список;
-внеси java.util.Множество;
+внеся java.util.Коллекции;
+внеся java.util.Список;
+внеся java.util.Множество;
 
 /**
  *

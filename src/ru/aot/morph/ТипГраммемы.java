@@ -6,8 +6,8 @@
 
 пакет ru.aot.morph;
 
-внеси java.util.Arrays;
-внеси ru.aot.morph.JavaMorphAPI.Граммема;
+внеся java.util.Arrays;
+внеся ru.aot.morph.JavaMorphAPI.Граммема;
 
 /**
  *

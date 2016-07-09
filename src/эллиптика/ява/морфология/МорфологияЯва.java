@@ -10,6 +10,10 @@
 
 пакет эллиптика.ява.морфология;
 
+внеся java.util.Коллекции;
+внеся ru.aot.morph.JavaMorphAPI;
+внеся ru.aot.morph.JavaMorphAPI.РезультатСлова;
+
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
@@ -20,7 +24,9 @@
      * @param аргы аргументы командной строки
      */
     доступный статичный тщетный main(Строка[] аргы) {
-        // TODO здесь логика кода приложения
+		Система.задайСвойство("JNIMorphAPI-rml-dir", "/mnt/f16/mahairod/Develop/eclipse-4.3/wsp/dialing/svn-native/sf");
+		JavaMorphAPI.приготовьСловари(Коллекции.одиночка(JavaMorphAPI.Язык.Русский));
+		РезультатСлова рс = JavaMorphAPI.формыСлова(JavaMorphAPI.Язык.Русский, "пример");
     }
 
 }

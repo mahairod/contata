@@ -6,11 +6,11 @@
 
 пакет ru.aot.morph;
 
-внеси java.util.HashSet;
-внеси java.util.Множество;
-внеси ru.aot.morph.JavaMorphAPI.Граммема;
-внеси ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
-внеси ru.aot.morph.JavaMorphAPI.ЧастьРечи;
+внеся java.util.HashSet;
+внеся java.util.Множество;
+внеся ru.aot.morph.JavaMorphAPI.Граммема;
+внеся ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
+внеся ru.aot.morph.JavaMorphAPI.ЧастьРечи;
 
 /**
  *

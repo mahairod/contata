@@ -12,7 +12,7 @@
 
 внеся java.util.Коллекции;
 внеся ru.aot.morph.JavaMorphAPI;
-внеся ru.aot.morph.JavaMorphAPI.РезультатСлова;
+внеся ru.aot.morph.РезультатСлова;
 
 /**
  *

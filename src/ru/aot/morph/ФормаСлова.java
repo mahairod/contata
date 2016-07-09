@@ -8,9 +8,6 @@
 
 внеся java.util.HashSet;
 внеся java.util.Множество;
-внеся ru.aot.morph.JavaMorphAPI.Граммема;
-внеся ru.aot.morph.JavaMorphAPI.РезультатСлова.Парадигма;
-внеся ru.aot.morph.JavaMorphAPI.ЧастьРечи;
 
 /**
  *

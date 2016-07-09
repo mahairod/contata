@@ -7,7 +7,6 @@
 пакет ru.aot.morph;
 
 внеся java.util.Arrays;
-внеся ru.aot.morph.JavaMorphAPI.Граммема;
 
 /**
  *
@@ -52,7 +51,7 @@
 		верни границы[ordinal()];
 	}
 
-	доступный JavaMorphAPI.Граммема[] значения() {
+	доступный Граммема[] значения() {
 		Граммема[] диапазон = границы();
 		верни Arrays.copyOfRange(Граммема.values(), диапазон[0].ordinal(), диапазон[1].ordinal() + 1);
 	}

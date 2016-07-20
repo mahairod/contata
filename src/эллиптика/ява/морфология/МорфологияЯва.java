@@ -11,8 +11,8 @@
 пакет эллиптика.ява.морфология;
 
 внеся java.util.Коллекции;
-внеся ru.aot.morph.JavaMorphAPI;
-внеся ru.aot.morph.РезультатСлова;
+внеся org.elliptica.ling.JavaMorphAPI;
+внеся org.elliptica.ling.РезультатСлова;
 
 /**
  *

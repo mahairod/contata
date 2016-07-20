@@ -4,7 +4,7 @@
  * и может быть использован только с его личного разрешения
  */
 
-пакет ru.aot.morph;
+пакет org.elliptica.ling;
 
 внеся java.util.Arrays;
 

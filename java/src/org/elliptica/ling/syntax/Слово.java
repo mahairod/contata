@@ -10,12 +10,12 @@
 
 пакет org.elliptica.ling.syntax;
 
-внеси javax.xml.bind.annotation.XmlElement;
-внеси javax.xml.bind.annotation.XmlElementWrapper;
-внеси javax.xml.bind.annotation.XmlRootElement;
-внеси org.elliptica.ling.Лемма;
-внеси ява.инструм.ПорядковыйСписок;
-внеси ява.инструм.Список;
+внеся javax.xml.bind.annotation.XmlElement;
+внеся javax.xml.bind.annotation.XmlElementWrapper;
+внеся javax.xml.bind.annotation.XmlRootElement;
+внеся org.elliptica.ling.Лемма;
+внеся java.util.ПорядковыйСписок;
+внеся java.util.Список;
 
 /**
  *

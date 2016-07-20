@@ -19,8 +19,8 @@ import javax.xml.bind.Marshaller;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ява.инструм.ПорядковыйСписок;
-import ява.инструм.Список;
+import java.util.ПорядковыйСписок;
+import java.util.Список;
 
 /**
  *

@@ -6,23 +6,23 @@
 
 пакет org.elliptica.ling;
 
-внеси java.io.File;
-внеси java.io.IOException;
-внеси java.io.StringReader;
-внеси java.util.ArrayList;
-внеси java.util.Список;
-внеси java.util.logging.Level;
-внеси java.util.logging.Logger;
-внеси javax.xml.XMLConstants;
-внеси javax.xml.bind.JAXBContext;
-внеси javax.xml.bind.JAXBException;
-внеси javax.xml.bind.Marshaller;
-внеси javax.xml.bind.SchemaOutputResolver;
-внеси javax.xml.bind.Unmarshaller;
-внеси javax.xml.validation.Schema;
-внеси javax.xml.validation.SchemaFactory;
-внеси org.elliptica.ling.syntax.*;
-внеси org.xml.sax.SAXException;
+внеся java.io.File;
+внеся java.io.IOException;
+внеся java.io.StringReader;
+внеся java.util.Список;
+внеся java.util.ПорядковыйСписок;
+внеся java.util.logging.Level;
+внеся java.util.logging.Logger;
+внеся javax.xml.XMLConstants;
+внеся javax.xml.bind.JAXBContext;
+внеся javax.xml.bind.JAXBException;
+внеся javax.xml.bind.Marshaller;
+внеся javax.xml.bind.SchemaOutputResolver;
+внеся javax.xml.bind.Unmarshaller;
+внеся javax.xml.validation.Schema;
+внеся javax.xml.validation.SchemaFactory;
+внеся org.elliptica.ling.syntax.*;
+внеся org.xml.sax.SAXException;
 
 /**
  *
@@ -39,7 +39,7 @@
 
 		Unmarshaller unmrsh = ничто;
 		попробуй {
-			JAXBContext jaxbc = JAXBContext.newInstance("org.elliptica.ling.syntax:ява.инструм");
+			JAXBContext jaxbc = JAXBContext.newInstance("org.elliptica.ling.syntax:java.util");
 //			Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema( новый File("src/elliptica-ling.xsd") );
 //			SchemaOutputResolver sor = новый MySchemaOutputResolver();
 //			jaxbc.generateSchema(sor);
@@ -60,7 +60,7 @@
 	}
 	
 	доступный Список<Строка> разборТекста(Строка текст){
-		Список<Строка> список = новый ArrayList<>();
+		Список<Строка> список = новый ПорядковыйСписок<>();
 		Строка xmlTree = parseRawText(список, текст);
 //		Строка xmlTree = "<текст><предложения><предложение><списокСвязейФрагментов></списокСвязейФрагментов><списокФрагментов>"
 //				+ "</списокФрагментов></предложение></предложения></текст>";
@@ -71,7 +71,7 @@
 			} ловя (JAXBException ex) {
 				Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
 			}
-			System.out.println(дерево.getПредложения().рамер());
+			System.out.println(дерево.getПредложения().размер());
 			верни список;
 		} иначе {
 			верни ничто;
@@ -82,10 +82,10 @@
 	
 	личный туземный тщетный init(Строка rmlPath) кидает ОтклонениеМорфологии;
 	личный туземный тщетный finalize0() кидает Throwable;
-	личный туземный Строка parseRawText(Список<Строка> list, Строка text);
+	личный туземный Строка parseRawText(Список<Строка> список, Строка text);
 
-	личный тщетный fillList(Список list, Строка line){
-		list.add(line);
+	личный тщетный fillList(Список список, Строка line){
+		список.добавь(line);
 	}
 
 	@Подмени

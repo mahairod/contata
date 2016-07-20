@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/mnt/f16/mahairod/Develop/cpp/linguistan/java/src/elliptica-ling.xsd" uri="xml-resources/jaxb/ellink/elliptica-ling.xsd"/>
+    <system systemId="file:/mnt/f16/mahairod/Develop/cpp/linguistan/java/src/bindings.xjb" uri="xml-resources/jaxb/ellink/bindings.xjb"/>
+</catalog>

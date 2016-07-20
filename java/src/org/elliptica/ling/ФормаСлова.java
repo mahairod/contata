@@ -6,8 +6,8 @@
 
 пакет org.elliptica.ling;
 
-внеси java.util.HashSet;
-внеси java.util.Множество;
+внеся java.util.HashSet;
+внеся java.util.Множество;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 пакет org.elliptica.ling;
 
-внеси статичный org.elliptica.ling.ТипГраммемы.*;
+внеся статичный org.elliptica.ling.ТипГраммемы.*;
 
 /**
  *

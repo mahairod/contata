@@ -10,7 +10,7 @@
 
 пакет org.elliptica.ling.syntax;
 
-внеси javax.xml.bind.annotation.XmlRootElement;
+внеся javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *

@@ -1,13 +1,13 @@
 пакет org.elliptica.ling;
 
-внеси java.io.File;
-внеси java.io.FileOutputStream;
-внеси java.io.IOException;
-внеси java.io.InputStream;
-внеси java.io.OutputStream;
-внеси java.util.*;
-внеси java.util.logging.Level;
-внеси java.util.logging.Logger;
+внеся java.io.File;
+внеся java.io.FileOutputStream;
+внеся java.io.IOException;
+внеся java.io.InputStream;
+внеся java.io.OutputStream;
+внеся java.util.*;
+внеся java.util.logging.Level;
+внеся java.util.logging.Logger;
 
 доступный класс Morph{
 	доступный статичный переч Язык{Русский};

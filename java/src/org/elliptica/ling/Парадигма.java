@@ -5,8 +5,8 @@
  */
 пакет org.elliptica.ling;
 
-внеси java.util.Список;
-внеси java.util.Множество;
+внеся java.util.Список;
+внеся java.util.Множество;
 
 /**
  *

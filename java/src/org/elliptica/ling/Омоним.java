@@ -10,7 +10,7 @@
 
 пакет org.elliptica.ling;
 
-внеси javax.xml.bind.annotation.XmlType;
+внеся javax.xml.bind.annotation.XmlType;
 
 /**
  *

@@ -6,7 +6,7 @@
 
 пакет org.elliptica.ling;
 
-внеси java.util.Arrays;
+внеся java.util.Arrays;
 
 /**
  *

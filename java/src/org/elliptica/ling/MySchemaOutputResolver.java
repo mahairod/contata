@@ -10,11 +10,11 @@
 
 пакет org.elliptica.ling;
 
-внеси java.io.File;
-внеси java.io.IOException;
-внеси javax.xml.bind.SchemaOutputResolver;
-внеси javax.xml.transform.Result;
-внеси javax.xml.transform.stream.StreamResult;
+внеся java.io.File;
+внеся java.io.IOException;
+внеся javax.xml.bind.SchemaOutputResolver;
+внеся javax.xml.transform.Result;
+внеся javax.xml.transform.stream.StreamResult;
 
 /**
  *

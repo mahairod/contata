@@ -6,7 +6,7 @@
 
 пакет org.elliptica.ling;
 
-внеси java.util.Множество;
+внеся java.util.Множество;
 
 /**
  *

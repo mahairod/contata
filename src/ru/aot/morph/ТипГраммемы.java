@@ -6,7 +6,6 @@
 
 пакет ru.aot.morph;
 
-внеся java.util.Arrays;
 внеся java.util.Массивы;
 
 /**

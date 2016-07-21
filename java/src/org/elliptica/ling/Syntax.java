@@ -29,7 +29,7 @@
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 доступный класс Syntax расширяет ОбъектЯва {
-	доступный Syntax(Строка rootPath, Строка libPath){
+	доступный Syntax(Строка rootPath, Строка libPath) {
 		это.rmlPath = rootPath;
 //		загрузиБиблиотеку("/mnt/f16/mahairod/Develop/cpp/linguistan/Source/LemmatizerLib/libLemmatizerrsh.so");
 //		загрузиБиблиотеку("/mnt/f16/mahairod/Develop/cpp/linguistan/Bin/libAgramtabdsh.so");
@@ -55,17 +55,17 @@
 			unmarshaller = unmrsh;
 		}
 	}
-	доступный Syntax(Строка rootPath){
+	доступный Syntax(Строка rootPath) {
 		это(rootPath, ничто);
 	}
-	
-	доступный Список<Строка> разборТекста(Строка текст){
+
+	доступный Список<Строка> разборТекста(Строка текст) {
 		Список<Строка> список = новый ПорядковыйСписок<>();
 		Строка xmlTree = parseRawText(список, текст);
 //		Строка xmlTree = "<текст><предложения><предложение><списокСвязейФрагментов></списокСвязейФрагментов><списокФрагментов>"
 //				+ "</списокФрагментов></предложение></предложения></текст>";
 		СинтаксическоеДерево дерево = ничто;
-		если ( xmlTree != ничто ){
+		если ( xmlTree != ничто ) {
 			попробуй {
 				дерево = (СинтаксическоеДерево) unmarshaller.unmarshal( новый StringReader(xmlTree) );
 			} ловя (JAXBException ex) {
@@ -77,14 +77,14 @@
 			верни ничто;
 		}
 	}
-	
+
 	личный итоговый Unmarshaller unmarshaller;
-	
+
 	личный туземный тщетный init(Строка rmlPath) кидает ОтклонениеМорфологии;
 	личный туземный тщетный finalize0() кидает Throwable;
 	личный туземный Строка parseRawText(Список<Строка> список, Строка text);
 
-	личный тщетный fillList(Список список, Строка line){
+	личный тщетный fillList(Список список, Строка line) {
 		список.добавь(line);
 	}
 
@@ -96,9 +96,9 @@
 
 	личный итоговый Строка rmlPath;
 
-	личный статичный синхронизированный тщетный загрузиБиблиотеку(Строка libPath){
+	личный статичный синхронизированный тщетный загрузиБиблиотеку(Строка libPath) {
 		если (ложь && библЗагружена) верни;
-		если (libPath!=ничто){
+		если (libPath!=ничто) {
 			System.load(libPath);
 		} иначе {
 			System.loadLibrary("JSyntaxAn");

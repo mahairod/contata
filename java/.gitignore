@@ -1,3 +1,11 @@
 /jni-lib/JNIMorphAPI.so
 bin/
 classes/
+/nbproject/private
+/build
+/dist/
+/Source
+/Dicts
+/Bin
+/Thes
+/gra

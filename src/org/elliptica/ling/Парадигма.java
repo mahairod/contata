@@ -15,7 +15,7 @@
 
 /**
  *
- * @author mahairod
+ * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 доступный сопряжение Парадигма {
 

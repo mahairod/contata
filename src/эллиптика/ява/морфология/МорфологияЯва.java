@@ -11,7 +11,7 @@
 пакет эллиптика.ява.морфология;
 
 внеся java.util.Коллекции;
-внеся org.elliptica.ling.JavaMorphAPI;
+внеся org.elliptica.ling.Morph;
 внеся org.elliptica.ling.РезультатСлова;
 
 /**
@@ -25,8 +25,8 @@
      */
     доступный статичный тщетный main(Строка[] аргы) {
 		Система.задайСвойство("JNIMorphAPI-rml-dir", "/mnt/f16/mahairod/Develop/eclipse-4.3/wsp/dialing/svn-native/sf");
-		JavaMorphAPI.приготовьСловари(Коллекции.одиночка(JavaMorphAPI.Язык.Русский));
-		РезультатСлова рс = JavaMorphAPI.формыСлова(JavaMorphAPI.Язык.Русский, "пример");
+		Morph.приготовьСловари(Коллекции.одиночка(Morph.Язык.Русский));
+		РезультатСлова рс = Morph.формыСлова(Morph.Язык.Русский, "пример");
     }
 
 }

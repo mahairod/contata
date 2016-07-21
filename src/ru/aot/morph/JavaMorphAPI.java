@@ -1,4 +1,4 @@
-пакет ru.aot.morph;
+пакет org.elliptica.ling;
 
 внеся java.io.UnsupportedEncodingException;
 внеся java.util.Коллекция;

@@ -46,11 +46,11 @@
 			unmrsh = jaxbc.createUnmarshaller();
 //			unmrsh.setSchema(schema);
 		} ловя (JAXBException ex) {
-			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+			LOG.log(Level.SEVERE, ничто, ex);
 //		} ловя (IOException ex) {
-//			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+//			LOG.log(Level.SEVERE, ничто, ex);
 //		} ловя (SAXException ex) {
-//			Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+//			LOG.log(Level.SEVERE, ничто, ex);
 		} напоследок {
 			unmarshaller = unmrsh;
 		}
@@ -69,9 +69,9 @@
 			попробуй {
 				дерево = (СинтаксическоеДерево) unmarshaller.unmarshal( новый StringReader(xmlTree) );
 			} ловя (JAXBException ex) {
-				Logger.getLogger(Syntax.класс.getName()).log(Level.SEVERE, ничто, ex);
+				LOG.log(Level.SEVERE, ничто, ex);
 			}
-			System.out.println(дерево.getПредложения().размер());
+			Система.вывод.println(дерево.getПредложения().размер());
 			верни список;
 		} иначе {
 			верни ничто;
@@ -99,7 +99,7 @@
 	личный статичный синхронизированный тщетный загрузиБиблиотеку(Строка libPath) {
 		если (ложь && библЗагружена) верни;
 		если (libPath!=ничто) {
-			System.load(libPath);
+			Система.загрузи(libPath);
 		} иначе {
 			System.loadLibrary("JSyntaxAn");
 		}
@@ -107,5 +107,6 @@
 	}
 	личный статичный логическое библЗагружена;
 
-}
+	Logger LOG = Logger.getLogger(Syntax.класс.getName());
 
+}

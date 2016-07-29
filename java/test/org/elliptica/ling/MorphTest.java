@@ -3,114 +3,115 @@
  * Данный программный код является собственностью Астафьева Антона Александровича
  * и может быть использован только с его личного разрешения
  */
-package org.elliptica.ling;
+пакет org.elliptica.ling;
 
-import java.util.Collections;
-import java.util.Set;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+внеся java.util.Коллекции;
+внеся java.util.Множество;
+внеся org.junit.After;
+внеся org.junit.AfterClass;
+внеся org.junit.Before;
+внеся org.junit.BeforeClass;
+внеся org.junit.Test;
+внеся статичный org.junit.Assert.*;
+внеся эллиптика.ява.язык.Система;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class MorphTest {
+доступный класс MorphTest {
 
-	public MorphTest() {
+	доступный MorphTest() {
 	}
 
 	@BeforeClass
-	public static void setUpClass() {
-		System.setProperty("jmorph.rml.dir", "/mnt/f16/mahairod/Develop/cpp/linguistan/");
+	доступный статичный тщетный setUpClass() {
+		Система.задайСвойство("jmorph.rml.dir", "/mnt/f16/mahairod/Develop/cpp/linguistan/");
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	доступный статичный тщетный tearDownClass() {
 	}
 
 	@Before
-	public void setUp() {
+	доступный тщетный setUp() {
 	}
 
 	@After
-	public void tearDown() {
+	доступный тщетный tearDown() {
 	}
 
 	/**
-	 * Test of приготовьСловари method, of class Morph.
+	 * Test of приготовьСловари method, of класс Morph.
 	 */
 	@Test
-	public void testПриготовьСловари() {
-		System.out.println("ПриготовьСловари");
-		Set<Morph.Язык> языкиДляОзначивания = Collections.singleton(Morph.Язык.Русский);
-		try{
+	доступный тщетный testПриготовьСловари() {
+		Система.вывод.печатьстр("ПриготовьСловари");
+		Множество<Morph.Язык> языкиДляОзначивания = Коллекции.одиночка(Morph.Язык.Русский);
+		попробуй{
 			Morph.приготовьСловари(языкиДляОзначивания);
-		} catch (ОтклонениеМорфологии ом){
+		} ловя (ОтклонениеМорфологии ом){
 			fail("Метод вызвал ошибку " + ом.getMessage());
 		}
 	}
 
 	/**
-	 * Test of закройСловари method, of class Morph.
+	 * Test of закройСловари method, of класс Morph.
 	 */
 	@Test
-	public void testЗакройСловари() {
-		System.out.println("ЗакройСловари");
-		try{
+	доступный тщетный testЗакройСловари() {
+		Система.вывод.печатьстр("ЗакройСловари");
+		попробуй{
 			Morph.закройСловари();
-		} catch (ОтклонениеМорфологии ом){
+		} ловя (ОтклонениеМорфологии ом){
 			fail("Метод вызвал ошибку " + ом.getMessage());
 		}
 	}
 
 	/**
-	 * Test of найдиСлово method, of class Morph.
+	 * Test of найдиСлово method, of класс Morph.
 	 */
 	@Test
-	public void testНайдиСлово() {
-		System.out.println("НайдиСлово");
-		Morph.Язык язык = null;
-		String слово = "";
-		РезультатСлова expResult = null;
-		РезультатСлова result = Morph.найдиСлово(язык, слово);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+	доступный тщетный testНайдиСлово() {
+		Система.вывод.печатьстр("НайдиСлово");
+		Morph.Язык язык = ничто;
+		Строка слово = "";
+		РезультатСлова ожидаемое = ничто;
+		РезультатСлова результат = Morph.найдиСлово(язык, слово);
+		assertEquals(ожидаемое, результат);
+		// TODO review the generated test code and remove the запасной call to fail.
+		fail("The test случай is a prototype.");
 	}
 
 	/**
-	 * Test of найдиФорму method, of class Morph.
+	 * Test of найдиФорму method, of класс Morph.
 	 */
 	@Test
-	public void testНайдиФорму() {
-		System.out.println("НайдиФорму");
-		Morph.Язык язык = null;
-		String слово = "";
-		Set<Граммема> граммемы = null;
-		ФормаСлова expResult = null;
-		ФормаСлова result = Morph.найдиФорму(язык, слово, граммемы);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+	доступный тщетный testНайдиФорму() {
+		Система.вывод.печатьстр("НайдиФорму");
+		Morph.Язык язык = ничто;
+		Строка слово = "";
+		Множество<Граммема> граммемы = ничто;
+		ФормаСлова ожидаемое = ничто;
+		ФормаСлова результат = Morph.найдиФорму(язык, слово, граммемы);
+		assertEquals(ожидаемое, результат);
+		// TODO review the generated test code and remove the запасной call to fail.
+		fail("The test случай is a prototype.");
 	}
 
 	/**
-	 * Test of формыСлова method, of class Morph.
+	 * Test of формыСлова method, of класс Morph.
 	 */
 	@Test
-	public void testФормыСлова() {
-		System.out.println("ФормыСлова");
-		Morph.Язык язык = null;
-		String слово = "";
-		РезультатСлова expResult = null;
-		РезультатСлова result = Morph.формыСлова(язык, слово);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+	доступный тщетный testФормыСлова() {
+		Система.вывод.печатьстр("ФормыСлова");
+		Morph.Язык язык = ничто;
+		Строка слово = "";
+		РезультатСлова ожидаемое = ничто;
+		РезультатСлова результат = Morph.формыСлова(язык, слово);
+		assertEquals(ожидаемое, результат);
+		// TODO review the generated test code and remove the запасной call to fail.
+		fail("The test случай is a prototype.");
 	}
 
 }

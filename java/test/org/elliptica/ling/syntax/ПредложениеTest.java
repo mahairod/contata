@@ -7,88 +7,86 @@
  * Данный программный код является собственностью Астафьева Антона Александровича
  * и может быть использован только с его личного разрешения
  */
-package org.elliptica.ling.syntax;
+пакет org.elliptica.ling.syntax;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import java.util.ПорядковыйСписок;
-import java.util.Список;
+внеся java.util.logging.Level;
+внеся java.util.logging.Logger;
+внеся javax.xml.bind.JAXBContext;
+внеся javax.xml.bind.JAXBException;
+внеся javax.xml.bind.Marshaller;
+внеся org.junit.BeforeClass;
+внеся org.junit.Test;
+внеся статичный org.junit.Assert.*;
+внеся java.util.ПорядковыйСписок;
+внеся эллиптика.ява.язык.Система;
 
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-public class ПредложениеTest {
+доступный класс ПредложениеTest {
 	
-	public ПредложениеTest() {
+	доступный ПредложениеTest() {
 	}
 	
-	static Class[] classes = new Class[]{
-			Предложение.class, Фрагмент.class, СвязьФрагментов.class, Слово.class, Диапазон.class
+	статичный Class[] classes = новый Class[]{
+			Предложение.класс, Фрагмент.класс, СвязьФрагментов.класс, Слово.класс, Диапазон.класс
 	};
 	
 	@BeforeClass
-	public static void setUpClass() {
-		try {
+	доступный статичный тщетный setUpClass() {
+		попробуй {
 			jc = JAXBContext.newInstance(classes);
-		} catch (JAXBException ex) {
-			Logger.getLogger(ПредложениеTest.class.getName()).log(Level.SEVERE, null, ex);
+		} ловя (JAXBException ex) {
+			Logger.getLogger(ПредложениеTest.класс.getName()).log(Level.SEVERE, ничто, ex);
 			fail(ex.getMessage());
 		}
 	}
 	
-	private static JAXBContext jc;
+	личный статичный JAXBContext jc;
 
 	/**
-	 * Test of getСписокСлов method, of class Предложение.
+	 * Test of getСписокСлов method, of класс Предложение.
 	 */
 	@Test
-	public void testGetСписокСлов() throws JAXBException {
-		System.out.println("getСписокСлов");
+	доступный тщетный testGetСписокСлов() кидает JAXBException {
+		Система.вывод.печатьстр("getСписокСлов");
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		
-		Предложение предложение = new Предложение();
+		Предложение предложение = новый Предложение();
 
-		предложение.списокСлов = new ПорядковыйСписок<>();
-		предложение.списокСлов.добавь(new Слово());
-		предложение.списокСлов.добавь(new Слово());
-		(предложение.списокСлов.дай(0).омонимы = new ПорядковыйСписок<>()).добавь(new Омоним());
+		предложение.списокСлов = новый ПорядковыйСписок<>();
+		предложение.списокСлов.добавь(новый Слово());
+		предложение.списокСлов.добавь(новый Слово());
+		(предложение.списокСлов.дай(0).омонимы = новый ПорядковыйСписок<>()).добавь(новый Омоним());
 		
-		Фрагмент фрагмент = new Фрагмент();
+		Фрагмент фрагмент = новый Фрагмент();
 		
-		предложение.списокФрагментов = new ПорядковыйСписок<>();
+		предложение.списокФрагментов = новый ПорядковыйСписок<>();
 		предложение.списокФрагментов.добавь(фрагмент);
 		предложение.списокФрагментов.добавь(фрагмент);
 		
-		фрагмент.варианты = new ПорядковыйСписок<>();
-		фрагмент.варианты.add(new Вариант());
-		фрагмент.союзы = new ПорядковыйСписок<>();
-		фрагмент.союзы.add(new ПозицияСоюза());
-		фрагмент.типы = new ПорядковыйСписок<>();
-		фрагмент.типы.add(new ТипФрагмента());
+		фрагмент.варианты = новый ПорядковыйСписок<>();
+		фрагмент.варианты.добавь(новый Вариант());
+		фрагмент.союзы = новый ПорядковыйСписок<>();
+		фрагмент.союзы.добавь(новый ПозицияСоюза());
+		фрагмент.типы = новый ПорядковыйСписок<>();
+		фрагмент.типы.добавь(новый ТипФрагмента());
 		фрагмент.предложение = предложение;
 		фрагмент.начало = 5;
 		фрагмент.конец = 20;
 		
-		предложение.списокСвязейФрагментов = new ПорядковыйСписок<>();
-		СвязьФрагментов связьФрагментов = new СвязьФрагментов();
+		предложение.списокСвязейФрагментов = новый ПорядковыйСписок<>();
+		СвязьФрагментов связьФрагментов = новый СвязьФрагментов();
 		предложение.списокСвязейФрагментов.добавь(связьФрагментов);
 
 		связьФрагментов.начало = 0;
 		связьФрагментов.конец = 23;
 		
-		marshaller.marshal(предложение, System.out);
+		marshaller.marshal(предложение, Система.вывод);
 
-		System.out.println();
+		Система.вывод.печатьстр();
 	}
 	
 }

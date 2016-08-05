@@ -14,7 +14,7 @@
 
 /**
  *
- * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
+ * @author Антон Александрович Астафьев {@literal <anton@astafiev.me>} (Anton Astafiev)
  */
 @XmlRootElement
 доступный класс ТипФрагмента расширяет ОбъектСинт {

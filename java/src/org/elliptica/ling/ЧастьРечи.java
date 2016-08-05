@@ -12,7 +12,7 @@
 
 /**
  *
- * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
+ * @author Антон Александрович Астафьев {@literal <anton@astafiev.me>} (Anton Astafiev)
  */
 доступный переч ЧастьРечи {
 	существительное, // 0

@@ -12,7 +12,7 @@
 
 /**
  *
- * @author Антон Александрович Астафьев <anton@astafiev.me>
+ * @author Антон Александрович Астафьев {@literal <anton@astafiev.me>}
  */
 доступный класс ОтклонениеМорфологии расширяет RuntimeException {
 

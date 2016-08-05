@@ -8,7 +8,7 @@
 
 /**
  *
- * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
+ * @author Антон Александрович Астафьев {@literal <anton@astafiev.me>} (Anton Astafiev)
  */
 абстрактный класс БазаСловоформы воплощает Словоформа {
 	@Подмени

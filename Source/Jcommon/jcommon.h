@@ -21,6 +21,17 @@ if(0 == var){\
 SIMPLE_CHECK_RETURN \
 NULL_CHECK_ONLY(var, NO_OBJ_MEM_ERROR)
 
+#define CHECK_EXPR_RETURN(test,message) \
+if( test ){\
+	throwException(message); \
+	return NULL;\
+};
+
+#define CHECK_EXPR_RETURN_VAL(test,message, val) \
+if( test ){\
+	throwException(message); \
+	return val;\
+};
 
 #define SIMPLE_CHECK_EXC \
 if(env_ptr->ExceptionOccurred()){\

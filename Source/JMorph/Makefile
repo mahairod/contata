@@ -2,7 +2,7 @@ VPATH = ../
 
 include ../common/common_mak
 
-common_parms := -I. $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers -fvisibility=hidden
+common_parms := -I. -I../Jcommon $(JAVA_INCLUDES) -std=c++0x -fextended-identifiers -fvisibility=hidden
 
 include ../common/common_mak
 
@@ -20,14 +20,15 @@ objects = JMorph.o$(ct) ../Jcommon/JByteArray.o$(ct) ../Jcommon/jcommon.o$(ct) \
 ../LemmatizerLib/MorphAutomBuilder.o$(ct) \
 ../LemmatizerLib/MorphDict.o$(ct) \
 ../LemmatizerLib/MorphDictBuilder.o$(ct) \
-../LemmatizerLib/../common/PlmLine.o$(ct) \
+../common/PlmLine.o$(ct) \
 ../LemmatizerLib/Predict.o$(ct) \
-../LemmatizerLib/../common/MorhologyHolder.o$(ct) \
+../common/MorphologyHolder.o$(ct) \
 ../AgramtabLib/EngGramTab.o$(ct) \
 ../AgramtabLib/GerGramTab.o$(ct) \
 ../AgramtabLib/RusGramTab.o$(ct) \
 ../AgramtabLib/agramtab_.o$(ct) \
-../MorphWizardLib/wizard.o$(ct) ../PCRE/pcre_rml.o$(ct) \
+../MorphWizardLib/wizard.o$(ct) \
+../PCRE/pcre_rml.o$(ct) \
 ../StructDictLib/ItemsContainer.o$(ct) \
 ../StructDictLib/Ross.o$(ct) \
 ../StructDictLib/TempArticle.o$(ct) \
@@ -45,9 +46,10 @@ objects = JMorph.o$(ct) ../Jcommon/JByteArray.o$(ct) ../Jcommon/jcommon.o$(ct) \
 ../GraphanLib/UnitHolder.o$(ct) \
 ../GraphanLib/GraphanDicts.o$(ct) \
 ../GraphanLib/Sentences.o$(ct) \
-$(PCRE_OBJECTS_LIB)/libpcre.a \
-$(PCRE_OBJECTS_LIB)/libpcrecpp.a \
-$(PCRE_OBJECTS_LIB)/libpcreposix.a
+
+#$(PCRE_OBJECTS_LIB)/libpcre.a \
+#$(PCRE_OBJECTS_LIB)/libpcrecpp.a \
+#$(PCRE_OBJECTS_LIB)/libpcreposix.a
 
 
 libs =  ../PCRE/libPCRE$(ct).$(lib_ext)

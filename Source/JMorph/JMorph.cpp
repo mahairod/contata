@@ -30,8 +30,8 @@
 #include "../LemmatizerLib/Lemmatizers.h"
 #include "../LemmatizerLib/Paradigm.h"
 
-#include "JByteArray.h"
-#include "jcommon.h"
+#include <JByteArray.h>
+#include <jcommon.h>
 
 //jni
 static jclass setClazz=0;
@@ -289,14 +289,14 @@ jobject GenerateMorphInfo(JNIEnv *env, jclass clazz, jni_dictionary& dic, string
 	return wordresult;
 
 //	}catch(CExpc e){
-//		throwException(env, "C++ exception: CExpc: " + e.m_strCause);
+//		throwException("C++ exception: CExpc: " + e.m_strCause);
 //	}catch(int e){
 //		string errstr("C++ exception: int: ");
 //		errstr += e;
 //		errstr += ".";
-//		throwException(env, errstr);
+//		throwException( errstr);
 //	}catch(...){
-//		throwException(env, "Unknown C++ exception.");
+//		throwException("Unknown C++ exception.");
 //	}
 //	return NULL;
 
@@ -319,7 +319,7 @@ bool InitMorphologySystem(JNIEnv *env, jni_dictionary &dic){
 		case morphEnglish :
 		case morphGerman:
 		default:
-			throwException(env, "assertion error: A1");
+			throwException("assertion error: A1");
 			return false;
 	}
 
@@ -328,15 +328,11 @@ bool InitMorphologySystem(JNIEnv *env, jni_dictionary &dic){
 	string strError;
 	if (!dic.pLemmatizer->LoadDictionariesRegistry(strError)){
 		string err = "Cannot load " + langua_str + " morphological dictionary. Error details: " + strError;
-		throwException(env, err);
+		throwException(err);
 		return false;
 	}
 	dic.pAgramtab = new Y;
-	if (!dic.pAgramtab->LoadFromRegistry()){
-		string err = "Cannot load " + langua_str + " gramtab.";
-		throwException(env, err);
-		return false;
-	}
+	CHECK_EXPR_RETURN_VAL(!dic.pAgramtab->LoadFromRegistry(), "Cannot load " + langua_str + " gramtab.", false);
 	return true;
 }
 
@@ -367,24 +363,15 @@ UTIL_METHOD(jobject, lookupFormImpl) (JNIEnv *env, jclass clazz, jint languageId
 
 static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
 	try{
-		if(!inited||dic.pAgramtab==0||dic.pLemmatizer==0){
-			throwException(env, "Словари не загружены. Сначала вызови Morph.приготовьСловари!");
-			return NULL;
-		}
-		if(languageId!=0){
-			throwException(env, "Поддерживается только русский язык.");
-			return NULL;
-		}
+		CHECK_EXPR_RETURN(!inited || dic.pAgramtab==0 || dic.pLemmatizer==0, "Словари не загружены. Сначала вызови Morph.приготовьСловари!");
+		CHECK_EXPR_RETURN(languageId!=0, "Поддерживается только русский язык.");
 		NULL_CHECK_ONLY(word, "word is null")
 
 		try {
-			ByteArray bArray(env, word);
+			ByteArray bArray(word);
 			string s( (char*) bArray.b(), bArray.len() );
 			Trim(s);
-			if (s.empty()){
-				throwException(env, "Empty or whitespace-only string instead of a word.");
-				return NULL;
-			}
+			CHECK_EXPR_RETURN(s.empty(), "Пустая либо пробельная строка вместо слова.");
 			if (normal){
 				return GetMorphForms(env, clazz, dic, s);
 			} else {
@@ -395,14 +382,14 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
 		}
 	}catch(CExpc& e){
 		string err = "C++ exception: CExpc: " + e.m_strCause;
-		throwException(env, err);
+		throwException(err);
 	}catch(int e){
 		string errstr("C++ exception: int: ");
 		errstr += e;
 		errstr += ".";
-		throwException(env, errstr);
+		throwException(errstr);
 	}catch(...){
-		throwException(env, "Unknown C++ exception.");
+		throwException("Unknown C++ exception.");
 	}
 	return NULL;
 }
@@ -458,14 +445,8 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	CHECKJAVAERROR( method_wordresult_new==NULL || env->ExceptionOccurred(), "метод создайРезультатСлова не получен")
 
 	inited=false;
-	if(languagesBitSet==0){
-		throwException(env, "Набор языков пуст.");
-		return;
-	}
-	if(languagesBitSet!=1){
-		throwException(env, "JMorph поддерживает только русский язык.");
-	return;
-	}
+	CHECK_EXPR_RETURN_VAL(languagesBitSet==0, "Набор языков пуст.", );
+	CHECK_EXPR_RETURN_VAL(languagesBitSet!=1, "JMorph поддерживает только русский язык.", );
 	dic.Language=morphRussian;
 	try{
 		//LOADING DICTS
@@ -481,7 +462,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 				bResult = InitMorphologySystem<CLemmatizerGerman, CGerGramTab>(env,dic);
 				break; */
 			default:
-				throwException(env,"assertion error: A2.");
+				throwException("assertion error: A2.");
 				return;
 		};
 		if (!bResult){
@@ -534,16 +515,16 @@ UTIL_METHOD(void, closeImpl) (JNIEnv *env, jclass clazz){
 		return;//ok
 	}catch(CExpc& e){
 		string err = string ("C++ exception: CExpc: ") + e.m_strCause;
-		throwException(env, err);
+		throwException(err);
 		return;
 	}catch(int e){
 		string errstr("C++ exception: int: ");
 		errstr += e;
 		errstr += ".";
-		throwException(env, errstr);
+		throwException(errstr);
 		return;
 	}catch(...){
-		throwException(env, "Unknown C++ exception.");
+		throwException("Unknown C++ exception.");
 		return;
 	}
 }

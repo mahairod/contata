@@ -2,7 +2,9 @@ VPATH = ../
 
 include ../common/common_mak
 
-common_parms := -I. $(JAVA_INCLUDES) -I../SynanDmnLib -I../common -I../Jcommon -std=c++11 -fextended-identifiers -fvisibility=hidden -g -rdynamic -D USE_TRIGRAM_LEMMATIZER
+common_parms := -I. $(JAVA_INCLUDES) -I../SynanDmnLib -I../common -I../Jcommon -std=c++11 -fextended-identifiers -fvisibility=hidden -g -rdynamic -D USE_TRIGRAM_LEMMATIZER -D HAVE_CONFIG_H
+
+#-D LINK_SIZE=2
 
 include ../common/common_mak
 

@@ -93,8 +93,8 @@ jclass getGlobalClassRef(const char* const class_name);
 #define FLD_JOBJ_REF	"указатель"
 
 #define CLASS_HSET		"java/util/HashSet"
-#define CLASS_LIST		"java/util/List"
-#define CLASS_STRG		"java/lang/String"
+#define CLASS_LIST		"java/util/Список"
+#define CLASS_STRG		"java/lang/Строка"
 #define CLASS_OBJT		"java/lang/Object"
 
 #define SIG_VRES		")V"

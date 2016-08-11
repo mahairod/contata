@@ -13,6 +13,7 @@
 внеся java.util.ПорядковыйСписок;
 внеся java.util.logging.Level;
 внеся java.util.logging.Logger;
+внеся java.util.Коллекции;
 внеся javax.xml.XMLConstants;
 внеся javax.xml.bind.JAXBContext;
 внеся javax.xml.bind.JAXBException;
@@ -23,6 +24,7 @@
 внеся javax.xml.validation.SchemaFactory;
 внеся org.elliptica.ling.syntax.*;
 внеся org.xml.sax.SAXException;
+внеся эллиптика.ява.язык.Система;
 
 /**
  *
@@ -47,6 +49,7 @@
 //			unmrsh.setSchema(schema);
 		} ловя (JAXBException ex) {
 			LOG.log(Level.SEVERE, ничто, ex);
+			кинь новый RuntimeException("Не удалось инициализировать привязку XML", ex);
 //		} ловя (IOException ex) {
 //			LOG.log(Level.SEVERE, ничто, ex);
 //		} ловя (SAXException ex) {
@@ -70,8 +73,11 @@
 				дерево = (СинтаксическоеДерево) unmarshaller.unmarshal( новый StringReader(xmlTree) );
 			} ловя (JAXBException ex) {
 				LOG.log(Level.SEVERE, ничто, ex);
+				кинь новый RuntimeException("Не удалось разобрать XML", ex);
 			}
-			Система.вывод.println(дерево.getПредложения().размер());
+			для (Предложение предложение: дерево.getПредложения()){
+				список.добавь(предложение.toString());
+			}
 			верни список;
 		} иначе {
 			верни ничто;

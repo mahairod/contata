@@ -14,22 +14,31 @@
 внеся java.awt.Graphics;
 внеся java.awt.Point;
 внеся java.util.StringTokenizer;
-внеся java.util.Vector;
-
+внеся java.util.ПорядковыйСписок;
+внеся java.util.Список;
+внеся org.elliptica.ling.syntax.Группа;
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 класс WordArc {
 
+	доступный WordArc() {
+		m_ChildArcs = новый ПорядковыйСписок();
+		m_ParentGroupLeg = новый Point();
+	}
+
 	доступный WordArc(цел FirstWord, цел LastWord, логическое val) {
+		это();
 		m_FirstWord = FirstWord;
 		m_LastWord = LastWord;
-		m_ChildArcs = новый Vector();
-		m_ParentGroupLeg = новый Point();
 		m_bGroupArc = val;
-		m_ChildArcs = новый Vector();
-		m_ParentGroupLeg = новый Point();
+	}
+
+	доступный WordArc(Группа группа, цел смещ) {
+		это(смещ + группа.getНачало(), смещ + группа.getКонец(), группа.getТип().equals("gr") || группа.getТип().equals("cl") );
+		m_bIsSubj = группа.getТип().equals("sp");
+		m_strName = группа.getОписание();
 	}
 
 	защищённый тщетный Init(Строка strArc) {
@@ -40,7 +49,7 @@
 		Строка ss;
 		ss = strTok.nextToken();
 		ss = ss.trim();
-		//СтрокаBuffer ssBuf = новый StringBuffer(ss);
+		//StringBuffer ssBuf = новый StringBuffer(ss);
 		{
 			Строка[] nums = ss.split(",");
 			если (nums.length < 2) {
@@ -73,27 +82,20 @@
 	}
 
 	доступный WordArc(Строка strArc) {
-		m_ChildArcs = новый Vector();
-		m_ParentGroupLeg = новый Point();
+		это();
 		Init(strArc);
 	}
 
 	доступный WordArc(цел FirstWord, цел LastWord) {
-		m_FirstWord = FirstWord;
-		m_LastWord = LastWord;
-		m_ChildArcs = новый Vector();
-		m_ParentGroupLeg = новый Point();
-		m_bGroupArc = истина;
-		m_ChildArcs = новый Vector();
-		m_ParentGroupLeg = новый Point();
+		это(FirstWord, LastWord, истина);
 	}
 
 	доступный тщетный addWordArc(WordArc arc) {
-		m_ChildArcs.addElement(arc);
+		m_ChildArcs.add(arc);
 	}
 
 	доступный тщетный addWordArc(цел FirstWord, цел LastWord) {
-		m_ChildArcs.addElement(новый WordArc(FirstWord, LastWord));
+		m_ChildArcs.add(новый WordArc(FirstWord, LastWord));
 	}
 
 	личный Point getLeftLegPoint(Graphics g, VisualSynAnPanel SynAnPanel) {
@@ -102,7 +104,7 @@
 		Point leftPoint = новый Point();
 		логическое bSet = ложь;
 		если (m_ChildArcs.size() > 0) {
-			WordArc wordArcLeft = (WordArc) m_ChildArcs.elementAt(0);
+			WordArc wordArcLeft = m_ChildArcs.get(0);
 			если ((wordArcLeft.m_FirstWord == m_FirstWord) && ((wordArcLeft.m_bGroupArc && m_bGroupArc) || (!wordArcLeft.m_bGroupArc && !m_bGroupArc) || (!wordArcLeft.m_bGroupArc && m_bGroupArc))) {
 				leftPoint = wordArcLeft.getParentGroupLeg();
 				bSet = истина;
@@ -126,7 +128,7 @@
 		WordPannel WordPannelRight = SynAnPanel.getWordPannel(m_LastWord);
 		логическое bSet = ложь;
 		если (m_ChildArcs.size() >= 1) {
-			WordArc wordArcRight = (WordArc) m_ChildArcs.elementAt(m_ChildArcs.size() - 1);
+			WordArc wordArcRight = m_ChildArcs.get(m_ChildArcs.size() - 1);
 			если ((wordArcRight.m_LastWord == m_LastWord) && ((wordArcRight.m_bGroupArc && m_bGroupArc) || (!wordArcRight.m_bGroupArc && !m_bGroupArc) || (!wordArcRight.m_bGroupArc && m_bGroupArc))) {
 				rightPoint = wordArcRight.getParentGroupLeg();
 				bSet = истина;
@@ -198,7 +200,7 @@
 	доступный тщетный Draw(Graphics g, VisualSynAnPanel SynAnPanel) {
 		m_Height = getHeight();
 		для (цел i = 0; i < m_ChildArcs.size(); i++) {
-			WordArc wordArc = (WordArc) m_ChildArcs.elementAt(i);
+			WordArc wordArc = m_ChildArcs.get(i);
 			wordArc.Draw(g, SynAnPanel);
 		}
 		WordPannel WordPannelLeft = SynAnPanel.getWordPannel(m_FirstWord);
@@ -243,7 +245,7 @@
 	личный цел calculateHeight() {
 		цел Height = 0;
 		для (цел i = 0; i < m_ChildArcs.size(); i++) {
-			WordArc wordArc = (WordArc) m_ChildArcs.elementAt(i);
+			WordArc wordArc = m_ChildArcs.get(i);
 			цел ii = wordArc.calculateHeight();
 			если (ii > Height) {
 				Height = ii;
@@ -262,7 +264,7 @@
 	личный цел m_Height = 0;
 	личный логическое m_bGroupArc = истина;
 	доступный логическое m_bIsSubj = ложь;
-	личный Vector m_ChildArcs;
+	личный Список<WordArc> m_ChildArcs;
 	личный логическое m_IsGroup;
 
 }

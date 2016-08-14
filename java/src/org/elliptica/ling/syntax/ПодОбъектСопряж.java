@@ -1,27 +1,20 @@
-
-import java.util.List;
-
 /*
  * Авторское право принадлежит Антону Александровичу Астафьеву <anton@astafiev.me> (Anton Astafiev) ѱ.
  * Все права защищены и охраняются законом.
  * Copyright (c) 2016 Антон Александрович Астафьев <anton@astafiev.me> (Anton Astafiev). All rights reserved.
- * 
+ *
  *  Собственная лицензия Астафьева
  * Данный программный код является собственностью Астафьева Антона Александровича
  * и может быть использован только с его личного разрешения
  */
 
+пакет org.elliptica.ling.syntax;
+
 /**
  *
- * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
+ * @author Антон Астафьев
+ * @param <Родит> тип родительского объекта
  */
-class HomonymNumbers2WorddArcs {
-	public HomonymNumbers m_HomonymNumbers;
-	public List m_Arcs;
-	public List<WordArc> m_SubjArcs;
-
-	public boolean equals(HomonymNumbers homonymNumbers) {
-		return m_HomonymNumbers.compareTo(homonymNumbers) == 0;
-	}
-
+доступный сопряжение ПодОбъектСопряж<Родит расширяет ОбъектСинт> {
+	Родит родитель();
 }

@@ -15,6 +15,7 @@
 внеся javax.xml.bind.annotation.XmlRootElement;
 внеся java.util.ПорядковыйСписок;
 внеся java.util.Список;
+внеся javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -63,6 +64,9 @@
 		это.числоПунктЗнаков = числоПунктЗнаков;
 	}
 
+	тщетный afterUnmarshal(Unmarshaller unmarshaller, Object parent){
+		предложение = (Предложение) parent;
+	}
 
 	Список<Вариант> варианты = новый ПорядковыйСписок<>();
 	Список<ПозицияСоюза> союзы = новый ПорядковыйСписок<>();

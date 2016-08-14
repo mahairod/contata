@@ -12,12 +12,12 @@
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-класс Homonym {
+class Омоним {
 
-	доступный Homonym(Строка _Lemma) {
+	public Омоним(String _Lemma) {
 		m_Lemma = _Lemma;
 	}
-	доступный Строка m_Lemma;
-	доступный Строка m_strGram;
+	public String m_Lemma;
+	public String m_strGram;
 
 }

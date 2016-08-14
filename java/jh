@@ -1,0 +1,8 @@
+echo Параметры: « $* »
+class=`echo $1 | 
+  sed -e s/"build\/classes\/"// |
+  sed -e s/"\.class"//|
+  sed -e s/"\/"/"\."/g`
+
+echo Запускаем $class
+/home/mahairod/EllipticaJDK/build/elliptica-b17/images/j2sdk-image/bin/javah -d jni -cp build/classes/ $class

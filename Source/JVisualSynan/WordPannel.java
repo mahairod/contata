@@ -23,8 +23,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  *
@@ -36,20 +37,20 @@ class WordPannel extends Panel implements MouseListener, ActionListener {
 	public int m_iActiveHomonym = 0;
 	private boolean m_bSizeCalculated = false;
 	VisualSynAnPanel m_visualSynAnPanel;
-	Vector m_Homonyms;
+	List<Омоним> m_Homonyms;
 
 	class VisualSynAnMouseMoveListener extends MouseAdapter implements MouseMotionListener {
 
-		private VisualSynAn m_VisualSynAnApplet;
+		private SynanViewer synanViewer;
 
-		public VisualSynAnMouseMoveListener(VisualSynAn VisualSynAnApplet) {
-			m_VisualSynAnApplet = VisualSynAnApplet;
+		public VisualSynAnMouseMoveListener(SynanViewer synanViewer) {
+			this.synanViewer = synanViewer;
 		}
 
 		public void mouseMoved(MouseEvent e) {
 			if ((m_iActiveHomonym >= 0) && (m_iActiveHomonym < m_Homonyms.size())) {
-				Homonym hom = (Homonym) m_Homonyms.elementAt(m_iActiveHomonym);
-				m_VisualSynAnApplet.updateLabel(hom.m_Lemma + " " + hom.m_strGram);
+				Омоним hom = m_Homonyms.get(m_iActiveHomonym);
+				synanViewer.updateLabel(hom.m_Lemma + " " + hom.m_strGram);
 			}
 		}
 
@@ -62,13 +63,13 @@ class WordPannel extends Panel implements MouseListener, ActionListener {
 		if (!strTok.hasMoreTokens()) {
 			return;
 		}
-		Homonym homonym = new Homonym("");
+		Омоним homonym = new Омоним("");
 		homonym.m_Lemma = strTok.nextToken();
 		if (!strTok.hasMoreTokens()) {
 			return;
 		}
 		homonym.m_strGram = strTok.nextToken();
-		m_Homonyms.addElement(homonym);
+		m_Homonyms.add(homonym);
 	}
 
 	public String Decode(String _Word, String mask, String Symbol) {
@@ -100,12 +101,12 @@ class WordPannel extends Panel implements MouseListener, ActionListener {
 		super();
 		m_Word = Decode(_Word);
 		m_visualSynAnPanel = visualSynAnPanel;
-		m_Homonyms = new Vector();
+		m_Homonyms = new ArrayList<>();
 		/*
-		m_Homonyms.addElement(new Homonym(m_Word));
+		m_Homonyms.add(new Омоним(m_Word));
 		if( m_Word == "$$")
-		m_Homonyms.addElement(new Homonym(m_Word));            */
-		addMouseMotionListener(new VisualSynAnMouseMoveListener(m_visualSynAnPanel.m_VisualSynAnApplet));
+		m_Homonyms.add(new Омоним(m_Word));            */
+		addMouseMotionListener(new VisualSynAnMouseMoveListener(m_visualSynAnPanel.synanViewer));
 		addMouseListener(this);
 	}
 
@@ -187,7 +188,7 @@ class WordPannel extends Panel implements MouseListener, ActionListener {
 		if ((mouseEvent.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
 			PopupMenu P = new PopupMenu();
 			for (int i = 0; i < m_Homonyms.size(); i++) {
-				MenuItem item = new MenuItem(((Homonym) m_Homonyms.elementAt(i)).m_Lemma);
+				MenuItem item = new MenuItem((m_Homonyms.get(i)).m_Lemma);
 				item.setActionCommand(Integer.toString(i));
 				P.add(item);
 			}

@@ -15,7 +15,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
+import java.util.List;
 /**
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
@@ -89,11 +89,11 @@ class WordArc {
 	}
 
 	public void addWordArc(WordArc arc) {
-		m_ChildArcs.addElement(arc);
+		m_ChildArcs.add(arc);
 	}
 
 	public void addWordArc(int FirstWord, int LastWord) {
-		m_ChildArcs.addElement(new WordArc(FirstWord, LastWord));
+		m_ChildArcs.add(new WordArc(FirstWord, LastWord));
 	}
 
 	private Point getLeftLegPoint(Graphics g, VisualSynAnPanel SynAnPanel) {
@@ -102,7 +102,7 @@ class WordArc {
 		Point leftPoint = new Point();
 		boolean bSet = false;
 		if (m_ChildArcs.size() > 0) {
-			WordArc wordArcLeft = (WordArc) m_ChildArcs.elementAt(0);
+			WordArc wordArcLeft = m_ChildArcs.get(0);
 			if ((wordArcLeft.m_FirstWord == m_FirstWord) && ((wordArcLeft.m_bGroupArc && m_bGroupArc) || (!wordArcLeft.m_bGroupArc && !m_bGroupArc) || (!wordArcLeft.m_bGroupArc && m_bGroupArc))) {
 				leftPoint = wordArcLeft.getParentGroupLeg();
 				bSet = true;
@@ -126,7 +126,7 @@ class WordArc {
 		WordPannel WordPannelRight = SynAnPanel.getWordPannel(m_LastWord);
 		boolean bSet = false;
 		if (m_ChildArcs.size() >= 1) {
-			WordArc wordArcRight = (WordArc) m_ChildArcs.elementAt(m_ChildArcs.size() - 1);
+			WordArc wordArcRight = m_ChildArcs.get(m_ChildArcs.size() - 1);
 			if ((wordArcRight.m_LastWord == m_LastWord) && ((wordArcRight.m_bGroupArc && m_bGroupArc) || (!wordArcRight.m_bGroupArc && !m_bGroupArc) || (!wordArcRight.m_bGroupArc && m_bGroupArc))) {
 				rightPoint = wordArcRight.getParentGroupLeg();
 				bSet = true;
@@ -198,7 +198,7 @@ class WordArc {
 	public void Draw(Graphics g, VisualSynAnPanel SynAnPanel) {
 		m_Height = getHeight();
 		for (int i = 0; i < m_ChildArcs.size(); i++) {
-			WordArc wordArc = (WordArc) m_ChildArcs.elementAt(i);
+			WordArc wordArc = m_ChildArcs.get(i);
 			wordArc.Draw(g, SynAnPanel);
 		}
 		WordPannel WordPannelLeft = SynAnPanel.getWordPannel(m_FirstWord);
@@ -243,7 +243,7 @@ class WordArc {
 	private int calculateHeight() {
 		int Height = 0;
 		for (int i = 0; i < m_ChildArcs.size(); i++) {
-			WordArc wordArc = (WordArc) m_ChildArcs.elementAt(i);
+			WordArc wordArc = m_ChildArcs.get(i);
 			int ii = wordArc.calculateHeight();
 			if (ii > Height) {
 				Height = ii;
@@ -262,7 +262,7 @@ class WordArc {
 	private int m_Height = 0;
 	private boolean m_bGroupArc = true;
 	public boolean m_bIsSubj = false;
-	private Vector m_ChildArcs;
+	private List<WordArc> m_ChildArcs;
 	private boolean m_IsGroup;
 
 }

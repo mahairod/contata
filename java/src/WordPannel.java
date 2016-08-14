@@ -8,6 +8,7 @@
  * и может быть использован только с его личного разрешения
  */
 
+внеся org.elliptica.ling.syntax.Омоним;
 внеся java.awt.Color;
 внеся java.awt.Dimension;
 внеся java.awt.Font;
@@ -23,8 +24,10 @@
 внеся java.awt.event.MouseEvent;
 внеся java.awt.event.MouseListener;
 внеся java.awt.event.MouseMotionListener;
+внеся java.util.Список;
+внеся java.util.ArrayList;
 внеся java.util.StringTokenizer;
-внеся java.util.Vector;
+внеся org.elliptica.ling.Граммема;
 
 /**
  *
@@ -36,20 +39,25 @@
 	доступный цел m_iActiveHomonym = 0;
 	личный логическое m_bSizeCalculated = ложь;
 	VisualSynAnPanel m_visualSynAnPanel;
-	Vector m_Homonyms;
+	Список<Омоним> m_Homonyms;
 
 	класс VisualSynAnMouseMoveListener расширяет MouseAdapter воплощает MouseMotionListener {
 
-		личный VisualSynAn m_VisualSynAnApplet;
+		личный SynanViewer synanViewer;
 
-		доступный VisualSynAnMouseMoveListener(VisualSynAn VisualSynAnApplet) {
-			m_VisualSynAnApplet = VisualSynAnApplet;
+		доступный VisualSynAnMouseMoveListener(SynanViewer synanViewer) {
+			это.synanViewer = synanViewer;
 		}
 
 		доступный тщетный mouseMoved(MouseEvent e) {
 			если ((m_iActiveHomonym >= 0) && (m_iActiveHomonym < m_Homonyms.size())) {
-				Homonym hom = (Homonym) m_Homonyms.elementAt(m_iActiveHomonym);
-				m_VisualSynAnApplet.updateLabel(hom.m_Lemma + " " + hom.m_strGram);
+				Омоним hom = m_Homonyms.get(m_iActiveHomonym);
+				если (hom == ничто) верни;
+				Строка чр = (hom.дайЧастьРечи() == ничто) ? " <нет>" : " " + hom.дайЧастьРечи().кратко();
+				для (Граммема граммема: hom.дайГраммемы()){
+					чр += ", " + граммема.коротко();
+				}
+				synanViewer.updateLabel(hom.getЗначение() + чр);
 			}
 		}
 
@@ -62,13 +70,13 @@
 		если (!strTok.hasMoreTokens()) {
 			верни;
 		}
-		Homonym homonym = новый Homonym("");
-		homonym.m_Lemma = strTok.nextToken();
+		Омоним homonym = новый Омоним();
+		homonym.setЗначение(strTok.nextToken());
 		если (!strTok.hasMoreTokens()) {
 			верни;
 		}
-		homonym.m_strGram = strTok.nextToken();
-		m_Homonyms.addElement(homonym);
+//		homonym.setЧастьРечи(ЧастьРечи.valueOf(strTok.nextToken()));
+		m_Homonyms.add(homonym);
 	}
 
 	доступный Строка Decode(Строка _Word, Строка mask, Строка Symbol) {
@@ -100,12 +108,12 @@
 		поверх();
 		m_Word = Decode(_Word);
 		m_visualSynAnPanel = visualSynAnPanel;
-		m_Homonyms = новый Vector();
+		m_Homonyms = новый ArrayList<>();
 		/*
-		m_Homonyms.addElement(новый Homonym(m_Word));
+		m_Homonyms.add(новый Омоним(m_Word));
 		если( m_Word == "$$")
-		m_Homonyms.addElement(новый Homonym(m_Word));            */
-		addMouseMotionListener(новый VisualSynAnMouseMoveListener(m_visualSynAnPanel.m_VisualSynAnApplet));
+		m_Homonyms.add(новый Омоним(m_Word));            */
+		addMouseMotionListener(новый VisualSynAnMouseMoveListener(m_visualSynAnPanel.synanViewer));
 		addMouseListener(это);
 	}
 
@@ -187,7 +195,7 @@
 		если ((mouseEvent.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
 			PopupMenu P = новый PopupMenu();
 			для (цел i = 0; i < m_Homonyms.size(); i++) {
-				MenuItem item = новый MenuItem(((Homonym) m_Homonyms.elementAt(i)).m_Lemma);
+				MenuItem item = новый MenuItem(m_Homonyms.get(i).getЗначение());
 				item.setActionCommand(Integer.toString(i));
 				P.add(item);
 			}

@@ -1,5 +1,6 @@
 
-внеся java.util.Vector;
+внеся java.util.ПорядковыйСписок;
+внеся java.util.Список;
 
 /*
  * Авторское право принадлежит Антону Александровичу Астафьеву <anton@astafiev.me> (Anton Astafiev) ѱ.
@@ -16,9 +17,9 @@
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
 класс HomonymNumbers2WorddArcs {
-	доступный HomonymNumbers m_HomonymNumbers;
-	доступный Vector m_Arcs;
-	доступный Vector m_SubjArcs;
+	доступный HomonymNumbers m_HomonymNumbers = новый HomonymNumbers();
+	доступный Список<WordArc> m_Arcs = новый ПорядковыйСписок<>();
+	доступный Список<WordArc> m_SubjArcs = новый ПорядковыйСписок<>();
 
 	доступный логическое equals(HomonymNumbers homonymNumbers) {
 		верни m_HomonymNumbers.compareTo(homonymNumbers) == 0;

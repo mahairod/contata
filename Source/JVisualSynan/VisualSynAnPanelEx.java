@@ -12,12 +12,6 @@
  *
  * @author Антон Астафьев <anton@astafiev.me> (Anton Astafiev)
  */
-class Homonym {
-
-	public Homonym(String _Lemma) {
-		m_Lemma = _Lemma;
-	}
-	public String m_Lemma;
-	public String m_strGram;
+public class VisualSynAnPanelEx extends VisualSynAnPanel {
 
 }

@@ -42,9 +42,9 @@ std::string closeTag(std::string tag) {
 }
 
 std::ostream& JObjectSynt::operator>>(std::ostream& ss) const {
-	ss << '<' << className() << '>';
+	ss << openTag( className() );
 	this->internal_export(ss);
-	ss << "</" << className() << '>';
+	ss << closeTag( className() );
 	return ss;
 }
 

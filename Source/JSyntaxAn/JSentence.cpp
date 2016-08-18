@@ -34,5 +34,6 @@ void JSentence::internal_export(std::ostream& ss) const {
 }
 
 JWord& JSentence::addWord(std::string word){
-	return *words.insert(words.end(), JWord(word));
+	int wordId = words.size();
+	return *words.insert(words.end(), JWord(word, wordId));
 }

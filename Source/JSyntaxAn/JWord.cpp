@@ -9,8 +9,9 @@
 
 #include "JWord.h"
 
-JWord::JWord(std::string val) {
+JWord::JWord(std::string val, int _id) {
 	value = val;
+	id = _id;
 }
 
 JWord::~JWord() {
@@ -34,5 +35,6 @@ void JWord::internal_export(std::ostream& ss) const {
 }
 
 JHomonym& JWord::addHomonym(std::string hom){
-	return *homonyms.insert(homonyms.end(), JHomonym(hom));
+	int homInd = homonyms.size();
+	return *homonyms.insert(homonyms.end(), JHomonym(hom, homInd, id));
 }

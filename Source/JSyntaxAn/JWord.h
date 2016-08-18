@@ -14,13 +14,14 @@
 
 class JWord : public JObjectSynt {
 public:
-	JWord(std::string val);
+	JWord(std::string val, int _id);
 	JHomonym& addHomonym(std::string word);
 	virtual ~JWord();
 protected:
 	std::string className() const;
 	void internal_export(std::ostream& ss) const;
 private:
+	int id;
 	std::string value;
 	std::vector<JHomonym> homonyms;
 };

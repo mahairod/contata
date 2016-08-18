@@ -9,8 +9,10 @@
 
 #include "JHomonym.h"
 
-JHomonym::JHomonym(std::string val) {
+JHomonym::JHomonym(std::string val, int _id, int _wordId) {
 	value = val;
+	id = _id;
+	wordId = _wordId;
 }
 
 JHomonym::~JHomonym() {
@@ -24,5 +26,6 @@ void JHomonym::internal_export(std::ostream& ss) const {
 	JObjectSynt::internal_export(ss);
 	//-- members here
 	tag(ss, "значение",	value);
+	ss << openTag("опред") << className() << ":" << wordId << ":" << id << closeTag("опред");
 	//---------------
 }

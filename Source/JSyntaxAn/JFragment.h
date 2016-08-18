@@ -12,13 +12,20 @@
 #include "JVariant.h"
 #include "JConjunction.h"
 #include "JFragmentType.h"
+#include "JHomonymRef.h"
 #include <vector>
 
 class JFragment : public JPeriod {
 public:
 	JFragment();
 	virtual ~JFragment();
+
 	JVariant& addVariant(const JVariant& v);
+	JFragmentType& addType(const JFragmentType& t);
+	JConjunction& addConjunction(const JConjunction& c);
+
+	void setPuncMarkNum(int markNum);
+	void setRelativeWord(const JHomonymRef homonym);
 protected:
 	std::string className() const;
 	void internal_export(std::ostream& ss) const;
@@ -28,6 +35,7 @@ private:
 	std::vector<JFragmentType> types;
 	JObjectSynt antecedent;
 	int puncMarkNum;
+	JHomonymRef relativeWord;
 };
 
 #endif	/* _JFRAGMENT_H_ */

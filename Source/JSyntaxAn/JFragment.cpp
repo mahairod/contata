@@ -20,6 +20,21 @@ JVariant& JFragment::addVariant(const JVariant& v){
 	return *variants.insert(variants.end(), v);
 }
 
+JFragmentType& JFragment::addType(const JFragmentType& t){
+	return *types.insert(types.end(), t);
+}
+
+JConjunction& JFragment::addConjunction(const JConjunction& c){
+	return *conjunctions.insert(conjunctions.end(), c);
+}
+
+void JFragment::setPuncMarkNum(int markNum){
+	puncMarkNum = markNum;
+}
+
+void JFragment::setRelativeWord(const JHomonymRef homonym){
+	this->relativeWord = homonym;
+}
 
 std::string JFragment::className() const {
 	return "фрагмент";
@@ -48,6 +63,7 @@ void JFragment::internal_export(std::ostream& ss) const {
 
 	tag(ss, "предшествующий", antecedent);
 	tag(ss, "числоПунктЗнаков", puncMarkNum);
+	tag(ss, "родственноеСлово", relativeWord);
 
 	//---------------
 }

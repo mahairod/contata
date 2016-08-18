@@ -12,13 +12,15 @@
 
 class JHomonym : public JObjectSynt {
 public:
-	JHomonym(std::string val);
+	JHomonym(std::string val, int _id, int _wordId);
 	virtual ~JHomonym();
 protected:
 	std::string className() const;
 	void internal_export(std::ostream& ss) const;
 private:
 	std::string value;
+	int id;
+	int wordId;
 };
 
 #endif	/* _JHOMONYM_H_ */

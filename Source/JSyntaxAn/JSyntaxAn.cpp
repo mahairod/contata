@@ -235,6 +235,16 @@ std::shared_ptr<JSentence> JSyntaxAn::processSentence(const CSentence& csent) {
 			JFragment& jfragment = sentence.addFragment(JFragment());
 			jfragment.setStart(fragment.m_iFirstWord);
 			jfragment.setStop(fragment.m_iLastWord);
+			jfragment.setPuncMarkNum(fragment.m_iPunctSignsCount);
+			if ( !fragment.m_RelativeWord.IsEmpty() ) {
+				jfragment.setRelativeWord(JHomonymRef(fragment.m_RelativeWord.m_WordNo, fragment.m_RelativeWord.m_HomonymNo));
+			}
+			for (vector<SClauseType>::const_iterator it = fragment.m_vectorTypes.begin(); it != fragment.m_vectorTypes.end(); ++it ){
+				const SClauseType& frType = *it;
+				JFragmentType jfrType;
+				jfrType.setType( (JFragmentType::FragmentType) frType.m_Type );
+				jfragment.addType( jfrType );
+			}
 
 			// writing groups
 			vector<SSynVariant2Groups> synVariants;

@@ -18,6 +18,10 @@ JFragmentType::JFragmentType(const JFragmentType& orig) : JObjectSynt(orig) {
 JFragmentType::~JFragmentType() {
 }
 
+void JFragmentType::setType(const FragmentType type){
+	fragmentType = type;
+}
+
 std::string JFragmentType::className() const {
 	return "типФрагмента";
 }
@@ -25,6 +29,6 @@ std::string JFragmentType::className() const {
 void JFragmentType::internal_export(std::ostream& ss) const {
 	JObjectSynt::internal_export(ss);
 	//-- members here
-	tag(ss, "номер", fragmentType);
+	tag(ss, "номер", (int) fragmentType);
 	//---------------
 }

@@ -18,7 +18,7 @@ public:
 	JObjectSynt(const JObjectSynt& orig);
 	virtual ~JObjectSynt();
 	virtual std::string className() const;
-	std::ostream& operator>>(std::ostream& ss) const;
+	virtual std::ostream& operator>>(std::ostream& ss) const;
 protected:
 	virtual void internal_export (std::ostream& ss) const;
 private:

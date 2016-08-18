@@ -404,7 +404,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
 	dic.pLemmatizer=0;
 	setClazz=NULL;
 	setConstructor=NULL;
-	JNIAPIExceptionClass=NULL;
+//	JNIAPIExceptionClass=NULL;
 	method_convertFromCharsetCp1251ToJavaString=NULL;
 	method_grammemSetAddGrammem=NULL;
 	method_paradigmsetAddNewParadigm=NULL;
@@ -508,8 +508,8 @@ UTIL_METHOD(void, closeImpl) (JNIEnv *env, jclass clazz){
 		}
 		//if(setConstructor!=NULL){env->DeleteGlobalRef(setConstructor);setConstructor=NULL;}
 		if(JNIAPIExceptionClass!=NULL){
-			env->DeleteGlobalRef(JNIAPIExceptionClass);
-			JNIAPIExceptionClass=NULL;
+//			env->DeleteGlobalRef(JNIAPIExceptionClass);
+//			JNIAPIExceptionClass=NULL;
 		}
 		inited=false;
 		return;//ok

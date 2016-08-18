@@ -37,7 +37,7 @@
 			unmrsh = jaxbc.createUnmarshaller();
 //			unmrsh.setSchema(schema);
 		} ловя (JAXBException ex) {
-			LOG.log(Level.SEVERE, ничто, ex);
+			ЛОГ.log(Level.SEVERE, ничто, ex);
 			кинь новый RuntimeException("Не удалось инициализировать привязку XML", ex);
 //		} ловя (IOException ex) {
 //			LOG.log(Level.SEVERE, ничто, ex);
@@ -69,7 +69,7 @@
 				}
 				верни дерево;
 			} ловя (JAXBException ex) {
-				LOG.log(Level.SEVERE, ничто, ex);
+				ЛОГ.log(Level.SEVERE, ничто, ex);
 				кинь новый RuntimeException("Не удалось разобрать XML", ex);
 			}
 		} иначе {
@@ -93,6 +93,6 @@
 	личный итоговый СинтаксисаВоплощение синтВопл;
 	личный итоговый Unmarshaller unmarshaller;
 
-	статичный итоговый Logger LOG = Logger.getLogger(Синтаксис.класс.getName());
+	статичный итоговый Logger ЛОГ = Logger.getLogger(Синтаксис.класс.getName());
 
 }

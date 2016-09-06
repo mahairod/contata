@@ -30,7 +30,7 @@
 		синтВопл = воплощение;
 		Unmarshaller unmrsh = ничто;
 		попробуй {
-			JAXBContext jaxbc = JAXBContext.newInstance("org.elliptica.ling.syntax:java.util");
+			JAXBContext jaxbc = JAXBContext.newInstance("org.elliptica.ling.syntax:java.util", Thread.currentThread().getContextClassLoader() );
 //			Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema( новый File("src/elliptica-ling.xsd") );
 //			SchemaOutputResolver sor = новый MySchemaOutputResolver();
 //			jaxbc.generateSchema(sor);

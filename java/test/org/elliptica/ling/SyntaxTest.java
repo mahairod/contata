@@ -151,5 +151,5 @@
 	}
 	
 	личный статичный Syntax instance = ничто;
-	статичный итоговый Logger ЛОГ = Logger.getLogger(SyntaxTest.класс.getName());
+	статичный итоговый Logger ЛОГ = Logger.getLogger(SyntaxTest.класс.дайИмя());
 }

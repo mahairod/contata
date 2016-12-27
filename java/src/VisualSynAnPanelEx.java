@@ -25,7 +25,7 @@
 
 	защищённый тщетный разбериСлова(Список<Слово> слова) {
 		для (Слово слово: слова){
-			WordPannel wordPannel = новый WordPannel(слово.getЗначение(), this);
+			WordPannel wordPannel = новый WordPannel(слово.getЗначение(), это);
 			для (Омоним омоним: слово.getОмонимы() ){
 				wordPannel.m_Homonyms.add(омоним);
 			}

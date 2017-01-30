@@ -11,7 +11,7 @@
 пакет org.elliptica.ling.syntax;
 
 внеся java.util.Коллекции;
-внеся java.util.Список;
+внеся java.util.Коллекция;
 внеся javax.xml.bind.annotation.XmlElement;
 внеся javax.xml.bind.annotation.XmlID;
 внеся javax.xml.bind.annotation.XmlRootElement;
@@ -47,7 +47,7 @@
 		}
 	}
 
-	доступный Список<Граммема> дайГраммемы() {
+	доступный Коллекция<Граммема> дайГраммемы() {
 		если (ничто != юнит)  {
 			верни юнит.дайГраммемы();
 		} иначе {

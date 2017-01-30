@@ -8,5 +8,5 @@ export PCRE_OBJECTS_LIB=$PCRE_HOME/lib64
 echo используем Ява в $JAVA_HOME
 echo используем pcre в $PCRE_OBJECTS_LIB
 
-make mode=release libmode=shared
+make mode=debug libmode=shared
 

@@ -358,10 +358,12 @@ UTIL_METHOD(jobject, lookupWordImpl) (JNIEnv *env, jclass clazz, jint languageId
  * Сигнатура: (I[B)Lru/aot/morph/JavaMorphAPI/WordResult;
  */
 UTIL_METHOD(jobject, lookupFormImpl) (JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
-	  return lookupWordIternal(true, env, clazz, languageId, word);
+	env_ptr = env;
+	return lookupWordIternal(true, env, clazz, languageId, word);
 }
 
 static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint languageId, jbyteArray word){
+	env_ptr = env;
 	try{
 		CHECK_EXPR_RETURN(!inited || dic.pAgramtab==0 || dic.pLemmatizer==0, "Словари не загружены. Сначала вызови Morph.приготовьСловари!");
 		CHECK_EXPR_RETURN(languageId!=0, "Поддерживается только русский язык.");
@@ -400,6 +402,8 @@ static jobject lookupWordIternal(bool normal, JNIEnv *env, jclass clazz, jint la
  * Сигнатура: (I)V
  */
 UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jstring work_dir){
+	env_ptr = env;
+
 	dic.pAgramtab=0;
 	dic.pLemmatizer=0;
 	setClazz=NULL;
@@ -490,6 +494,7 @@ UTIL_METHOD(void, initImpl)(JNIEnv *env, jclass clazz, jint languagesBitSet, jst
  * Сигнатура: ()V
  */
 UTIL_METHOD(void, closeImpl) (JNIEnv *env, jclass clazz){
+	env_ptr = env;
 	try{
 		//dispose of dics
 		if(dic.pLemmatizer!=0){

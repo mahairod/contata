@@ -407,12 +407,8 @@ const char* CRusGramTab::GetClauseNameByType(long type) const
 */
 bool CRusGramTab::IsStrongClauseRoot(const poses_mask_t poses) const
 {
-	return		(poses & (1<<VERB))
-			||	(poses & (1<<ADVERB_PARTICIPLE)) // субъект деепричастия  совпадлает с субъектом
-												 // главной  клаузы 
-			||	(poses & (1<<PARTICIPLE_SHORT))
-			||	(poses & (1<<ADJ_SHORT))
-			||	(poses & (1<<PREDK));
+	// ADVERB_PARTICIPLE: субъект деепричастия  совпадлает с субъектом главной  клаузы
+	return poses & PREDICATE_POSES;
 };
 
 

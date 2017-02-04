@@ -64,6 +64,10 @@ bool CAncodePattern::HasPos(BYTE pos) const
 	return (m_iPoses & (1 << pos)) > 0; 
 };
 
+bool CAncodePattern::HasAnyPos(poses_mask_t poses) const
+{
+	return (m_iPoses & poses) > 0;
+};
 
 string CAncodePattern::GetGrammemsByAncodes() const
 {

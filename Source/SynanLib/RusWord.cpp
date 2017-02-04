@@ -144,7 +144,6 @@ bool CRusSentence::HasNounInNom(const CSynWord& _W  )  const
 
 
 
-
 bool CRusSentence::AllHomonymsArePredicates(const CSynWord& W) const
 {
 	int i = 0;
@@ -152,9 +151,7 @@ bool CRusSentence::AllHomonymsArePredicates(const CSynWord& W) const
 	{
 		const CSynHomonym& Hom = W.m_Homonyms[i];
 
-	    if ( (Hom.HasPos(VERB)) || (Hom.HasPos(ADVERB_PARTICIPLE)) ||
-			 (Hom.HasPos(ADJ_SHORT)) || (Hom.HasPos(PARTICIPLE_SHORT)) ||
-			 (Hom.HasPos(PREDK)) )
+		if ( (Hom.HasAnyPos(PREDICATE_POSES)) )
 			 continue;
 
 		//глаголы, которые не являются самостоятельным предикатом или суть ан.ф.

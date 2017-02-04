@@ -36,8 +36,6 @@ enum rPartOfSpeeches
 	  INFINITIVE = 21,
 };
 
- 
-
 enum rGrammems {
 		 rPlural     = 0,
 		 rSingular   = 1,
@@ -134,6 +132,11 @@ typedef enum {
 	COPUL_T=11//йноск
 } rClauseTypeEnum ;
 
+typedef  DWORD poses_mask_t;
+
+#define M(p) (1 << p)
+const poses_mask_t PREDICATE_POSES = M(VERB) | M(ADVERB_PARTICIPLE) | M(ADJ_SHORT) | M(PARTICIPLE_SHORT) | M(PREDK);
+#undef M
 
 #endif
 

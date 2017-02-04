@@ -373,7 +373,7 @@ gui = \
 ../SynAn/ComRelation.o$(ct)\
 ../SynAn/COMSentence.o$(ct)\
 
-germansyn = \
+#germansyn = \
 ../GerSynanLib/GerGroup.o$(ct)\
 ../GerSynanLib/Familien.o$(ct)\
 ../GerSynanLib/GenitNP.o$(ct)\
@@ -398,3 +398,20 @@ germansyn = \
 ../GerSynanLib/Numeralia.o$(ct)\
 ../GerSynanLib/GerBaseRules.o$(ct)\
 ../GerSynanLib/GerSentence.o$(ct)\
+
+germansyn = \
+../GerSynanLib/GerAnalytical.o$(ct) \
+../GerSynanLib/GerBaseRules.o$(ct) \
+../GerSynanLib/GerBuildInitialClauses.o$(ct) \
+../GerSynanLib/GerClause.o$(ct) \
+../GerSynanLib/GerFormatCaller.o$(ct) \
+../GerSynanLib/GerGroup.o$(ct) \
+../GerSynanLib/GerOborot.o$(ct) \
+../GerSynanLib/GerSentence.o$(ct) \
+../GerSynanLib/GerSubject.o$(ct) \
+../GerSynanLib/GerSyntaxOpt.o$(ct) \
+../GerSynanLib/GerThesaurus.o$(ct) \
+../GerSynanLib/GerWord.o$(ct)
+
+
+objects+=$(germansyn)

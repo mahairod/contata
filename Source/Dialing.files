@@ -893,3 +893,4 @@ JSyntaxAn/JHomonymRef.h
 JSyntaxAn/JHomonymRef.cpp
 JSyntaxAn/JObjectRef.h
 JSyntaxAn/JObjectRef.cpp
+JSyntaxAn/main.cpp

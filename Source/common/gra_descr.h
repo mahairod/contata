@@ -14,7 +14,7 @@ enum Descriptors
 	 ORLE   = 1, 
 	 OLLE  = 2, 
 	 ODel  = 3, 
-	 OPun  = 4, 
+	 OPun  = 4,			// пункт. знак
 	 ODigits   = 5, 
 	 ONumChar = 6, 
 	 OElectAddr  = 7, 

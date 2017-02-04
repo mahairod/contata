@@ -27,6 +27,7 @@ public:
 	void	CopyAncodePattern(const CAncodePattern& X);
 	bool	HasGrammem(BYTE gram) const;
 	bool	HasPos(BYTE pos) const;
+	bool	HasAnyPos(poses_mask_t poses) const;
 	string	GetGrammemsByAncodes() const;
 	bool	ModifyGrammems(QWORD Grammems, poses_mask_t Poses=0xffffffff);
 	bool	InitAncodePattern();

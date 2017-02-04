@@ -124,22 +124,15 @@ void	CGroupsVector :: Clear()
 //  which is ordered by GladkijPeriodLess
 int CGroupsVector :: get_maximal_group_no(size_t WordNo)  const 
 {
-	vector<CGroup>::const_iterator begin = GetGroups().begin();
-	vector<CGroup>::const_iterator end = GetGroups().end();
-	if (begin == end) return -1;
-
 	CPeriod P(WordNo);
-
-	do 
-	{
-		end--;
-		if(P.is_part_of(*end))
-			return end - begin;
-	} while(end != begin);
-
+	const vector<CGroup>& groups = GetGroups();
+	for (vector<CGroup>::const_reverse_iterator it = groups.rbegin(); it!=groups.rend(); it++){
+		if(P.is_part_of(*it))
+			return groups.rend() - it - 1;
+	}
 
 	return -1;
-};
+}
 
 // 1.Если нет группы, в которую входит WordNo, то функция возращает WordNo.
 // 2.Иначе функция возращает номер первого слова самой минимальной из 

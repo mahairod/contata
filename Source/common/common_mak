@@ -1,4 +1,4 @@
-cparams := $(cparams) -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$(HOME)/include -std=c++11 -ftemplate-depth-65
+cparams := $(cparams) -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$(HOME)/include -std=c++14 -ftemplate-depth-65
 
 ifndef libmode
 	libmode := static

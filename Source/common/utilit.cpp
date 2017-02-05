@@ -1794,20 +1794,19 @@ size_t dual_bracket (BYTE x)
 
 // ============     CShortString and  CShortStringHolder =========================
 
-CShortString::CShortString(vector<char>::const_iterator pData)
-{
-	m_pStringPointer = pData;
-};
+template<>
 BYTE CShortString::GetLength() const
 {	
 	return	(BYTE)m_pStringPointer[0];	
 }
 
-vector<char>::const_iterator	CShortString::GetData() const
+template<>
+string::const_iterator	CShortString::GetData() const
 {	
-	return	m_pStringPointer;	
+	return	m_pStringPointer;
 }
 
+template<>
 const char*	CShortString::GetString() const
 {	
 	return	&(m_pStringPointer[1]);	
@@ -1859,7 +1858,7 @@ void CShortStringHolder::ReadShortStringHolder(string filename)
 	int Offset = 0;
 	for (DWORD i=0; i < Count; i++)
 	{
-		CShortString R(m_Buffer.begin()+Offset);
+		CShortString R(m_Buffer.begin() + Offset);
 		push_back(R);
 		Offset +=   R.GetLength() + 2;
 	};
@@ -2090,7 +2089,7 @@ bool LoadFileToString(string FileName, string& Result)
 	if ( access(FileName.c_str(), 4) != 0) return false;
 
 
-	vector<char> V;
+	string V;
 	ReadVector(FileName,V);
 	Result = string (V.begin(), V.end());
 	return true;

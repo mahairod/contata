@@ -104,17 +104,25 @@ public:
 
 
 
-class CShortString
+template <typename ElType, /*template<typename,typename,typename>*/ class CONTAINER>
+class CShortStringCommon
 {
-	vector<char>::const_iterator m_pStringPointer;
+//	typedef CONTAINER<ElType, ElType, ElType> cont;
+	typedef CONTAINER cont;
+	typedef typename cont::const_iterator el_iterator;
+	el_iterator m_pStringPointer;
 public:
-	CShortString(vector<char>::const_iterator pData);
+	CShortStringCommon(el_iterator pData){
+		m_pStringPointer = pData;
+	}
 
 	BYTE GetLength() const;
-	vector<char>::const_iterator GetData() const;
-	const char*	GetString() const;
+	el_iterator GetData() const;
+	const ElType*	GetString() const;
 	//bool  operator <(const CShortString& s) const;
 };
+
+typedef CShortStringCommon<char, string> CShortString;
 
 class IsLessShortString : public std::binary_function<const CShortString&, const char*, bool>
 {
@@ -124,10 +132,9 @@ public:
 	bool operator()(const CShortString& Item1,	const CShortString& Item2) const;
 };
 
-
-class CShortStringHolder : public vector<CShortString> 
+class CShortStringHolder : public vector<CShortString>
 {
-	vector<char> m_Buffer;
+	string m_Buffer;
 	template<class T>
 		bool CreateFromSequence(T begin, T end);
 public:	

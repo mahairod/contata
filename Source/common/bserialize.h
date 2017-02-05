@@ -250,8 +250,8 @@ void tt(vector< boost::array<BYTE,VectorMaxStructSize>>* sss, vector<T>* V)
 }
 #endif
 
-template <class T>
-void ReadVectorInner (FILE* fp, vector<T>& V, size_t Count)
+template <class T, class CONT>
+void ReadVectorInner (FILE* fp, CONT& V, size_t Count)
 {
 #ifdef  WIN32
 	if (_setmode( _fileno( fp ), _O_BINARY ) != _O_BINARY) 
@@ -314,6 +314,10 @@ void ReadVectorInner (FILE* fp, vector<T>& V, size_t Count)
 
 };
 
+static void ReadVectorInner (FILE* fp, vector<BYTE>& V, size_t Count){
+ return ReadVectorInner<BYTE,vector<BYTE>>(fp, V, Count);
+}
+
 template <class T>
 size_t GetSizeInBytes()
 {
@@ -321,8 +325,8 @@ size_t GetSizeInBytes()
     return get_size_in_bytes(dummy);
 }
 
-template <class T>
-inline void ReadVector (const string& FileName, vector<T>& V)
+template <typename T, typename T2, template<typename, typename> class CONT>
+inline void ReadVector (const string& FileName, CONT<T, T2>& V)
 {
 	V.clear();
 	file_off_t sz = FileSize(FileName.c_str());
@@ -334,7 +338,7 @@ inline void ReadVector (const string& FileName, vector<T>& V)
 	size_t size_of_t = get_size_in_bytes(dummy);
 	size_t Count = (size_t)sz/size_of_t;
 	try {
-        ReadVectorInner(fp, V, Count);
+		ReadVectorInner<T, CONT<T,T2> >(fp, V, Count);
 		fclose (fp);
 		fp = 0;
 	}
@@ -356,8 +360,8 @@ bool BinaryWriteItem (FILE* fp, const T& V)
     return fwrite((void*)buffer, size_of_t, 1, fp) == 1;
 }
 
-template <class T>
-bool WriteVectorInner (FILE* fp, const vector<T>& V)
+template <typename T, class CONT>
+bool WriteVectorInner (FILE* fp, const CONT& V)
 {
 	#ifdef  WIN32
 		if (_setmode( _fileno( fp ), _O_BINARY ) != _O_BINARY) 
@@ -383,6 +387,9 @@ bool WriteVectorInner (FILE* fp, const vector<T>& V)
 	return true;
 };
 
+static bool WriteVectorInner (FILE* fp, const vector<BYTE>& V){
+	return WriteVectorInner<BYTE,vector<BYTE>>(fp, V);
+}
 
 template <class T>
 inline bool WriteVector (const string& FileName, const vector<T>& V)

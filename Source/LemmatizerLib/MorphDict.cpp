@@ -6,6 +6,13 @@
 #include "MorphDict.h"
 #include "LemmaInfoSerialize.h"
 
+void ReadVectorInner (FILE* fp, vector<CLemmaInfoAndLemma>& V, size_t Count){
+ return ReadVectorInner<CLemmaInfoAndLemma,vector<CLemmaInfoAndLemma>>(fp, V, Count);
+}
+
+bool WriteVectorInner (FILE* fp, const vector<CLemmaInfoAndLemma>& V){
+	return WriteVectorInner<CLemmaInfoAndLemma,vector<CLemmaInfoAndLemma>>(fp, V);
+}
 
 
 //======================================================

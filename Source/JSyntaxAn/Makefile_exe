@@ -1,6 +1,6 @@
 VPATH = ../
 
-common_parms := -I. $(JAVA_INCLUDES) -I../SynanDmnLib -I../common -I../Jcommon -std=c++11 -fextended-identifiers -fvisibility=hidden -g -rdynamic -D USE_TRIGRAM_LEMMATIZER -D HAVE_CONFIG_H -D BOOST
+common_parms := -I. $(JAVA_INCLUDES) -I../SynanDmnLib -I../common -I../Jcommon -std=c++14 -fextended-identifiers -fvisibility=hidden -g -rdynamic -D USE_TRIGRAM_LEMMATIZER -D HAVE_CONFIG_H -D BOOST
 
 #-D LINK_SIZE=2
 

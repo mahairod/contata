@@ -8,7 +8,6 @@
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.dir" name="Исходники"/>
-                <root id="src.ap-source-output.dir" name="Порождения"/>
                 <root id="src.bin.dir" name="Бинарники"/>
             </source-roots>
             <test-roots>

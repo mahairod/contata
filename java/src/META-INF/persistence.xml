@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>эллиптика.ява.морфемика.ячейки.MorphemDescr</class>
     <class>эллиптика.ява.морфемика.ячейки.MorphemExample</class>
+    <class>эллиптика.ява.морфемика.ячейки.СущностьАХЯНаКлючеInteger</class>
     <class>эллиптика.ява.морфемика.ячейки.ПреобразовательТипаМорфемы</class>
     <class>эллиптика.ява.морфемика.ячейки.ПреобразовательЧастиРечи</class>
     <properties>

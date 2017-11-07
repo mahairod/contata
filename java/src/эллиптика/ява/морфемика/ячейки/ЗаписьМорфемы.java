@@ -36,14 +36,14 @@
 @Entity
 @Table(name = "morphem_descr")
 @NamedQueries({
-	@NamedQuery(name = "MorphemDescr.найдиВсе", query = "SELECT m FROM MorphemDescr m"),
-	@NamedQuery(name = "MorphemDescr.найдиПоМорфеме", query = "SELECT m FROM MorphemDescr m WHERE m.морфема = :морфема"),
-	@NamedQuery(name = "MorphemDescr.найдиПоЧасти", query = "SELECT m FROM MorphemDescr m WHERE m.часть = :часть"),
-	@NamedQuery(name = "MorphemDescr.найдиПоОбразует", query = "SELECT m FROM MorphemDescr m WHERE m.образует = :образует"),
-	@NamedQuery(name = "MorphemDescr.найдиПоЗнач", query = "SELECT m FROM MorphemDescr m WHERE m.знач = :знач"),
-	@NamedQuery(name = "MorphemDescr.найдиПоЯзыку", query = "SELECT m FROM MorphemDescr m WHERE m.язык = :язык"),
-	@NamedQuery(name = "MorphemDescr.найдиПоОригиналу", query = "SELECT m FROM MorphemDescr m WHERE m.оригинал = :оригинал")})
-доступный класс MorphemDescr расширяет СущностьАХЯНаКлючеInteger воплощает Serializable {
+	@NamedQuery(name = "ЗаписьМорфемы.найдиВсе", query = "SELECT m FROM ЗаписьМорфемы m"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоМорфеме", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.морфема = :морфема"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоЧасти", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.часть = :часть"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоОбразует", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.образует = :образует"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоЗнач", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.знач = :знач"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоЯзыку", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.язык = :язык"),
+	@NamedQuery(name = "ЗаписьМорфемы.найдиПоОригиналу", query = "SELECT m FROM ЗаписьМорфемы m WHERE m.оригинал = :оригинал")})
+доступный класс ЗаписьМорфемы расширяет СущностьАХЯНаКлючеInteger воплощает Serializable {
 
 	доступный логическое цельСовместима(ЧастьРечи цель){
 		если (цель == целевойТип || цель == ЧастьРечи.любой){
@@ -121,10 +121,10 @@
     @Column(name = "макс_правая_позиция")
 	личный Integer максПраваяПозиция;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "morphemDescr", fetch = FetchType.EAGER)
-	личный List<MorphemExample> списокMorphemExample;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "записьМорфемы", fetch = FetchType.EAGER)
+	личный List<ПримерМорфем> списокMorphemExample;
 
-	доступный MorphemDescr() {
+	доступный ЗаписьМорфемы() {
 	}
 
 	доступный логическое применимаК(ЧастьРечи чр, ширцел исхГраммемы, Строка перед, символ после) {
@@ -322,20 +322,20 @@
 	}
 
 	@Deprecated
-	доступный List<MorphemExample> getСписокMorphemExample() {
+	доступный List<ПримерМорфем> getСписокMorphemExample() {
 		верни дайСписокmorphemExample();
 	}
 
-	доступный List<MorphemExample> дайСписокmorphemExample() {
+	доступный List<ПримерМорфем> дайСписокmorphemExample() {
 		верни списокMorphemExample;
 	}
 
 	@Deprecated
-	доступный тщетный setСписокMorphemExample(List<MorphemExample> списокMorphemexample) {
+	доступный тщетный setСписокMorphemExample(List<ПримерМорфем> списокMorphemexample) {
 		это.задайСписокmorphEmexample(списокMorphemexample);
 	}
 
-	доступный тщетный задайСписокmorphEmexample(List<MorphemExample> списокMorphemexample) {
+	доступный тщетный задайСписокmorphEmexample(List<ПримерМорфем> списокMorphemexample) {
 		это.списокMorphemExample = списокMorphemexample;
 	}
 
@@ -397,7 +397,7 @@
 
 	@Подмени
 	доступный Строка строкой() {
-		верни "MorphemDescr{" + тип + " " + морфема + ", " + исходныйТип + " => " + целевойТип + '}';
+		верни дайКласс().дайИмя() + "{" + тип + " " + морфема + ", " + исходныйТип + " => " + целевойТип + '}';
 	}
 
 }

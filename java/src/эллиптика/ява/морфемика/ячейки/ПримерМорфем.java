@@ -28,17 +28,17 @@
 @Entity
 @Table(name = "morphem_example")
 @NamedQueries({
-	@NamedQuery(name = "MorphemExample.найдиВсе", query = "SELECT m FROM MorphemExample m"),
-	@NamedQuery(name = "MorphemExample.найдиПоContent", query = "SELECT m FROM MorphemExample m WHERE m.content = :content")})
-доступный класс MorphemExample расширяет СущностьАХЯНаКлючеInteger воплощает Serializable {
+	@NamedQuery(name = "ПримерМорфем.найдиВсе", query = "SELECT m FROM ПримерМорфем m"),
+	@NamedQuery(name = "ПримерМорфем.найдиПоContent", query = "SELECT m FROM ПримерМорфем m WHERE m.content = :content")})
+доступный класс ПримерМорфем расширяет СущностьАХЯНаКлючеInteger воплощает Serializable {
 
 	личный статичный итоговый ширцел serialVersionUID = 1L;
 	личный Строка content;
 	@JoinColumn(name = "morphem", referencedColumnName = "разл")
     @ManyToOne(optional = ложь, fetch = FetchType.EAGER)
-	личный MorphemDescr morphemDescr;
+	личный ЗаписьМорфемы записьМорфемы;
 
-	доступный MorphemExample() {
+	доступный ПримерМорфем() {
 	}
 
 	@Deprecated
@@ -60,21 +60,21 @@
 	}
 
 	@Deprecated
-	доступный MorphemDescr getMorphemDescr() {
+	доступный ЗаписьМорфемы getMorphemDescr() {
 		верни дайMorphemdescr();
 	}
 
-	доступный MorphemDescr дайMorphemdescr() {
-		верни morphemDescr;
+	доступный ЗаписьМорфемы дайMorphemdescr() {
+		верни записьМорфемы;
 	}
 
 	@Deprecated
-	доступный тщетный setMorphemDescr(MorphemDescr morphemDescr) {
+	доступный тщетный setMorphemDescr(ЗаписьМорфемы morphemDescr) {
 		это.задайMorphemdescr(morphemDescr);
 	}
 
-	доступный тщетный задайMorphemdescr(MorphemDescr morphemDescr) {
-		это.morphemDescr = morphemDescr;
+	доступный тщетный задайMorphemdescr(ЗаписьМорфемы morphemDescr) {
+		это.записьМорфемы = morphemDescr;
 	}
 
 }

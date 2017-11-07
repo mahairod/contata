@@ -13,7 +13,7 @@
 внеся java.util.Список;
 внеся java.util.Collections;
 внеся java.util.Массивы;
-внеся эллиптика.ява.морфемика.ячейки.MorphemDescr;
+внеся эллиптика.ява.морфемика.ячейки.ЗаписьМорфемы;
 
 
 /**
@@ -22,12 +22,12 @@
  */
 доступный класс Вариант {
 
-	доступный Вариант(MorphemDescr morphemDescr, Список<Вариант> дети) {
+	доступный Вариант(ЗаписьМорфемы morphemDescr, Список<Вариант> дети) {
 		это.morphemDescr = morphemDescr;
 		это.дети = дети;
 	}
 
-	доступный Вариант(MorphemDescr morphemDescr, Строка остаток) {
+	доступный Вариант(ЗаписьМорфемы morphemDescr, Строка остаток) {
 		это.morphemDescr = morphemDescr;
 		это.остаток = остаток;
 	}
@@ -43,7 +43,7 @@
 		}
 	}
 
-	доступный MorphemDescr getMorphemDescr() {
+	доступный ЗаписьМорфемы getMorphemDescr() {
 		верни morphemDescr;
 	}
 
@@ -55,7 +55,7 @@
 		верни остаток;
 	}
 
-	личный MorphemDescr morphemDescr;
+	личный ЗаписьМорфемы morphemDescr;
 	личный Список<Вариант> дети;
 	личный Строка остаток;
 }

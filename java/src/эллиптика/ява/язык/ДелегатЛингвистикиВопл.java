@@ -201,7 +201,7 @@
 		ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
 		Thread.currentThread().setContextClassLoader(ClassLoader.getSystemClassLoader());
 
-		System.setProperty("jmorph.rml.dir", ПУТЬ_К_СЛОВАРЯМ);
+		Настройки.загрузи();
 
 		если (слова.length == 0){
 			верни операция.дляСбоя(вход);
@@ -263,7 +263,7 @@
 
 	личный статичный Синтаксис дайСинтаксис(){
 		если (ничто == синтаксис)  {
-			синтаксис = новый Синтаксис(ПУТЬ_К_СЛОВАРЯМ);
+			синтаксис = новый Синтаксис();
 		}
 		верни синтаксис;
 	}
@@ -281,7 +281,6 @@
 		ШАБЛОН_ШАБЛОНА = Pattern.compile("\\$\\{([Ё-Я]?[а-ё]+)\\}" + "(" + шаблонПробелов + ")?");
 	}
 
-	личный статичный итоговый Строка ПУТЬ_К_СЛОВАРЯМ = "/mnt/f16/mahairod/Develop/cpp/linguistan/";
 	личный статичный Синтаксис синтаксис;
 
 

@@ -44,6 +44,7 @@
 		HttpServer сервер = HttpServer.create();
 		сервер.bind(новый InetSocketAddress(InetAddress.getLoopbackAddress(), порт), 20);
 		сервер.createContext("/морфемика", новый СервисМорфем());
+		сервер.createContext("/управление", новый СервисУправления(сервер));
 		сервер.start();
 	}
 }

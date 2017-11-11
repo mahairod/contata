@@ -16,6 +16,7 @@
 внеся java.net.InetSocketAddress;
 внеся java.util.logging.Level;
 внеся java.util.logging.Logger;
+внеся эллиптика.ява.сеть.ППСТСервер;
 
 
 /**
@@ -41,10 +42,10 @@
 		} ловя (Exception откл) {
 			порт = 7070;
 		}
-		HttpServer сервер = HttpServer.create();
-		сервер.bind(новый InetSocketAddress(InetAddress.getLoopbackAddress(), порт), 20);
-		сервер.createContext("/морфемика", новый СервисМорфем());
-		сервер.createContext("/управление", новый СервисУправления(сервер));
-		сервер.start();
+		ППСТСервер сервер = ППСТСервер.создай();
+		сервер.прикрепи(новый InetSocketAddress(InetAddress.getLoopbackAddress(), порт), 20);
+		сервер.создайКонтекст("/морфемика", новый СервисМорфем());
+		сервер.создайКонтекст("/управление", новый СервисУправления(сервер));
+		сервер.запуск();
 	}
 }

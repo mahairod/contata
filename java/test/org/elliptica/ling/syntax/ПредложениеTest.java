@@ -50,7 +50,7 @@
 	 */
 	@Test
 	доступный тщетный testGetСписокСлов() кидает JAXBException {
-		Система.вывод.печатьстр("getСписокСлов");
+		Система.вывод.печатайстр("getСписокСлов");
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		
@@ -84,9 +84,9 @@
 		связьФрагментов.setНачало(0);
 		связьФрагментов.setКонец(23);
 		
-		marshaller.marshal(предложение, Система.вывод);
+		marshaller.marshal(предложение, Система.вывод.совместимый());
 
-		Система.вывод.печатьстр();
+		Система.вывод.печатайстр();
 	}
 	
 }

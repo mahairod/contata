@@ -4,7 +4,6 @@
 внеся java.io.IOException;
 внеся java.io.InputStream;
 внеся java.io.OutputStream;
-внеся java.util.Коллекция;
 внеся java.util.Множество;
 внеся java.util.HashSet;
 внеся java.util.МножествоСвёрток;

@@ -13,7 +13,6 @@
 внеся java.sql.SQLException;
 внеся javax.persistence.AttributeConverter;
 внеся javax.persistence.Converter;
-внеся org.elliptica.ling.ЧастьРечи;
 внеся org.postgresql.util.PGobject;
 внеся эллиптика.ява.утилиты.журналирование.Журналарь;
 внеся эллиптика.ява.утилиты.журналирование.Уровень;
@@ -24,16 +23,16 @@
  * @автор Антон Александрович Астафьев {@буквально <anton@astafiev.me>} (Anton Astafiev)
  */
 @Converter
-доступный класс ПреобразовательЧастиРечи воплощает AttributeConverter<ЧастьРечи, PGobject> {
+доступный класс ПреобразовательОтношенияМорфем воплощает AttributeConverter<ТипОтношенияМорфем, PGobject> {
 
 	@Подмени
-	доступный PGobject convertToDatabaseColumn(ЧастьРечи атрибут) {
+	доступный PGobject convertToDatabaseColumn(ТипОтношенияМорфем атрибут) {
 		если (атрибут == ничто){
 			верни ничто;
 		}
 		PGobject зн = новый PGobject();
 		попробуй {
-			зн.setType("partofspeech");
+			зн.setType("отношение_морфем");
 			зн.setValue(атрибут.name());
 		} ловя (SQLException ex) {
 			ЖУРНАЛ.запись(Уровень.ОШИБКА, ничто, ex);
@@ -42,13 +41,13 @@
 	}
 
 	@Подмени
-	доступный ЧастьРечи convertToEntityAttribute(PGobject данныеБД) {
+	доступный ТипОтношенияМорфем convertToEntityAttribute(PGobject данныеБД) {
 		если (данныеБД экземпляр PGobject){
-			верни ЧастьРечи.valueOf(данныеБД.getValue());
+			верни ТипОтношенияМорфем.valueOf(данныеБД.getValue());
 		} иначе {
 			верни ничто;
 		}
 	}
 
-	личный статичный итоговый Журналарь ЖУРНАЛ = Журналарь.дайЖурналарь(ПреобразовательТипаМорфемы.класс.дайИмя());
+	личный статичный итоговый Журналарь ЖУРНАЛ = Журналарь.дайЖурналарь(ПреобразовательОтношенияМорфем.класс.дайИмя());
 }
